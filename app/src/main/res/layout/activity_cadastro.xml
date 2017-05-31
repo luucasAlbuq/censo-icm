@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Louvor"
+                android:hint="* Louvor"
                 android:inputType="textPersonName"
                 android:paddingTop="15dp"
                 android:textSize="25dp"></EditText>
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Palavra"
+                android:hint="* Palavra"
                 android:inputType="textPersonName"
                 android:paddingTop="15dp"
                 android:textSize="25dp"></EditText>
