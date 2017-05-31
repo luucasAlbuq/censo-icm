@@ -1,5 +1,6 @@
 package icm.censo.a3_code.com.censoicm;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,15 +17,23 @@ import android.widget.Toast;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 
 import model.Censo;
 
 public class CadastroActivity extends AppCompatActivity {
 
     private int varoesValue, senhorasValue, jovensValue, adolescentesValue, criancasValue, visitantesValue, totalValue;
-    private TextView totalTextView;
+    private TextView totalTextView, dataTextView;
+
+    //Variaveis referentes a data
+    private Date dataCadastro;
+    private final Calendar calendario = Calendar.getInstance();
+    private DatePickerDialog.OnDateSetListener data;
+
     //Campos de frequencia
     private EditText varoesField, senhorasField, jovensField, adolescentesField, criancasField, visitantesField;
     //Campos de informacoes textuais
@@ -154,6 +164,10 @@ public class CadastroActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Constroi o objecto censo para ser persistido
+     * @return
+     */
     private Censo buildCenso(){
         Censo censo = new Censo();
 
@@ -174,8 +188,12 @@ public class CadastroActivity extends AppCompatActivity {
         censo.setObreiroLouvor(louvor);
         censo.setObreirosPorta(new HashSet<String>(Arrays.asList(porta)));
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        censo.setData(new Date());
+        if(dataCadastro == null){
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            censo.setData(new Date());
+        }else{
+            censo.setData(dataCadastro);
+        }
 
         return censo;
     }
@@ -184,7 +202,7 @@ public class CadastroActivity extends AppCompatActivity {
      * Verifica se todos os campos obrigatorios foram preenchidos
      * @return boolean
      */
-    public boolean verificaCamposObrigatorios(){
+    private boolean verificaCamposObrigatorios(){
         boolean valido = true;
 
         if(palavraField.getText().toString().isEmpty()){
@@ -201,6 +219,28 @@ public class CadastroActivity extends AppCompatActivity {
         return  valido;
     }
 
+    /***
+     * Prepara o calendario
+     */
+    private void preparaCalendario(){
+        final Calendar calendario = Calendar.getInstance();
+
+        data = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendario.set(Calendar.YEAR, year);
+                calendario.set(Calendar.MONTH, month);
+                calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                dataCadastro = calendario.getTime();
+                Locale BRAZIL = new Locale("pt","BR");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy",BRAZIL);
+                Toast.makeText(getApplicationContext(), sdf.format(calendario.getTime()), Toast.LENGTH_SHORT).show();
+                dataTextView.setText("Data: "+sdf.format(calendario.getTime()));
+            }
+        };
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -214,6 +254,7 @@ public class CadastroActivity extends AppCompatActivity {
         criancasField = (EditText) findViewById(R.id.criancas);
         visitantesField = (EditText) findViewById(R.id.visitantes);
         totalTextView = (TextView) findViewById(R.id.total);
+        dataTextView = (TextView) findViewById(R.id.data);
         portaField = (EditText) findViewById(R.id.porta);
         palavraField = (EditText) findViewById(R.id.palavra);
         louvorField = (EditText) findViewById(R.id.louvor);
@@ -221,6 +262,17 @@ public class CadastroActivity extends AppCompatActivity {
         botaoSalvar = (Button) findViewById(R.id.salvar);
 
         addTextChangedListener();
+
+        dataTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                preparaCalendario();
+                new DatePickerDialog(CadastroActivity.this, data, calendario
+                        .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
+                        calendario.get(Calendar.DAY_OF_MONTH)).show();
+            }
+
+        });
 
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override

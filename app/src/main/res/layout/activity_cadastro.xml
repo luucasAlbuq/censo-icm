@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="* Louvor"
+                android:hint="Louvor"
                 android:inputType="textPersonName"
                 android:paddingTop="15dp"
                 android:textSize="25dp"></EditText>
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="* Palavra"
+                android:hint="Palavra"
                 android:inputType="textPersonName"
                 android:paddingTop="15dp"
                 android:textSize="25dp"></EditText>
@@ -60,6 +60,20 @@
                 android:lines="5"
                 android:paddingTop="15dp"
                 android:textSize="25dp"></EditText>
+
+            <TextView
+                android:id="@+id/data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_row="3"
+                android:text="Data:"
+                android:textSize="25dp"
+                android:drawableRight="@drawable/add_icon24dp"
+                android:drawablePadding="10dp"/>
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -156,19 +170,6 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/data"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_row="3"
-                    android:text="Data:"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:drawableRight="@drawable/add_icon24dp"
-                    android:drawablePadding="10dp"/>
             </GridLayout>
 
             <Button
