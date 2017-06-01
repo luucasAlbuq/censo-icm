@@ -235,7 +235,6 @@ public class CadastroActivity extends AppCompatActivity {
                 dataCadastro = calendario.getTime();
                 Locale BRAZIL = new Locale("pt","BR");
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy",BRAZIL);
-                Toast.makeText(getApplicationContext(), sdf.format(calendario.getTime()), Toast.LENGTH_SHORT).show();
                 dataTextView.setText("Data: "+sdf.format(calendario.getTime()));
             }
         };
