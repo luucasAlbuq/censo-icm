@@ -267,9 +267,11 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 preparaCalendario();
-                new DatePickerDialog(CadastroActivity.this, data, calendario
+                DatePickerDialog datePickerDialog = new DatePickerDialog(CadastroActivity.this, data, calendario
                         .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
-                        calendario.get(Calendar.DAY_OF_MONTH)).show();
+                        calendario.get(Calendar.DAY_OF_MONTH));
+                Locale.setDefault(new Locale("pt","BR"));
+                datePickerDialog.show();
             }
 
         });
