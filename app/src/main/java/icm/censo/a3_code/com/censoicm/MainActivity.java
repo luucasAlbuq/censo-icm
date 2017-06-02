@@ -17,11 +17,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-
 import util.MetodoPesquisa;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,10 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private  Button cadastrarButton, pesquisarMenuButton, compararButton, relatorioButton;
     private final Calendar calendario = Calendar.getInstance();
 
-
-    /***
-     * Prepara o calendario
-     */
+    //Prepara o calendario
     private DatePickerDialog.OnDateSetListener preparaCalendario(final TextView dataTextView){
         final Calendar calendario = Calendar.getInstance();
 
@@ -52,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
         return data;
     }
 
-    /**
-     * Prepara o selectbox do popup
-     */
+    //Prepara o selectbox do popup
     private void preparaSpinner(ViewGroup layout){
         /**
          * Adicionando elementes no spinner
@@ -99,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         final TextView dataPesquisaFim = (TextView) layout.findViewById(R.id.dataPesquisaFim);
         dataPesquisaFim.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,8 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     @Override

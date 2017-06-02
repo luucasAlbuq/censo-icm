@@ -39,7 +39,7 @@ public class CadastroActivity extends AppCompatActivity {
     //Campos de informacoes textuais
     private EditText portaField, palavraField, louvorField, domField;
 
-    private Button botaoSalvar;
+    private Button botaoSalvar, botaoCancelar;
 
     /**
      * Carrega os valores dos campos editText para as variaveis correspondentes.
@@ -258,7 +258,8 @@ public class CadastroActivity extends AppCompatActivity {
         palavraField = (EditText) findViewById(R.id.palavra);
         louvorField = (EditText) findViewById(R.id.louvor);
         domField = (EditText) findViewById(R.id.dom);
-        botaoSalvar = (Button) findViewById(R.id.salvar);
+        botaoSalvar = (Button) findViewById(R.id.salvarCadastro);
+        botaoCancelar = (Button) findViewById(R.id.cancelarCadastro);
 
         addTextChangedListener();
 
@@ -285,6 +286,13 @@ public class CadastroActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(), "Preencha os campos obrigatórios", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        botaoCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

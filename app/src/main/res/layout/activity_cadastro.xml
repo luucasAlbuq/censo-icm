@@ -172,8 +172,13 @@
 
             </GridLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
             <Button
-                android:id="@+id/salvar"
+                android:id="@+id/salvarCadastro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -182,7 +187,23 @@
                 android:text="Salvar"
                 android:textAllCaps="false"
                 android:textColor="@android:color/background_light"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:layout_margin="10dp"/>
+
+            <Button
+                android:id="@+id/cancelarCadastro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_dark"
+                android:text="Cancelar"
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textSize="20dp"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
 
         </LinearLayout>
 
