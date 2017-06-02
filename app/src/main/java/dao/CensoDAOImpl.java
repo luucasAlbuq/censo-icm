@@ -1,5 +1,8 @@
 package dao;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -12,9 +15,13 @@ import model.Censo;
 
 public class CensoDAOImpl implements CensoDAO {
 
+    private  DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+
     @Override
     public <T> void save(T object) {
-
+        //Gerando Id
+        String censoId = db.push().getKey();
+        db.child(censoId).setValue(object);
     }
 
     @Override

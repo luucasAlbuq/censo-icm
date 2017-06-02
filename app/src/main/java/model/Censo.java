@@ -1,5 +1,7 @@
 package model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -7,6 +9,7 @@ import java.util.Set;
  * Entidade que armazena dados sobre o censo de um culto
  * Created by luucasAlbuq on 30/05/2017.
  */
+@IgnoreExtraProperties
 public class Censo {
 
     private int qtdJovens;
