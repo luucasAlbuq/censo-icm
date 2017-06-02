@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="icm.censo.a3_code.com.censoicm.CadastroActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <EditText
+                android:id="@+id/porta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Porta"
+                android:inputType="textPersonName"
+                android:paddingTop="15dp"
+                android:textSize="25dp"></EditText>
+
+            <EditText
+                android:id="@+id/louvor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Louvor"
+                android:inputType="textPersonName"
+                android:paddingTop="15dp"
+                android:textSize="25dp"></EditText>
+
+            <EditText
+                android:id="@+id/palavra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Palavra"
+                android:inputType="textPersonName"
+                android:paddingTop="15dp"
+                android:textSize="25dp"></EditText>
+
+            <EditText
+                android:id="@+id/dom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Dom"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:paddingTop="15dp"
+                android:textSize="25dp"></EditText>
+
+            <TextView
+                android:id="@+id/data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_row="3"
+                android:text="Data:"
+                android:textSize="25dp"
+                android:drawableRight="@drawable/add_icon24dp"
+                android:drawablePadding="10dp"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp">
+
+                <EditText
+                    android:id="@+id/varoes"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_margin="5dp"
+                    android:layout_row="0"
+                    android:ems="10"
+                    android:gravity="fill"
+                    android:hint="Varões"
+                    android:inputType="number"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/senhoras"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_margin="5dp"
+                    android:layout_row="0"
+                    android:ems="10"
+                    android:gravity="fill"
+                    android:hint="Senhoras"
+                    android:inputType="number"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/adolescentes"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_margin="5dp"
+                    android:layout_row="1"
+                    android:ems="10"
+                    android:gravity="fill"
+                    android:hint="Adolescentes"
+                    android:inputType="number"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/criancas"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_margin="5dp"
+                    android:layout_row="1"
+                    android:ems="10"
+                    android:gravity="fill"
+                    android:hint="Crianças"
+                    android:inputType="number"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/jovens"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_margin="5dp"
+                    android:layout_row="2"
+                    android:ems="10"
+                    android:gravity="fill"
+                    android:hint="Jovens"
+                    android:inputType="number"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/visitantes"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_margin="5dp"
+                    android:layout_row="2"
+                    android:ems="10"
+                    android:gravity="fill"
+                    android:hint="Visitantes"
+                    android:inputType="number"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_row="3"
+                    android:text="Total:"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+            </GridLayout>
+
+            <Button
+                android:id="@+id/salvar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_blue_light"
+                android:text="Salvar"
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</ScrollView>

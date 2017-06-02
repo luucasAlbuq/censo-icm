@@ -14,6 +14,7 @@ public class Censo {
     private int qtdVisitantes;
     private int qtdSenhoras;
     private int qtdVaroes;
+    private int qtdAdolescentes;
     private int totalPessoas;
     private String dom;
     private Set<String> obreirosPorta;
@@ -21,6 +22,14 @@ public class Censo {
     private String obreiroPalavra;
     private Date data;
     private Object id;
+
+    public int getQtdAdolescentes() {
+        return qtdAdolescentes;
+    }
+
+    public void setQtdAdolescentes(int qtdAdolescentes) {
+        this.qtdAdolescentes = qtdAdolescentes;
+    }
 
     public int getQtdJovens() {
         return qtdJovens;
@@ -135,5 +144,24 @@ public class Censo {
         int result = getData().hashCode();
         result = 31 * result + getId().hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Censo{" +
+                "qtdJovens=" + qtdJovens +
+                ", qtdCriancas=" + qtdCriancas +
+                ", qtdVisitantes=" + qtdVisitantes +
+                ", qtdSenhoras=" + qtdSenhoras +
+                ", qtdVaroes=" + qtdVaroes +
+                ", qtdAdolescentes=" + qtdAdolescentes +
+                ", totalPessoas=" + totalPessoas +
+                ", dom='" + dom + '\'' +
+                ", obreirosPorta=" + obreirosPorta +
+                ", obreiroLouvor='" + obreiroLouvor + '\'' +
+                ", obreiroPalavra='" + obreiroPalavra + '\'' +
+                ", data=" + data +
+                ", id=" + id +
+                '}';
     }
 }
