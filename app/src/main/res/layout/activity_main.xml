@@ -11,7 +11,7 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="80dp">
+        android:layout_margin="30dp">
 
 
         <Button
@@ -91,5 +91,25 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/sairButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:layout_row="4"
+            android:layout_rowWeight="1"
+            android:background="@android:color/holo_blue_light"
+            android:drawableLeft="@drawable/close_icon48dp"
+            android:drawableStart="@drawable/close_icon48dp"
+            android:gravity="fill"
+            android:text="Sair"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="20dp" />
+
     </GridLayout>
 </RelativeLayout>

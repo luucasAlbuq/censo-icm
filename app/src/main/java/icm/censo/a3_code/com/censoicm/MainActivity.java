@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,8 +31,9 @@ import util.MetodoPesquisa;
 
 public class MainActivity extends AppCompatActivity {
 
-    private  Button cadastrarButton, pesquisarMenuButton, compararButton, relatorioButton;
+    private  Button cadastrarButton, pesquisarMenuButton, compararButton, relatorioButton, sairButton;
     private final Calendar calendario = Calendar.getInstance();
+    private FirebaseAuth auth;
 
     //Prepara o calendario
     private DatePickerDialog.OnDateSetListener preparaCalendario(final TextView dataTextView){
@@ -130,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
 
         //Chamando a tela de cadastro quando clicar na opcao de cadastro
         cadastrarButton  = (Button) findViewById(R.id.cadastrarButton);
@@ -165,6 +169,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 preparaPesquisaPopup();
+            }
+        });
+
+        //Deslogar
+        sairButton = (Button) findViewById(R.id.sairButton);
+        sairButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
             }
         });
     }
