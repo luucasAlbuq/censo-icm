@@ -21,6 +21,13 @@ public interface CensoDAO extends BasicOperations {
     public Set<Censo> getCensoFromTo(Date datInicio, Date dataFim);
 
     /**
+     * Recupera o censo feito em um dia específico
+     * @param data
+     * @return Censo
+     */
+    public Censo getCensoByData(Date data);
+
+    /**
      * Recupera todos os @{@link Censo} de um mes
      * @param int mes
      * @return Set<Censo> colecao de objectos

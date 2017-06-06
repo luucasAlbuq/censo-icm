@@ -1,8 +1,12 @@
 package model;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -20,11 +24,32 @@ public class Censo {
     private int qtdAdolescentes;
     private int totalPessoas;
     private String dom;
-    private Set<String> obreirosPorta;
+    private List<String> obreirosPorta;
     private String obreiroLouvor;
     private String obreiroPalavra;
     private Date data;
-    private Object id;
+    private String id;
+
+    public Censo() {};
+
+
+    public Censo(int qtdJovens, int qtdCriancas, int qtdVisitantes, int qtdSenhoras, int qtdVaroes,
+                 int qtdAdolescentes, int totalPessoas, String dom, List<String> obreirosPorta,
+                 String obreiroLouvor, String obreiroPalavra, Date data, String id) {
+        this.qtdJovens = qtdJovens;
+        this.qtdCriancas = qtdCriancas;
+        this.qtdVisitantes = qtdVisitantes;
+        this.qtdSenhoras = qtdSenhoras;
+        this.qtdVaroes = qtdVaroes;
+        this.qtdAdolescentes = qtdAdolescentes;
+        this.totalPessoas = totalPessoas;
+        this.dom = dom;
+        this.obreirosPorta = obreirosPorta;
+        this.obreiroLouvor = obreiroLouvor;
+        this.obreiroPalavra = obreiroPalavra;
+        this.data = data;
+        this.id = id;
+    }
 
     public int getQtdAdolescentes() {
         return qtdAdolescentes;
@@ -90,11 +115,11 @@ public class Censo {
         this.dom = dom;
     }
 
-    public Set<String> getObreirosPorta() {
+    public List<String> getObreirosPorta() {
         return obreirosPorta;
     }
 
-    public void setObreirosPorta(Set<String> obreirosPorta) {
+    public void setObreirosPorta(List<String> obreirosPorta) {
         this.obreirosPorta = obreirosPorta;
     }
 
@@ -122,11 +147,11 @@ public class Censo {
         this.data = data;
     }
 
-    public Object getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Object id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -166,5 +191,12 @@ public class Censo {
                 ", data=" + data +
                 ", id=" + id +
                 '}';
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        return result;
     }
 }

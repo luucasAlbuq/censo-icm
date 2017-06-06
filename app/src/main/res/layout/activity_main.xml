@@ -33,6 +33,7 @@
             android:text="Cadastrar"
             android:textAlignment="center"
             android:textAllCaps="false"
+            android:textColor="@android:color/white"
             android:textSize="20dp" />
 
         <Button
@@ -52,7 +53,8 @@
             android:text="Pesquisar"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/compararButton"
@@ -71,7 +73,8 @@
             android:text="Comparar Frequência"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/relatorioButton"
@@ -90,7 +93,8 @@
             android:text="Gerar Relatório"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/sairButton"
@@ -109,7 +113,8 @@
             android:text="Sair"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@android:color/white"/>
 
     </GridLayout>
 </RelativeLayout>
