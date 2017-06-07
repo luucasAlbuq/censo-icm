@@ -12,7 +12,7 @@ public class CensoValidatorImpl implements CensoValidator {
 
     //Verifica se uma string possui apenas letras
     private boolean isAlpth(String name){
-        return name.matches("[a-zA-Z]+");
+        return name.trim().matches("[a-zA-Z]+");
     }
 
     @Override
@@ -33,7 +33,9 @@ public class CensoValidatorImpl implements CensoValidator {
         }
 
         for(String porta: censo.getObreirosPorta()){
-            if(!isAlpth(porta)) return false;
+            if(!isAlpth(porta)){
+                return false;
+            }
         }
 
         return isValid;

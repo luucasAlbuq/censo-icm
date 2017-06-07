@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import controller.CensoController;
-import dao.CensoDAO;
 import dao.CensoDAOImpl;
 import model.Censo;
 
@@ -47,7 +46,7 @@ public class CadastroActivity extends AppCompatActivity {
     //Campos de frequencia
     private EditText varoesField, senhorasField, jovensField, adolescentesField, criancasField, visitantesField;
     //Campos de informacoes textuais
-    private EditText portaField, palavraField, louvorField, domField;
+    private EditText portaField, palavraField, louvorField, domField, louvoresField, textoBiblicoField;
 
     private Button botaoSalvar, botaoCancelar;
 
@@ -210,13 +209,17 @@ public class CadastroActivity extends AppCompatActivity {
 
         String palavra = palavraField.getText().toString();
         String louvor = louvorField.getText().toString();
+        String textoBiblico = textoBiblicoField.getText().toString();
         String dom = domField.getText().toString();
-        String[] porta = portaField.getText().toString().split(" ");
+        String[] porta = portaField.getText().toString().split(",");
+        String[] louvores = louvoresField.getText().toString().trim().split(",");
 
         censo.setObreiroPalavra(palavra);
         censo.setObreiroLouvor(louvor);
         censo.setDom(dom);
         censo.setObreirosPorta(Arrays.asList(porta));
+        censo.setLouvores(Arrays.asList(louvores));
+        censo.setTextoBiblico(textoBiblico);
 
         if (dataCadastro == null) {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -302,7 +305,6 @@ public class CadastroActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
@@ -322,6 +324,8 @@ public class CadastroActivity extends AppCompatActivity {
         portaField = (EditText) findViewById(R.id.porta);
         palavraField = (EditText) findViewById(R.id.palavra);
         louvorField = (EditText) findViewById(R.id.louvor);
+        louvoresField = (EditText) findViewById(R.id.louvores);
+        textoBiblicoField = (EditText) findViewById(R.id.textoBiblico);
         domField = (EditText) findViewById(R.id.dom);
         botaoSalvar = (Button) findViewById(R.id.salvarCadastro);
         botaoCancelar = (Button) findViewById(R.id.cancelarCadastro);

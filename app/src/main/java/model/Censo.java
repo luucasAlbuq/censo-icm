@@ -29,13 +29,16 @@ public class Censo {
     private String obreiroPalavra;
     private Date data;
     private String id;
+    private String textoBiblico;
+    private List<String> louvores;
 
     public Censo() {};
 
 
     public Censo(int qtdJovens, int qtdCriancas, int qtdVisitantes, int qtdSenhoras, int qtdVaroes,
                  int qtdAdolescentes, int totalPessoas, String dom, List<String> obreirosPorta,
-                 String obreiroLouvor, String obreiroPalavra, Date data, String id) {
+                 String obreiroLouvor, String obreiroPalavra, Date data, String id, String textoBiblico,
+                 List<String> louvores) {
         this.qtdJovens = qtdJovens;
         this.qtdCriancas = qtdCriancas;
         this.qtdVisitantes = qtdVisitantes;
@@ -49,6 +52,24 @@ public class Censo {
         this.obreiroPalavra = obreiroPalavra;
         this.data = data;
         this.id = id;
+        this.textoBiblico = textoBiblico;
+        this.louvores = louvores;
+    }
+
+    public String getTextoBiblico() {
+        return textoBiblico;
+    }
+
+    public void setTextoBiblico(String textoBiblico) {
+        this.textoBiblico = textoBiblico;
+    }
+
+    public List<String> getLouvores() {
+        return louvores;
+    }
+
+    public void setLouvores(List<String> louvores) {
+        this.louvores = louvores;
     }
 
     public int getQtdAdolescentes() {
@@ -189,7 +210,9 @@ public class Censo {
                 ", obreiroLouvor='" + obreiroLouvor + '\'' +
                 ", obreiroPalavra='" + obreiroPalavra + '\'' +
                 ", data=" + data +
-                ", id=" + id +
+                ", id='" + id + '\'' +
+                ", textoBiblico='" + textoBiblico + '\'' +
+                ", louvores=" + louvores +
                 '}';
     }
 
