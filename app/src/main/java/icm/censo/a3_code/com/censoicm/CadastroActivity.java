@@ -3,6 +3,7 @@ package icm.censo.a3_code.com.censoicm;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,23 +12,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Locale;
 
+import controller.CensoController;
+import dao.CensoDAOImpl;
 import model.Censo;
 
 public class CadastroActivity extends AppCompatActivity {
 
+    private CensoController controller = new CensoController();
+
     private int varoesValue, senhorasValue, jovensValue, adolescentesValue, criancasValue, visitantesValue, totalValue;
     private TextView totalTextView, dataTextView;
+    private ProgressBar progressBar;
 
     //Variaveis referentes a data
     private Date dataCadastro;
@@ -37,7 +46,7 @@ public class CadastroActivity extends AppCompatActivity {
     //Campos de frequencia
     private EditText varoesField, senhorasField, jovensField, adolescentesField, criancasField, visitantesField;
     //Campos de informacoes textuais
-    private EditText portaField, palavraField, louvorField, domField;
+    private EditText portaField, palavraField, louvorField, domField, louvoresField, textoBiblicoField;
 
     private Button botaoSalvar, botaoCancelar;
 
@@ -45,130 +54,149 @@ public class CadastroActivity extends AppCompatActivity {
      * Carrega os valores dos campos editText para as variaveis correspondentes.
      */
     private void carregaFrequencia() {
-        try{
-            if(!varoesField.getText().toString().isEmpty()){
+        try {
+            if (!varoesField.getText().toString().isEmpty()) {
                 varoesValue = Integer.parseInt(varoesField.getText().toString());
-            }if(!senhorasField.getText().toString().isEmpty()){
+            }
+            if (!senhorasField.getText().toString().isEmpty()) {
                 senhorasValue = Integer.parseInt(senhorasField.getText().toString());
-            }if(!jovensField.getText().toString().isEmpty()){
+            }
+            if (!jovensField.getText().toString().isEmpty()) {
                 jovensValue = Integer.parseInt(jovensField.getText().toString());
-            }if(!adolescentesField.getText().toString().isEmpty()){
+            }
+            if (!adolescentesField.getText().toString().isEmpty()) {
                 adolescentesValue = Integer.parseInt(adolescentesField.getText().toString());
-            }if(!criancasField.getText().toString().isEmpty()){
+            }
+            if (!criancasField.getText().toString().isEmpty()) {
                 criancasValue = Integer.parseInt(criancasField.getText().toString());
-            }if(!visitantesField.getText().toString().isEmpty()){
+            }
+            if (!visitantesField.getText().toString().isEmpty()) {
                 visitantesValue = Integer.parseInt(visitantesField.getText().toString());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Dados inválidos", Toast.LENGTH_SHORT).show();
-            Log.e("formValues",e.getMessage());
+            Log.e("formValues", e.getMessage());
         }
     }
 
     /**
      * Calcula o total de pessoas
+     *
      * @return total de pessoas
      */
     private int calcularTotal() {
-        totalValue =  varoesValue + senhorasValue + jovensValue + adolescentesValue + criancasValue + visitantesValue;
+        totalValue = varoesValue + senhorasValue + jovensValue + adolescentesValue + criancasValue + visitantesValue;
         return totalValue;
     }
 
     /**
      * Adiciona evento de onChange aos campos de frequencia para atualizar o total dinamicamente
      */
-    private void addTextChangedListener(){
+    private void addTextChangedListener() {
         varoesField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 carregaFrequencia();
                 calcularTotal();
-                totalTextView.setText("Total: "+totalValue);
+                totalTextView.setText("Total: " + totalValue);
             }
         });
         senhorasField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 carregaFrequencia();
                 calcularTotal();
-                totalTextView.setText("Total: "+totalValue);
+                totalTextView.setText("Total: " + totalValue);
             }
         });
         jovensField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 carregaFrequencia();
                 calcularTotal();
-                totalTextView.setText("Total: "+totalValue);
+                totalTextView.setText("Total: " + totalValue);
             }
         });
         adolescentesField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 carregaFrequencia();
                 calcularTotal();
-                totalTextView.setText("Total: "+totalValue);
+                totalTextView.setText("Total: " + totalValue);
             }
         });
         criancasField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 carregaFrequencia();
                 calcularTotal();
-                totalTextView.setText("Total: "+totalValue);
+                totalTextView.setText("Total: " + totalValue);
             }
         });
         visitantesField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 carregaFrequencia();
                 calcularTotal();
-                totalTextView.setText("Total: "+totalValue);
+                totalTextView.setText("Total: " + totalValue);
             }
         });
     }
 
     /**
      * Constroi o objecto censo para ser persistido
+     *
      * @return
      */
-    private Censo buildCenso(){
+    private Censo buildCenso() {
         Censo censo = new Censo();
 
         censo.setQtdVaroes(varoesValue);
@@ -181,17 +209,22 @@ public class CadastroActivity extends AppCompatActivity {
 
         String palavra = palavraField.getText().toString();
         String louvor = louvorField.getText().toString();
-        String dom  = domField.getText().toString();
-        String[] porta = portaField.getText().toString().split(" ");
+        String textoBiblico = textoBiblicoField.getText().toString();
+        String dom = domField.getText().toString();
+        String[] porta = portaField.getText().toString().split(",");
+        String[] louvores = louvoresField.getText().toString().trim().split(",");
 
         censo.setObreiroPalavra(palavra);
         censo.setObreiroLouvor(louvor);
-        censo.setObreirosPorta(new HashSet<String>(Arrays.asList(porta)));
+        censo.setDom(dom);
+        censo.setObreirosPorta(Arrays.asList(porta));
+        censo.setLouvores(Arrays.asList(louvores));
+        censo.setTextoBiblico(textoBiblico);
 
-        if(dataCadastro == null){
+        if (dataCadastro == null) {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             censo.setData(new Date());
-        }else{
+        } else {
             censo.setData(dataCadastro);
         }
 
@@ -200,29 +233,32 @@ public class CadastroActivity extends AppCompatActivity {
 
     /**
      * Verifica se todos os campos obrigatorios foram preenchidos
+     *
      * @return boolean
      */
-    private boolean verificaCamposObrigatorios(){
+    private boolean verificaCamposObrigatorios() {
         boolean valido = true;
 
-        if(palavraField.getText().toString().isEmpty()){
+        if (palavraField.getText().toString().isEmpty()) {
             palavraField.setHintTextColor(Color.RED);
             valido = false;
-        }if(louvorField.getText().toString().isEmpty()){
+        }
+        if (louvorField.getText().toString().isEmpty()) {
             louvorField.setHintTextColor(Color.RED);
             valido = false;
-        }if(totalValue <= 0){
+        }
+        if (totalValue <= 0) {
             totalTextView.setTextColor(Color.RED);
             valido = false;
         }
 
-        return  valido;
+        return valido;
     }
 
     /***
      * Prepara o calendario
      */
-    private void preparaCalendario(){
+    private void preparaCalendario() {
         final Calendar calendario = Calendar.getInstance();
 
         data = new DatePickerDialog.OnDateSetListener() {
@@ -233,11 +269,42 @@ public class CadastroActivity extends AppCompatActivity {
                 calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                 dataCadastro = calendario.getTime();
-                Locale BRAZIL = new Locale("pt","BR");
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy",BRAZIL);
-                dataTextView.setText("Data: "+sdf.format(calendario.getTime()));
+                Locale BRAZIL = new Locale("pt", "BR");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", BRAZIL);
+                dataTextView.setText("Data: " + sdf.format(calendario.getTime()));
             }
         };
+    }
+
+    private void salvarCadastro() {
+        try {
+            if (verificaCamposObrigatorios()) {
+                Censo censo = buildCenso();
+                controller.cadastrar(censo);
+                Task saveTask = CensoDAOImpl.task;
+                if (saveTask == null) {
+                    Toast.makeText(getApplicationContext(), "Ocorreu um erro!", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    saveTask.addOnCompleteListener(CadastroActivity.this, new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Dados Salvos!", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Ocorreu um erro!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+
+            } else {
+                Toast.makeText(getApplicationContext(), "Preencha os campos obrigatórios", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -257,9 +324,12 @@ public class CadastroActivity extends AppCompatActivity {
         portaField = (EditText) findViewById(R.id.porta);
         palavraField = (EditText) findViewById(R.id.palavra);
         louvorField = (EditText) findViewById(R.id.louvor);
+        louvoresField = (EditText) findViewById(R.id.louvores);
+        textoBiblicoField = (EditText) findViewById(R.id.textoBiblico);
         domField = (EditText) findViewById(R.id.dom);
         botaoSalvar = (Button) findViewById(R.id.salvarCadastro);
         botaoCancelar = (Button) findViewById(R.id.cancelarCadastro);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarCadastro);
 
         addTextChangedListener();
 
@@ -270,7 +340,7 @@ public class CadastroActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(CadastroActivity.this, data, calendario
                         .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
                         calendario.get(Calendar.DAY_OF_MONTH));
-                Locale.setDefault(new Locale("pt","BR"));
+                Locale.setDefault(new Locale("pt", "BR"));
                 datePickerDialog.show();
             }
 
@@ -279,13 +349,9 @@ public class CadastroActivity extends AppCompatActivity {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(verificaCamposObrigatorios()){
-                    buildCenso();
-                    Toast.makeText(getApplicationContext(), "Dados Salvos", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Preencha os campos obrigatórios", Toast.LENGTH_SHORT).show();
-                }
+                progressBar.setVisibility(View.VISIBLE);
+                salvarCadastro();
+                progressBar.setVisibility(View.GONE);
             }
         });
 

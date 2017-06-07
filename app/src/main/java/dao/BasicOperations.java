@@ -9,9 +9,9 @@ package dao;
 public interface BasicOperations {
 
     /* Basic crud */
-    public <T> void save( T object);
-    public <T> T update( T object, T objectId);
-    public <T> boolean delete( T object);
-    public <T> T read( T objectId);
+    public <T> boolean save( T object);
+    public <T> boolean update( T object, T objectId);
+    public <T> boolean delete( T objectId);
+    public <T> Object read( T objectId);
 
 }

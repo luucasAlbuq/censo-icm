@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,15 +18,21 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
 import util.MetodoPesquisa;
 
 public class MainActivity extends AppCompatActivity {
 
-    private  Button cadastrarButton, pesquisarMenuButton, compararButton, relatorioButton;
+    private  Button cadastrarButton, pesquisarMenuButton, compararButton, relatorioButton, sairButton;
     private final Calendar calendario = Calendar.getInstance();
+    private FirebaseAuth auth;
 
     //Prepara o calendario
     private DatePickerDialog.OnDateSetListener preparaCalendario(final TextView dataTextView){
@@ -125,6 +132,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+        // Esse listener vai ser chamando quando houver uma mudanca na cessao do usuario no firebase
+        FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
+
         //Chamando a tela de cadastro quando clicar na opcao de cadastro
         cadastrarButton  = (Button) findViewById(R.id.cadastrarButton);
         cadastrarButton.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +182,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 preparaPesquisaPopup();
+            }
+        });
+
+        //Deslogar
+        sairButton = (Button) findViewById(R.id.sairButton);
+        sairButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
             }
         });
     }
