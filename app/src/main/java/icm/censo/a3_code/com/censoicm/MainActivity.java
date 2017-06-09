@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
                 calendario.set(Calendar.YEAR, year);
                 calendario.set(Calendar.MONTH, month);
                 calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                calendario.clear(Calendar.HOUR_OF_DAY);
+                calendario.clear(Calendar.AM_PM);
+                calendario.clear(Calendar.MINUTE);
+                calendario.clear(Calendar.HOUR);
+                calendario.clear(Calendar.MILLISECOND);
+                calendario.clear(Calendar.SECOND);
 
                 Locale BRAZIL = new Locale("pt", "BR");
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", BRAZIL);

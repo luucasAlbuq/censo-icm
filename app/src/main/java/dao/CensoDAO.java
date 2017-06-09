@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import model.Censo;
@@ -16,28 +17,28 @@ public interface CensoDAO extends BasicOperations {
      *
      * @param Date datInicio
      * @param Date dataFim
-     * @return Set<Censo> colecao de objectos
+     * @return List<Censo> colecao de objectos
      */
-    public Set<Censo> getCensoFromTo(Date datInicio, Date dataFim);
+    public List<Censo> getCensoFromTo(Date datInicio, Date dataFim);
 
     /**
      * Recupera o censo feito em um dia específico
      * @param data
      * @return Censo
      */
-    public Censo getCensoByData(Date data);
+    public List<Censo> getCensoByData(Date data);
 
     /**
      * Recupera todos os @{@link Censo} de um mes
      * @param int mes
-     * @return Set<Censo> colecao de objectos
+     * @return List<Censo> colecao de objectos
      */
-    public Set<Censo> getCensoMes(int mes);
+    public List<Censo> getCensoMes(int mes);
 
     /**
      * Recupera todos os @{@link Censo} de um ano
      * @param int ano
-     * @return Set<Censo> colecao de objectos
+     * @return List<Censo> colecao de objectos
      */
-    public Set<Censo> getCensoAno(int ano);
+    public List<Censo> getCensoAno(int ano);
 }

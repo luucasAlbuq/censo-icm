@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -216,10 +217,15 @@ public class CadastroActivity extends AppCompatActivity {
         censo.setLouvores(Arrays.asList(louvores));
         censo.setTextoBiblico(textoBiblico);
 
-        if (dataCadastro == null) {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            censo.setData(new Date());
-        } else {
+        calendario.clear(Calendar.HOUR_OF_DAY);
+        calendario.clear(Calendar.AM_PM);
+        calendario.clear(Calendar.MINUTE);
+        calendario.clear(Calendar.HOUR);
+        calendario.clear(Calendar.MILLISECOND);
+        calendario.clear(Calendar.SECOND);
+        if (dataCadastro == null){
+            censo.setData(calendario.getTime());
+        }else{
             censo.setData(dataCadastro);
         }
 
@@ -246,7 +252,6 @@ public class CadastroActivity extends AppCompatActivity {
             totalTextView.setTextColor(Color.RED);
             valido = false;
         }
-
         return valido;
     }
 
@@ -262,6 +267,12 @@ public class CadastroActivity extends AppCompatActivity {
                 calendario.set(Calendar.YEAR, year);
                 calendario.set(Calendar.MONTH, month);
                 calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                calendario.clear(Calendar.HOUR_OF_DAY);
+                calendario.clear(Calendar.AM_PM);
+                calendario.clear(Calendar.MINUTE);
+                calendario.clear(Calendar.HOUR);
+                calendario.clear(Calendar.MILLISECOND);
+                calendario.clear(Calendar.SECOND);
 
                 dataCadastro = calendario.getTime();
                 Locale BRAZIL = new Locale("pt", "BR");
