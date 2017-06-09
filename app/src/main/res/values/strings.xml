@@ -108,4 +108,21 @@
     <string name="parse_app_id">IoKiBX4HFAZQYVDAkhIMb0WeeZV7DuIQUTGyZkPY</string>
     <string name="parse_client_key">9fu8pfEgKLNOzVI1cJmkbw38a0smb7y9RGO32OJi</string>
 
+    <!-- Esquema DB -->
+    <string name="db_table_name">censo</string>
+    <string name="db_col_jovens">qtd_jovens</string>
+    <string name="db_col_criancas">qtd_criancas</string>
+    <string name="db_col_visitantes">qtd_visitantes</string>
+    <string name="db_col_varoes">qtd_varoes</string>
+    <string name="db_col_adolescentes">qtd_adolescentes</string>
+    <string name="db_col_total">qtd_total</string>
+    <string name="db_col_dom">dom</string>
+    <string name="db_col_obreiro_louvor">obreiro_louvor</string>
+    <string name="db_col_obreiro_palavra">obreiro_palavra</string>
+    <string name="db_col_texto_biblico">texto_biblico</string>
+    <string name="db_col_data">data</string>
+    <string name="db_col_obreiros_porta">obreiros_porta</string>
+    <string name="db_col_louvores">louvores</string>
+    <string name="db_col_nome_igreja">nome_igreja</string>
+
 </resources>
