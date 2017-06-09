@@ -46,8 +46,15 @@ public class CensoServiceImpl implements CensoService {
     }
 
     @Override
-    public Censo getCensoByData(Date data) {
-        return null;
+    public Censo getCensoByData(Date data) throws Exception {
+        Censo censo = null;
+        try{
+            censo = censoDAO.getCensoByData(data);
+        }catch (Exception e){
+            Log.e("Controller:",e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+        return censo;
     }
 
     @Override

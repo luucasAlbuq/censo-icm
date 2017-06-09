@@ -87,5 +87,25 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="erro_generico">Desculpe ocorreu um erro.</string>
     <string name="auth_failed">Não foi possível realizar o login,verifique seu email e sua senha.</string>
+    <string name="title_activity_relatorio_dia">RelatorioDiaActivity</string>
+    <string name="relatorio_obreiro_louvor">Obreiro no louvor</string>
+    <string name="relatorio_obreiro_palavra">Obreiro na palavra</string>
+    <string name="relatorio_obreiro_porta">Obreiros na porta</string>
+    <string name="relatorio_dom">Dom</string>
+    <string name="relatorio_louvores">Louvores</string>
+    <string name="relatorio_texto_biblico">Texto Bíblico</string>
+    <string name="relatorio_data">Data</string>
+    <string name="relatorio_frequencia">Frequência</string>
+    <string name="title_activity_novo_relatorio_dia">NovoRelatorioDiaActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- Parse -->
+    <string name="parse_server_url">https://parseapi.back4app.com/</string>
+    <string name="parse_app_id">IoKiBX4HFAZQYVDAkhIMb0WeeZV7DuIQUTGyZkPY</string>
+    <string name="parse_client_key">9fu8pfEgKLNOzVI1cJmkbw38a0smb7y9RGO32OJi</string>
+
 </resources>

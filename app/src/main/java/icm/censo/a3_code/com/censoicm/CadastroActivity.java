@@ -3,7 +3,6 @@ package icm.censo.a3_code.com.censoicm;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,9 +15,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -27,7 +23,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import controller.CensoController;
-import dao.CensoDAOImpl;
 import model.Censo;
 
 public class CadastroActivity extends AppCompatActivity {
@@ -280,23 +275,12 @@ public class CadastroActivity extends AppCompatActivity {
         try {
             if (verificaCamposObrigatorios()) {
                 Censo censo = buildCenso();
-                controller.cadastrar(censo);
-                Task saveTask = CensoDAOImpl.task;
-                if (saveTask == null) {
-                    Toast.makeText(getApplicationContext(), "Ocorreu um erro!", Toast.LENGTH_SHORT).show();
+                boolean isSaved = controller.cadastrar(censo);
+                if (isSaved) {
+                    Toast.makeText(getApplicationContext(), "Dados Salvos!", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    saveTask.addOnCompleteListener(CadastroActivity.this, new OnCompleteListener() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Dados Salvos!", Toast.LENGTH_SHORT).show();
-                                finish();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Ocorreu um erro!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    Toast.makeText(getApplicationContext(), "Ocorreu um erro!", Toast.LENGTH_SHORT).show();
                 }
 
             } else {
