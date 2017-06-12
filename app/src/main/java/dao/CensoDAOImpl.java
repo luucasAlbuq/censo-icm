@@ -39,6 +39,12 @@ public class CensoDAOImpl implements CensoDAO {
         object.put(DBEsquema.COL_NOME_IGREJA.getValor(), "icm-azenha");
         object.put(DBEsquema.COL_USER.getValor(),ParseUser.getCurrentUser().getUsername());
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(censo.getData());
+        object.put(DBEsquema.COL_DIA.getValor(),Calendar.DAY_OF_MONTH);
+        object.put(DBEsquema.COL_MES.getValor(),Calendar.MONTH);
+        object.put(DBEsquema.COL_ANO.getValor(),Calendar.YEAR);
+
         object.put(DBEsquema.COL_DATA.getValor(), censo.getData());
         object.put(DBEsquema.COL_QTD_JOVENS.getValor(), censo.getQtdJovens());
         object.put(DBEsquema.COL_QTD_ADOLESCENTES.getValor(), censo.getQtdAdolescentes());

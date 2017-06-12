@@ -6,6 +6,9 @@ package util;
 public enum DBEsquema {
     TABLE("censo"),
     COL_USER("usuario"),
+    COL_DIA("dia"),
+    COL_MES("mes"),
+    COL_ANO("ano"),
     COL_QTD_JOVENS("qtd_jovens"),
     COL_QTD_CRIANCAS("qtd_criancas"),
     COL_QTD_VISITANTES("qtd_visitantes"),
