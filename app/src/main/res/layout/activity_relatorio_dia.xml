@@ -2,30 +2,32 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relatorio_dia_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="visible"
     tools:context="icm.censo.a3_code.com.censoicm.RelatorioDiaActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/relatorio_secessao_frequencia"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/holo_blue_light"
+            android:gravity="center"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
             android:paddingTop="5dp"
-            android:textStyle="bold"
             android:text="Frequência"
-            android:visibility="visible"
-            android:gravity="center"
+            android:textColor="@android:color/white"
             android:textSize="15dp"
-            android:textColor="@android:color/white"/>
+            android:textStyle="bold"
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,32 +40,32 @@
                 android:id="@+id/relatorio_graf_dia"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center"/>
+                android:layout_marginTop="15dp" />
 
             <TextView
                 android:id="@+id/relatorio_secessao_obreiros"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_blue_light"
+                android:gravity="center"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
                 android:paddingTop="5dp"
-                android:textStyle="bold"
                 android:text="Obreiros"
-                android:visibility="visible"
-                android:gravity="center"
+                android:textColor="@android:color/white"
                 android:textSize="15dp"
-                android:textColor="@android:color/white"/>
+                android:textStyle="bold"
+                android:visibility="visible" />
 
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/relatorio_obreiro_louvor"
@@ -168,20 +170,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_blue_light"
+                android:gravity="center"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
                 android:paddingTop="5dp"
-                android:textStyle="bold"
                 android:text="Informações do Culto"
-                android:visibility="visible"
-                android:gravity="center"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:visibility="visible" />
 
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/relatorio_data"
@@ -314,40 +316,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:layout_margin="5dp"
             android:layout_marginTop="15dp"
-            android:layout_margin="5dp">
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/salvarRelatorioDia"
+                android:id="@+id/baixarRelatorioDia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:background="@android:color/holo_blue_light"
+                android:drawableLeft="@drawable/download_icon30dp"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/download_icon30dp"
                 android:text="Baixar"
                 android:textAllCaps="false"
                 android:textColor="@android:color/background_light"
-                android:drawableLeft="@drawable/download_icon30dp"
-                android:drawableStart="@drawable/download_icon30dp"
-                android:drawablePadding="5dp"
                 android:textSize="17dp" />
 
             <Button
                 android:id="@+id/compartilharRelatorioDia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:background="@android:color/holo_green_dark"
+                android:drawableLeft="@drawable/share_icon30dp"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/share_icon30dp"
                 android:text="Compartilhar"
                 android:textAllCaps="false"
                 android:textColor="@android:color/background_light"
-                android:drawableLeft="@drawable/share_icon30dp"
-                android:drawableStart="@drawable/share_icon30dp"
-                android:drawablePadding="5dp"
                 android:textSize="17dp" />
 
         </LinearLayout>

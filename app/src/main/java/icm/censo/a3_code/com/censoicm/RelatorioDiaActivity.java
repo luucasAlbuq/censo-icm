@@ -1,20 +1,20 @@
 package icm.censo.a3_code.com.censoicm;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -25,11 +25,15 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import controller.CensoController;
 import model.Censo;
@@ -61,7 +65,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 if(mChart.isSaveEnabled()){
-                    mChart.saveToGallery("censo_icm.jpg", 85); // 85 is the quality of the image
+                    mChart.saveToGallery("censo_icm"+ Calendar.getInstance().getTimeInMillis()+".jpg", 85); // 85 is the quality of the image
                     Toast.makeText(getApplicationContext(), "Gráfico Salvo", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -110,6 +114,43 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         pieChart.invalidate();
     }
 
+    private void takeScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            String mPath = Environment.getExternalStorageDirectory().toString()+"/"+ Environment.DIRECTORY_DCIM.toString()+"/"+ now + ".jpg";
+            Log.i("PATH",mPath);
+            // create bitmap screen capture
+//            View v1 = getWindow().getDecorView().getRootView();
+//            v1.setDrawingCacheEnabled(true);
+//            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+//            v1.setDrawingCacheEnabled(false);
+
+            ScrollView view = (ScrollView) findViewById(R.id.relatorio_dia_id);
+            Bitmap bitmap = Bitmap.createBitmap(
+                    view.getChildAt(0).getWidth(),
+                    view.getChildAt(0).getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(bitmap);
+            view.getChildAt(0).draw(c);
+
+
+            File imageFile = new File(mPath);
+
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 100;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            outputStream.flush();
+            outputStream.close();
+            Toast.makeText(getApplicationContext(), "Relatório salvo em suas imagens.", Toast.LENGTH_SHORT).show();
+        } catch (Throwable e) {
+            // Several error may come out with file handling or OOM
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),getString(R.string.erro_generico), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +164,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         TextView dom = (TextView) findViewById(R.id.relatorio_dom_resposta);
         TextView louvores = (TextView) findViewById(R.id.relatorio_louvores_resposta);
         TextView textoBiblico = (TextView) findViewById(R.id.relatorio_texto_biblico_resposta);
+        Button baixar = (Button) findViewById(R.id.baixarRelatorioDia);
 
         List<Censo> lista = null;
         try {
@@ -156,5 +198,11 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         }
 
 
+        baixar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeScreenshot();
+            }
+        });
     }
 }
