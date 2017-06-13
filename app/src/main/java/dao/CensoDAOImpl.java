@@ -1,30 +1,21 @@
 package dao;
 
-import android.app.ActivityManager;
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.Transaction;
-import com.google.firebase.database.ValueEventListener;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import icm.censo.a3_code.com.censoicm.CadastroActivity;
-import icm.censo.a3_code.com.censoicm.MainActivity;
 import model.Censo;
+import util.DBEsquema;
 
 /**
  * Implementa as assinaturas para manipulacao de objetos @{@link Censo}
@@ -34,123 +25,136 @@ import model.Censo;
 public class CensoDAOImpl implements CensoDAO {
 
     private static CensoDAO censoDAO;
-    private static FirebaseDatabase firebaseDatabase;
-    private static DatabaseReference db;
-    public static Task task;
-
-
+    private Calendar calendario = Calendar.getInstance();
     private CensoDAOImpl(){};
 
     public static synchronized CensoDAO getInstance() {
         if(censoDAO == null){
             censoDAO = new CensoDAOImpl();
-            db = getFirebaseDatabase().getReference("azenha");
         }
         return censoDAO;
     }
 
-    public static FirebaseDatabase getFirebaseDatabase(){
-        if(firebaseDatabase == null){
-            firebaseDatabase = FirebaseDatabase.getInstance();
-            firebaseDatabase.setPersistenceEnabled(true);
-        }
-        return firebaseDatabase;
+    private ParseObject buildParseObj(Censo censo){
+        ParseObject object = new ParseObject(DBEsquema.TABLE.getValor());
+        object.put(DBEsquema.COL_NOME_IGREJA.getValor(), "icm-azenha");
+        object.put(DBEsquema.COL_USER.getValor(),ParseUser.getCurrentUser().getUsername());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(censo.getData());
+        object.put(DBEsquema.COL_DIA.getValor(),Calendar.DAY_OF_MONTH);
+        object.put(DBEsquema.COL_MES.getValor(),Calendar.MONTH);
+        object.put(DBEsquema.COL_ANO.getValor(),Calendar.YEAR);
+
+        object.put(DBEsquema.COL_DATA.getValor(), censo.getData());
+        object.put(DBEsquema.COL_QTD_JOVENS.getValor(), censo.getQtdJovens());
+        object.put(DBEsquema.COL_QTD_ADOLESCENTES.getValor(), censo.getQtdAdolescentes());
+        object.put(DBEsquema.COL_QTD_CRIANCAS.getValor(), censo.getQtdCriancas());
+        object.put(DBEsquema.COL_QTD_VISITANTES.getValor(), censo.getQtdVisitantes());
+        object.put(DBEsquema.COL_QTD_SENHORAS.getValor(), censo.getQtdSenhoras());
+        object.put(DBEsquema.COL_QTD_VAROES.getValor(), censo.getQtdVaroes());
+        object.put(DBEsquema.COL_TOTAL.getValor(), censo.getTotalPessoas());
+        object.put(DBEsquema.COL_DOM.getValor(), censo.getDom());
+        object.put(DBEsquema.COL_TEXT_BIBLICO.getValor(), censo.getTextoBiblico());
+        object.put(DBEsquema.COL_LOUVORES.getValor(), censo.getLouvores());
+        object.put(DBEsquema.COL_OBRE_LOUVOR.getValor(), censo.getObreiroLouvor());
+        object.put(DBEsquema.COL_OBRE_PALAVRA.getValor(), censo.getObreiroPalavra());
+        object.put(DBEsquema.COL_OBRE_PORTA.getValor(), censo.getObreirosPorta());
+        return object;
     }
 
+    private Censo castToCenso(ParseObject obj){
+        Censo censo = null;
+        try{
+            censo = new Censo();
+            censo.setQtdAdolescentes(obj.getInt(DBEsquema.COL_QTD_ADOLESCENTES.getValor()));
+            censo.setQtdJovens(obj.getInt(DBEsquema.COL_QTD_JOVENS.getValor()));
+            censo.setQtdCriancas(obj.getInt(DBEsquema.COL_QTD_CRIANCAS.getValor()));
+            censo.setQtdSenhoras(obj.getInt(DBEsquema.COL_QTD_SENHORAS.getValor()));
+            censo.setQtdVaroes(obj.getInt(DBEsquema.COL_QTD_VAROES.getValor()));
+            censo.setQtdVisitantes(obj.getInt(DBEsquema.COL_QTD_VISITANTES.getValor()));
+            censo.setTotalPessoas(obj.getInt(DBEsquema.COL_TOTAL.getValor()));
+
+            censo.setDom(obj.getString(DBEsquema.COL_DOM.getValor()));
+            censo.setTextoBiblico(obj.getString(DBEsquema.COL_TEXT_BIBLICO.getValor()));
+            censo.setData(obj.getDate(DBEsquema.COL_DATA.getValor()));
+            censo.setLouvores((List<String>) obj.get(DBEsquema.COL_LOUVORES.getValor()));
+
+            censo.setObreirosPorta((List<String>) obj.get(DBEsquema.COL_OBRE_PORTA.getValor()));
+            censo.setObreiroPalavra(obj.getString(DBEsquema.COL_OBRE_PALAVRA.getValor()));
+            censo.setObreiroLouvor(obj.getString(DBEsquema.COL_OBRE_LOUVOR.getValor()));
+            censo.setId(obj.getString("objectId"));
+
+        }catch (Exception e){
+            Log.e("DB: cast: ",e.getMessage());
+        }
+        return censo;
+    }
 
     @Override
     public <T> boolean save(final T object) {
         boolean isSaved = false;
         try{
-            //Gerando Id
-            String censoId = db.push().getKey();
-            task = db.child(censoId).setValue(object);
-            isSaved = task.isSuccessful();
+            ParseObject censo = buildParseObj((Censo) object);
+            censo.save();
+            isSaved = true;
         }catch (Exception e){
             Log.e("DB: save: ",e.getMessage());
-        }finally {
-            return isSaved;
         }
+        return isSaved;
     }
 
     @Override
     public <T> boolean update(T object, T objectId) {
-        //Permite salvar dados offline
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        return db.child((String) objectId).setValue(object).isSuccessful();
+        return false;
     }
 
 
     @Override
     public <T> boolean delete(T objectId) {
-        //Permite salvar dados offline
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        return db.child((String) objectId).setValue(null).isSuccessful();
+        return false;
     }
 
     @Override
     public <T> Censo read(T objectId) {
-        final Censo[] censo = new Censo[1];
-        db.child((String) objectId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                censo[0] = dataSnapshot.getValue(Censo.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("DB: read: ",databaseError.getMessage());
-            }
-        });
-        return censo[0];
+        Censo censo = null;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
+        try {
+            censo = castToCenso(query.get((String) objectId));
+        } catch (ParseException e) {
+            Log.e("DB: read by id: ",e.getMessage());
+        }
+        return censo;
     }
 
     @Override
-    public Set<Censo> getCensoFromTo(Date dataInicio, Date dataFim) {
-        final Set<Censo> censoSet = new HashSet<>();
-        Query query = db.orderByChild("data").startAt(dataInicio.toString()).endAt(dataFim.toString());
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot data: dataSnapshot.getChildren()){
-                    Censo censo = data.getValue(Censo.class);
-                    censoSet.add(censo);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("DB: getCensoFromTo: ",databaseError.getMessage());
-            }
-        });
-        return censoSet;
-    }
-
-    @Override
-    public Censo getCensoByData(Date data) {
-        final Censo[] censo = new Censo[1];
-        Query query = db.orderByChild("data").equalTo(data.toString());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                censo[0] = dataSnapshot.getValue(Censo.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("DB: getCensoByData: ",databaseError.getMessage());
-            }
-        });
-        return censo[0];
-    }
-
-    @Override
-    public Set<Censo> getCensoMes(int mes) {
+    public List<Censo> getCensoFromTo(Date dataInicio, Date dataFim) {
         return null;
     }
 
     @Override
-    public Set<Censo> getCensoAno(int ano) {
+    public List<Censo> getCensoByData(Date data) {
+        List<Censo> lista = new ArrayList<Censo>();
+        try{
+            ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
+            query.whereEqualTo(DBEsquema.COL_DATA.getValor(), data);
+            for(ParseObject obj: query.find()){
+                lista.add(castToCenso(obj));
+            }
+        }catch (Exception e){
+            Log.e("DB: read by date: ",e.getMessage());
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Censo> getCensoMes(int mes) {
+        return null;
+    }
+
+    @Override
+    public List<Censo> getCensoAno(int ano) {
         return null;
     }
 }
+

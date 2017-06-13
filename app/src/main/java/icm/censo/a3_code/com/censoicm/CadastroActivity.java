@@ -3,7 +3,6 @@ package icm.censo.a3_code.com.censoicm;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,10 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -27,7 +24,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import controller.CensoController;
-import dao.CensoDAOImpl;
 import model.Censo;
 
 public class CadastroActivity extends AppCompatActivity {
@@ -221,10 +217,15 @@ public class CadastroActivity extends AppCompatActivity {
         censo.setLouvores(Arrays.asList(louvores));
         censo.setTextoBiblico(textoBiblico);
 
-        if (dataCadastro == null) {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            censo.setData(new Date());
-        } else {
+        calendario.clear(Calendar.HOUR_OF_DAY);
+        calendario.clear(Calendar.AM_PM);
+        calendario.clear(Calendar.MINUTE);
+        calendario.clear(Calendar.HOUR);
+        calendario.clear(Calendar.MILLISECOND);
+        calendario.clear(Calendar.SECOND);
+        if (dataCadastro == null){
+            censo.setData(calendario.getTime());
+        }else{
             censo.setData(dataCadastro);
         }
 
@@ -251,7 +252,6 @@ public class CadastroActivity extends AppCompatActivity {
             totalTextView.setTextColor(Color.RED);
             valido = false;
         }
-
         return valido;
     }
 
@@ -267,6 +267,12 @@ public class CadastroActivity extends AppCompatActivity {
                 calendario.set(Calendar.YEAR, year);
                 calendario.set(Calendar.MONTH, month);
                 calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                calendario.clear(Calendar.HOUR_OF_DAY);
+                calendario.clear(Calendar.AM_PM);
+                calendario.clear(Calendar.MINUTE);
+                calendario.clear(Calendar.HOUR);
+                calendario.clear(Calendar.MILLISECOND);
+                calendario.clear(Calendar.SECOND);
 
                 dataCadastro = calendario.getTime();
                 Locale BRAZIL = new Locale("pt", "BR");
@@ -280,23 +286,12 @@ public class CadastroActivity extends AppCompatActivity {
         try {
             if (verificaCamposObrigatorios()) {
                 Censo censo = buildCenso();
-                controller.cadastrar(censo);
-                Task saveTask = CensoDAOImpl.task;
-                if (saveTask == null) {
-                    Toast.makeText(getApplicationContext(), "Ocorreu um erro!", Toast.LENGTH_SHORT).show();
+                boolean isSaved = controller.cadastrar(censo);
+                if (isSaved) {
+                    Toast.makeText(getApplicationContext(), "Dados Salvos!", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    saveTask.addOnCompleteListener(CadastroActivity.this, new OnCompleteListener() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Dados Salvos!", Toast.LENGTH_SHORT).show();
-                                finish();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Ocorreu um erro!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    Toast.makeText(getApplicationContext(), "Ocorreu um erro!", Toast.LENGTH_SHORT).show();
                 }
 
             } else {

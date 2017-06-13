@@ -1,20 +1,16 @@
 package model;
 
-import com.google.firebase.database.Exclude;
-import com.google.firebase.database.IgnoreExtraProperties;
-
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Entidade que armazena dados sobre o censo de um culto
  * Created by luucasAlbuq on 30/05/2017.
  */
-@IgnoreExtraProperties
-public class Censo {
+public class Censo implements Serializable {
 
     private int qtdJovens;
     private int qtdCriancas;
@@ -216,7 +212,6 @@ public class Censo {
                 '}';
     }
 
-    @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("id", id);

@@ -1,41 +1,41 @@
 package icm.censo.a3_code.com.censoicm;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.parse.LogOutCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
+import controller.CensoController;
 import util.MetodoPesquisa;
 
 public class MainActivity extends AppCompatActivity {
 
-    private  Button cadastrarButton, pesquisarMenuButton, compararButton, relatorioButton, sairButton;
+    private Button cadastrarButton, pesquisarMenuButton, compararButton, relatorioButton, sairButton;
     private final Calendar calendario = Calendar.getInstance();
-    private FirebaseAuth auth;
+    private CensoController controller = new CensoController();
 
     //Prepara o calendario
-    private DatePickerDialog.OnDateSetListener preparaCalendario(final TextView dataTextView){
+    private DatePickerDialog.OnDateSetListener preparaCalendario(final TextView dataTextView) {
         final Calendar calendario = Calendar.getInstance();
 
         DatePickerDialog.OnDateSetListener data = new DatePickerDialog.OnDateSetListener() {
@@ -44,10 +44,16 @@ public class MainActivity extends AppCompatActivity {
                 calendario.set(Calendar.YEAR, year);
                 calendario.set(Calendar.MONTH, month);
                 calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                calendario.clear(Calendar.HOUR_OF_DAY);
+                calendario.clear(Calendar.AM_PM);
+                calendario.clear(Calendar.MINUTE);
+                calendario.clear(Calendar.HOUR);
+                calendario.clear(Calendar.MILLISECOND);
+                calendario.clear(Calendar.SECOND);
 
-                Locale BRAZIL = new Locale("pt","BR");
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy",BRAZIL);
-                dataTextView.setText("Data: "+sdf.format(calendario.getTime()));
+                Locale BRAZIL = new Locale("pt", "BR");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", BRAZIL);
+                dataTextView.setText(sdf.format(calendario.getTime()));
             }
         };
 
@@ -55,60 +61,97 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Prepara o selectbox do popup
-    private void preparaSpinner(ViewGroup layout){
+    private Spinner preparaSpinner(ViewGroup layout) {
+        final String[] metodos_pesquisa = {MetodoPesquisa.POR_MES.getValor(), MetodoPesquisa.POR_DIA.getValor()};
         /**
          * Adicionando elementes no spinner
          */
-        String[] metodos_pesquisa = {MetodoPesquisa.POR_MES.getValor(), MetodoPesquisa.POR_DIA.getValor()};
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, R.layout.simple_spinner_item, metodos_pesquisa);
         Spinner spinner = (Spinner) layout.findViewById(R.id.metodo_de_pesquisa);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
+        return spinner;
     }
 
-    private void preparaPesquisaPopup(){
-        LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.pesquisar_popup, null);
-        final PopupWindow popupWindow = new PopupWindow(layout, RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT,true);
-        popupWindow.setFocusable(true);
-        popupWindow.setTouchable(true);
-        popupWindow.showAtLocation(pesquisarMenuButton, Gravity.CENTER, 0, 0);
 
-        preparaSpinner(layout);
+    private void preparaPesquisaPopup() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        ViewGroup view = (ViewGroup) getLayoutInflater().inflate(R.layout.pesquisar_popup, null);
+        mBuilder.setView(view);
+        final String[] metodoPesquisa = {MetodoPesquisa.POR_DIA.getValor()};
+        final AlertDialog dialog = mBuilder.create();
+        final TextView dataPesquisaInicio = (TextView) view.findViewById(R.id.dataPesquisaInicio);
+        final TextView dataPesquisaInicioResposta = (TextView) view.findViewById(R.id.dataPesquisaInicio_resposta);
+        final TextView dataPesquisaFim = (TextView) view.findViewById(R.id.dataPesquisaFim);
+        final TextView dataPesquisaFimResposta = (TextView) view.findViewById(R.id.dataPesquisaFim_resposta);
+        final Button pesquisarButton = (Button) view.findViewById(R.id.pesquisarPopupButton);
+        final Button calcelarPopup = (Button) view.findViewById(R.id.cancelarPopupButton);
+
+        Spinner spinner = preparaSpinner(view);
+
+        if(spinner != null){
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if(position == 1 && dataPesquisaFim != null){
+                        metodoPesquisa[0] = MetodoPesquisa.POR_DIA.getValor();
+                        dataPesquisaFim.setVisibility(View.GONE);
+                        dataPesquisaFimResposta.setVisibility(View.GONE);
+                    }else if(dataPesquisaFim != null){
+                        metodoPesquisa[0] = MetodoPesquisa.POR_MES.getValor();
+                        dataPesquisaFim.setVisibility(View.VISIBLE);
+                        dataPesquisaFimResposta.setVisibility(View.VISIBLE);
+                    }
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
+            });
+        }
 
         // Carrega Calendario Para campo Data de Inicio
-        final TextView dataPesquisaInicio = (TextView) layout.findViewById(R.id.dataPesquisaInicio);
         dataPesquisaInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog.OnDateSetListener data = preparaCalendario(dataPesquisaInicio);
+                DatePickerDialog.OnDateSetListener data = preparaCalendario(dataPesquisaInicioResposta);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, data, calendario
                         .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
                         calendario.get(Calendar.DAY_OF_MONTH));
-                Locale.setDefault(new Locale("pt","BR"));
+                Locale.setDefault(new Locale("pt", "BR"));
                 datePickerDialog.show();
             }
         });
 
-        final TextView dataPesquisaFim = (TextView) layout.findViewById(R.id.dataPesquisaFim);
         dataPesquisaFim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog.OnDateSetListener data = preparaCalendario(dataPesquisaFim);
+                DatePickerDialog.OnDateSetListener data = preparaCalendario(dataPesquisaFimResposta);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, data, calendario
                         .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
                         calendario.get(Calendar.DAY_OF_MONTH));
-                Locale.setDefault(new Locale("pt","BR"));
+                Locale.setDefault(new Locale("pt", "BR"));
                 datePickerDialog.show();
+            }
+        });
+
+        pesquisarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    Date pesquisaInicio = formatter.parse(dataPesquisaInicioResposta.getText().toString());
+                    //Chama o relatorio diario
+                    if(metodoPesquisa[0].equals(MetodoPesquisa.POR_DIA.getValor())){
+                        Intent intent = new Intent(dialog.getContext(), RelatorioDiaActivity.class);
+                        //To pass:
+                        intent.putExtra("date", pesquisaInicio);
+                        dialog.getContext().startActivity(intent);
+                        dialog.dismiss();
+                    }
+                } catch (java.text.ParseException e) {
+                    Toast.makeText(MainActivity.this, getString(R.string.erro_generico)+": "+e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -116,15 +159,16 @@ public class MainActivity extends AppCompatActivity {
          * Necessario carregar os elementos diretamente do layout que esta sendo usado,
          * porque as instancias desses elementos nao existem fora do layout do popup
          */
-        Button calcelarPopup = (Button) layout.findViewById(R.id.cancelarPopupButton);
         calcelarPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(popupWindow!=null){
-                    popupWindow.dismiss();
+                if (dialog != null) {
+                    dialog.dismiss();
                 }
             }
         });
+
+        dialog.show();
     }
 
     @Override
@@ -132,24 +176,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-        // Esse listener vai ser chamando quando houver uma mudanca na cessao do usuario no firebase
-        FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    finish();
-                }
-            }
-        };
-
         //Chamando a tela de cadastro quando clicar na opcao de cadastro
-        cadastrarButton  = (Button) findViewById(R.id.cadastrarButton);
+        cadastrarButton = (Button) findViewById(R.id.cadastrarButton);
         cadastrarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,9 +218,17 @@ public class MainActivity extends AppCompatActivity {
         sairButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                auth.signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                finish();
+                ParseUser.logOutInBackground(new LogOutCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(MainActivity.this, getString(R.string.erro_generico), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
         });
     }

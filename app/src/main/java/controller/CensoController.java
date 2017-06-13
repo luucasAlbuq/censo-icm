@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.Date;
+import java.util.List;
+
 import model.Censo;
 import service.CensoService;
 import service.CensoServiceImpl;
@@ -18,5 +21,9 @@ public class CensoController {
 
     public boolean atualizar(Censo censo) throws Exception {
         return censoService.atualizar(censo, censo.getId());
+    }
+
+    public List<Censo> getCensoByDia(Date data) throws Exception {
+        return censoService.getCensoByData(data);
     }
 }

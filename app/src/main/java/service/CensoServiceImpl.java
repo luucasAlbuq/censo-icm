@@ -3,6 +3,7 @@ package service;
 import android.util.Log;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import dao.CensoDAO;
@@ -46,8 +47,16 @@ public class CensoServiceImpl implements CensoService {
     }
 
     @Override
-    public Censo getCensoByData(Date data) {
-        return null;
+    public List<Censo> getCensoByData(Date data) throws Exception {
+        List<Censo> censo = null;
+        try{
+
+            censo = censoDAO.getCensoByData(data);
+        }catch (Exception e){
+            Log.e("Controller:",e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+        return censo;
     }
 
     @Override
@@ -56,12 +65,12 @@ public class CensoServiceImpl implements CensoService {
     }
 
     @Override
-    public Set<Censo> getCensoByMes(int mes) {
+    public List<Censo> getCensoByMes(int mes) {
         return null;
     }
 
     @Override
-    public Set<Censo> getCensoByAno(int ano) {
+    public List<Censo> getCensoByAno(int ano) {
         return null;
     }
 }

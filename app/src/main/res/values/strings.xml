@@ -87,5 +87,42 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="erro_generico">Desculpe, ocorreu um erro.</string>
     <string name="auth_failed">Não foi possível realizar o login,verifique seu email e sua senha.</string>
+    <string name="title_activity_relatorio_dia">RelatorioDiaActivity</string>
+    <string name="relatorio_obreiro_louvor">Louvor:</string>
+    <string name="relatorio_obreiro_palavra">Palavra:</string>
+    <string name="relatorio_obreiro_porta">Porta:</string>
+    <string name="relatorio_dom">Dom:</string>
+    <string name="relatorio_louvores">Louvores:</string>
+    <string name="relatorio_texto_biblico">Texto Bíblico:</string>
+    <string name="relatorio_data">Data:</string>
+    <string name="relatorio_frequencia">Frequência</string>
+    <string name="title_activity_novo_relatorio_dia">NovoRelatorioDiaActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- Parse -->
+    <string name="parse_server_url">https://parseapi.back4app.com/</string>
+    <string name="parse_app_id">IoKiBX4HFAZQYVDAkhIMb0WeeZV7DuIQUTGyZkPY</string>
+    <string name="parse_client_key">9fu8pfEgKLNOzVI1cJmkbw38a0smb7y9RGO32OJi</string>
+
+    <!-- Esquema DB -->
+    <string name="db_table_name">censo</string>
+    <string name="db_col_jovens">qtd_jovens</string>
+    <string name="db_col_criancas">qtd_criancas</string>
+    <string name="db_col_visitantes">qtd_visitantes</string>
+    <string name="db_col_varoes">qtd_varoes</string>
+    <string name="db_col_adolescentes">qtd_adolescentes</string>
+    <string name="db_col_total">qtd_total</string>
+    <string name="db_col_dom">dom</string>
+    <string name="db_col_obreiro_louvor">obreiro_louvor</string>
+    <string name="db_col_obreiro_palavra">obreiro_palavra</string>
+    <string name="db_col_texto_biblico">texto_biblico</string>
+    <string name="db_col_data">data</string>
+    <string name="db_col_obreiros_porta">obreiros_porta</string>
+    <string name="db_col_louvores">louvores</string>
+    <string name="db_col_nome_igreja">nome_igreja</string>
+
 </resources>
