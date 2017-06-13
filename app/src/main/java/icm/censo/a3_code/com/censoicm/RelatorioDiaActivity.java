@@ -96,8 +96,14 @@ public class RelatorioDiaActivity extends AppCompatActivity {
 
         ArrayList<Integer> cores = new ArrayList<Integer>();
         for(int c : ColorTemplate.MATERIAL_COLORS){
-            cores.add(c);
+            if(!cores.contains(c)) cores.add(c);
         }
+
+        for(int c: ColorTemplate.COLORFUL_COLORS){
+            if(!cores.contains(c)) cores.add(c);
+        }
+
+
 
         PieDataSet dataSet = new PieDataSet(entries, null);
         dataSet.setSliceSpace(5);
@@ -134,6 +140,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
                     view.getChildAt(0).getHeight(),
                     Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(bitmap);
+            c.drawColor(Color.WHITE);
             view.getChildAt(0).draw(c);
 
 

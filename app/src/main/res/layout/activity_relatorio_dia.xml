@@ -5,6 +5,7 @@
     android:id="@+id/relatorio_dia_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:visibility="visible"
     tools:context="icm.censo.a3_code.com.censoicm.RelatorioDiaActivity">
 
@@ -12,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/relatorio_secessao_frequencia"
@@ -33,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
 
             <com.github.mikephil.charting.charts.PieChart
@@ -44,7 +47,8 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp" />
+                android:layout_marginTop="15dp"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/relatorio_secessao_obreiros"
@@ -65,7 +69,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/relatorio_obreiro_louvor"
@@ -81,7 +86,8 @@
                     android:drawablePadding="10dp"
                     android:padding="5dp"
                     android:text="@string/relatorio_obreiro_louvor"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/relatorio_obreiro_louvor_resposta"
@@ -96,7 +102,8 @@
                     android:layout_rowWeight="1"
                     android:drawablePadding="10dp"
                     android:padding="5dp"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/relatorio_obreiro_palavra"
@@ -112,7 +119,8 @@
                     android:drawablePadding="10dp"
                     android:padding="5dp"
                     android:text="@string/relatorio_obreiro_palavra"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/relatorio_obreiro_palavra_resposta"
@@ -127,7 +135,8 @@
                     android:layout_rowWeight="1"
                     android:drawablePadding="10dp"
                     android:padding="5dp"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/relatorio_obreiro_porta"
@@ -143,7 +152,8 @@
                     android:drawablePadding="10dp"
                     android:padding="5dp"
                     android:text="@string/relatorio_obreiro_porta"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/relatorio_obreiro_porta_resposta"
@@ -159,7 +169,8 @@
                     android:layout_rowWeight="1"
                     android:drawablePadding="10dp"
                     android:padding="5dp"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
 
             </GridLayout>
@@ -183,7 +194,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/relatorio_data"
@@ -199,7 +211,8 @@
                     android:drawablePadding="10dp"
                     android:padding="5dp"
                     android:text="@string/relatorio_data"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/relatorio_data_resposta"
@@ -214,7 +227,8 @@
                     android:layout_rowWeight="1"
                     android:drawablePadding="10dp"
                     android:padding="5dp"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/relatorio_texto_biblico"
@@ -230,7 +244,8 @@
                     android:drawablePadding="10dp"
                     android:padding="5dp"
                     android:text="@string/relatorio_texto_biblico"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/relatorio_texto_biblico_resposta"
@@ -245,7 +260,8 @@
                     android:layout_rowWeight="1"
                     android:drawablePadding="10dp"
                     android:padding="5dp"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
 
             </GridLayout>
@@ -262,7 +278,8 @@
                 android:drawablePadding="10dp"
                 android:padding="5dp"
                 android:text="@string/relatorio_louvores"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/relatorio_louvores_resposta"
@@ -278,7 +295,8 @@
                 android:maxLines="7"
                 android:padding="5dp"
                 android:scrollbars="vertical"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/relatorio_dom"
@@ -293,7 +311,8 @@
                 android:drawablePadding="10dp"
                 android:padding="5dp"
                 android:text="@string/relatorio_dom"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/relatorio_dom_resposta"
@@ -309,7 +328,8 @@
                 android:maxLines="7"
                 android:padding="5dp"
                 android:scrollbars="vertical"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:visibility="visible" />
 
         </LinearLayout>
 
@@ -318,7 +338,8 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_marginTop="15dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/baixarRelatorioDia"
@@ -334,7 +355,8 @@
                 android:text="Baixar"
                 android:textAllCaps="false"
                 android:textColor="@android:color/background_light"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/compartilharRelatorioDia"
@@ -350,7 +372,8 @@
                 android:text="Compartilhar"
                 android:textAllCaps="false"
                 android:textColor="@android:color/background_light"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:visibility="visible" />
 
         </LinearLayout>
     </LinearLayout>
