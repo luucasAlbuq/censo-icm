@@ -22,6 +22,7 @@ import com.parse.ParseUser;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import controller.CensoController;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Locale BRAZIL = new Locale("pt", "BR");
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", BRAZIL);
-                dataTextView.setText("Data: " + sdf.format(calendario.getTime()));
+                dataTextView.setText(sdf.format(calendario.getTime()));
             }
         };
 
@@ -78,10 +79,12 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
         ViewGroup view = (ViewGroup) getLayoutInflater().inflate(R.layout.pesquisar_popup, null);
         mBuilder.setView(view);
+        final String[] metodoPesquisa = {MetodoPesquisa.POR_DIA.getValor()};
         final AlertDialog dialog = mBuilder.create();
-
         final TextView dataPesquisaInicio = (TextView) view.findViewById(R.id.dataPesquisaInicio);
+        final TextView dataPesquisaInicioResposta = (TextView) view.findViewById(R.id.dataPesquisaInicio_resposta);
         final TextView dataPesquisaFim = (TextView) view.findViewById(R.id.dataPesquisaFim);
+        final TextView dataPesquisaFimResposta = (TextView) view.findViewById(R.id.dataPesquisaFim_resposta);
         final Button pesquisarButton = (Button) view.findViewById(R.id.pesquisarPopupButton);
         final Button calcelarPopup = (Button) view.findViewById(R.id.cancelarPopupButton);
 
@@ -92,9 +95,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if(position == 1 && dataPesquisaFim != null){
+                        metodoPesquisa[0] = MetodoPesquisa.POR_DIA.getValor();
                         dataPesquisaFim.setVisibility(View.GONE);
+                        dataPesquisaFimResposta.setVisibility(View.GONE);
                     }else if(dataPesquisaFim != null){
+                        metodoPesquisa[0] = MetodoPesquisa.POR_MES.getValor();
                         dataPesquisaFim.setVisibility(View.VISIBLE);
+                        dataPesquisaFimResposta.setVisibility(View.VISIBLE);
                     }
                 }
                 @Override
@@ -106,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         dataPesquisaInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog.OnDateSetListener data = preparaCalendario(dataPesquisaInicio);
+                DatePickerDialog.OnDateSetListener data = preparaCalendario(dataPesquisaInicioResposta);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, data, calendario
                         .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
                         calendario.get(Calendar.DAY_OF_MONTH));
@@ -118,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         dataPesquisaFim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog.OnDateSetListener data = preparaCalendario(dataPesquisaFim);
+                DatePickerDialog.OnDateSetListener data = preparaCalendario(dataPesquisaFimResposta);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, data, calendario
                         .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
                         calendario.get(Calendar.DAY_OF_MONTH));
@@ -130,9 +137,21 @@ public class MainActivity extends AppCompatActivity {
         pesquisarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(dialog.getContext(), RelatorioDiaActivity.class);
-                dialog.getContext().startActivity(intent);
-                dialog.dismiss();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    Date pesquisaInicio = formatter.parse(dataPesquisaInicioResposta.getText().toString());
+                    //Chama o relatorio diario
+                    if(metodoPesquisa[0].equals(MetodoPesquisa.POR_DIA.getValor())){
+                        Intent intent = new Intent(dialog.getContext(), RelatorioDiaActivity.class);
+                        //To pass:
+                        intent.putExtra("date", pesquisaInicio);
+                        dialog.getContext().startActivity(intent);
+                        dialog.dismiss();
+                    }
+                } catch (java.text.ParseException e) {
+                    Toast.makeText(MainActivity.this, getString(R.string.erro_generico)+": "+e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
 

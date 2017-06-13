@@ -42,6 +42,8 @@ import model.Censo;
 
 public class RelatorioDiaActivity extends AppCompatActivity {
 
+    private Date dataPesquisa;
+
     private CensoController controller = new CensoController();
 
     private void  buildChart(Censo censo){
@@ -173,6 +175,8 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorio_dia);
 
+        dataPesquisa = (Date) getIntent().getSerializableExtra("date");
+
         TextView obreiroLouvor = (TextView) findViewById(R.id.relatorio_obreiro_louvor_resposta);
         TextView obreiroPalavra = (TextView) findViewById(R.id.relatorio_obreiro_palavra_resposta);
         TextView obreiroPorta = (TextView) findViewById(R.id.relatorio_obreiro_porta_resposta);
@@ -184,16 +188,8 @@ public class RelatorioDiaActivity extends AppCompatActivity {
 
         List<Censo> lista = null;
         try {
-            Calendar calendario = Calendar.getInstance();
-            calendario.clear(Calendar.HOUR_OF_DAY);
-            calendario.clear(Calendar.AM_PM);
-            calendario.clear(Calendar.MINUTE);
-            calendario.clear(Calendar.HOUR);
-            calendario.clear(Calendar.MILLISECOND);
-            calendario.clear(Calendar.SECOND);
-
             //TODO implementar pesquisa
-            lista = controller.getCensoByDia(calendario.getTime());
+            lista = controller.getCensoByDia(dataPesquisa);
             Censo censo = lista.get(0);
             buildChart(censo);
 

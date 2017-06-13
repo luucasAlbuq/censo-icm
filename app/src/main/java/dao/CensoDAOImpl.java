@@ -25,6 +25,7 @@ import util.DBEsquema;
 public class CensoDAOImpl implements CensoDAO {
 
     private static CensoDAO censoDAO;
+    private Calendar calendario = Calendar.getInstance();
     private CensoDAOImpl(){};
 
     public static synchronized CensoDAO getInstance() {
