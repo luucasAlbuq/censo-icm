@@ -191,6 +191,8 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             calendario.clear(Calendar.HOUR);
             calendario.clear(Calendar.MILLISECOND);
             calendario.clear(Calendar.SECOND);
+
+            //TODO implementar pesquisa
             lista = controller.getCensoByDia(calendario.getTime());
             Censo censo = lista.get(0);
             buildChart(censo);

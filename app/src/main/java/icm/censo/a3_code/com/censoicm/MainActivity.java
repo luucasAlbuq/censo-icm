@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Prepara o selectbox do popup
-    private void preparaSpinner(ViewGroup layout) {
+    private Spinner preparaSpinner(ViewGroup layout) {
         final String[] metodos_pesquisa = {MetodoPesquisa.POR_MES.getValor(), MetodoPesquisa.POR_DIA.getValor()};
         /**
          * Adicionando elementes no spinner
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
                 new ArrayAdapter<String>(this, R.layout.simple_spinner_item, metodos_pesquisa);
         Spinner spinner = (Spinner) layout.findViewById(R.id.metodo_de_pesquisa);
         spinner.setAdapter(adapter);
+
+        return spinner;
     }
 
 
@@ -82,7 +85,22 @@ public class MainActivity extends AppCompatActivity {
         final Button pesquisarButton = (Button) view.findViewById(R.id.pesquisarPopupButton);
         final Button calcelarPopup = (Button) view.findViewById(R.id.cancelarPopupButton);
 
-        preparaSpinner(view);
+        Spinner spinner = preparaSpinner(view);
+
+        if(spinner != null){
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if(position == 1 && dataPesquisaFim != null){
+                        dataPesquisaFim.setVisibility(View.GONE);
+                    }else if(dataPesquisaFim != null){
+                        dataPesquisaFim.setVisibility(View.VISIBLE);
+                    }
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
+            });
+        }
 
         // Carrega Calendario Para campo Data de Inicio
         dataPesquisaInicio.setOnClickListener(new View.OnClickListener() {
