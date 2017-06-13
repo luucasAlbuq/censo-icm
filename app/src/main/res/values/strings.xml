@@ -87,7 +87,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="erro_generico">Desculpe ocorreu um erro.</string>
+    <string name="erro_generico">Desculpe, ocorreu um erro.</string>
     <string name="auth_failed">Não foi possível realizar o login,verifique seu email e sua senha.</string>
     <string name="title_activity_relatorio_dia">RelatorioDiaActivity</string>
     <string name="relatorio_obreiro_louvor">Louvor:</string>

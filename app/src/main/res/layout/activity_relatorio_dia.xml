@@ -345,7 +345,7 @@
                 android:id="@+id/baixarRelatorioDia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:background="@android:color/holo_blue_light"
@@ -357,24 +357,6 @@
                 android:textColor="@android:color/background_light"
                 android:textSize="17dp"
                 android:visibility="visible" />
-
-            <Button
-                android:id="@+id/compartilharRelatorioDia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_green_dark"
-                android:drawableLeft="@drawable/share_icon30dp"
-                android:drawablePadding="5dp"
-                android:drawableStart="@drawable/share_icon30dp"
-                android:text="Compartilhar"
-                android:textAllCaps="false"
-                android:textColor="@android:color/background_light"
-                android:textSize="17dp"
-                android:visibility="visible" />
-
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

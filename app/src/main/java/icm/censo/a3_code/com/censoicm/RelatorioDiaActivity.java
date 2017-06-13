@@ -3,6 +3,7 @@ package icm.censo.a3_code.com.censoicm;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -54,12 +56,23 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         mChart.setRotationAngle(0);
         mChart.setRotationEnabled(true);
         mChart.setSaveEnabled(true);
+
+        Description description = new Description();
+        description.setText("Total: "+censo.getTotalPessoas());
+        description.setTextAlign(Paint.Align.CENTER);
+        description.setTextSize(10f);
+        description.setPosition(50f,10f);
+        mChart.setDescription(description);
         setDataPie(censo, mChart);
 
         // customize legends
         Legend l = mChart.getLegend();
+        l.setWordWrapEnabled(true);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
 
         mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
@@ -71,9 +84,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected() {
-
-            }
+            public void onNothingSelected() {}
         });
     }
 
@@ -103,8 +114,6 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             if(!cores.contains(c)) cores.add(c);
         }
 
-
-
         PieDataSet dataSet = new PieDataSet(entries, null);
         dataSet.setSliceSpace(5);
         dataSet.setSelectionShift(5);
@@ -128,11 +137,12 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             // image naming and path  to include sd card  appending name you choose for file
             String mPath = Environment.getExternalStorageDirectory().toString()+"/"+ Environment.DIRECTORY_DCIM.toString()+"/"+ now + ".jpg";
             Log.i("PATH",mPath);
-            // create bitmap screen capture
-//            View v1 = getWindow().getDecorView().getRootView();
-//            v1.setDrawingCacheEnabled(true);
-//            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-//            v1.setDrawingCacheEnabled(false);
+
+
+            //Don't show the button
+            Button baixarBtn = (Button) findViewById(R.id.baixarRelatorioDia);
+            baixarBtn.setVisibility(View.GONE);
+
 
             ScrollView view = (ScrollView) findViewById(R.id.relatorio_dia_id);
             Bitmap bitmap = Bitmap.createBitmap(
@@ -143,14 +153,13 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             c.drawColor(Color.WHITE);
             view.getChildAt(0).draw(c);
 
-
             File imageFile = new File(mPath);
-
             FileOutputStream outputStream = new FileOutputStream(imageFile);
             int quality = 100;
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
             outputStream.flush();
             outputStream.close();
+            baixarBtn.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), "Relatório salvo em suas imagens.", Toast.LENGTH_SHORT).show();
         } catch (Throwable e) {
             // Several error may come out with file handling or OOM
