@@ -2,9 +2,11 @@ package dao;
 
 import android.util.Log;
 
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRole;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -16,6 +18,7 @@ import java.util.Set;
 
 import model.Censo;
 import util.DBEsquema;
+import util.Roles;
 
 /**
  * Implementa as assinaturas para manipulacao de objetos @{@link Censo}
@@ -36,15 +39,21 @@ public class CensoDAOImpl implements CensoDAO {
     }
 
     private ParseObject buildParseObj(Censo censo){
+        ParseUser currentUser = ParseUser.getCurrentUser();
         ParseObject object = new ParseObject(DBEsquema.TABLE.getValor());
-        object.put(DBEsquema.COL_NOME_IGREJA.getValor(), "icm-azenha");
-        object.put(DBEsquema.COL_USER.getValor(),ParseUser.getCurrentUser().getUsername());
+
+        ParseACL acl = new ParseACL();
+        acl.setRoleWriteAccess(Roles.ADMIN.getValor(),true);
+        acl.setRoleWriteAccess(Roles.USER.getValor(),false);
+        acl.setRoleReadAccess(Roles.ADMIN.getValor(),true);
+        acl.setRoleReadAccess(Roles.USER.getValor(),true);
+        object.setACL(acl);
+
+        object.put(DBEsquema.COL_NOME_IGREJA.getValor(), (String) currentUser.get("igreja"));
+        object.put(DBEsquema.COL_USER.getValor(),currentUser.getUsername());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(censo.getData());
-        object.put(DBEsquema.COL_DIA.getValor(),Calendar.DAY_OF_MONTH);
-        object.put(DBEsquema.COL_MES.getValor(),Calendar.MONTH);
-        object.put(DBEsquema.COL_ANO.getValor(),Calendar.YEAR);
 
         object.put(DBEsquema.COL_DATA.getValor(), censo.getData());
         object.put(DBEsquema.COL_QTD_JOVENS.getValor(), censo.getQtdJovens());

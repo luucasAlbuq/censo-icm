@@ -50,7 +50,6 @@ public class CensoServiceImpl implements CensoService {
     public List<Censo> getCensoByData(Date data) throws Exception {
         List<Censo> censo = null;
         try{
-
             censo = censoDAO.getCensoByData(data);
         }catch (Exception e){
             Log.e("Controller:",e.getMessage());
