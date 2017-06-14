@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import controller.CensoController;
 import model.Censo;
+import util.DBEsquema;
 import util.MetodoPesquisa;
 
 public class MainActivity extends AppCompatActivity {
@@ -146,12 +147,12 @@ public class MainActivity extends AppCompatActivity {
                     if(metodoPesquisa[0].equals(MetodoPesquisa.POR_DIA.getValor())){
                         Intent intent = new Intent(dialog.getContext(), RelatorioDiaActivity.class);
                         //To pass:
-                        intent.putExtra("date", pesquisaInicio);
+                        intent.putExtra(DBEsquema.COL_DATA.getValor(), pesquisaInicio);
                         dialog.getContext().startActivity(intent);
                         dialog.dismiss();
                     }else{
                         Date pesquisaFim = formatter.parse(dataPesquisaFimResposta.getText().toString());
-                        List<Censo> list = controller.getCensobetweenDates(pesquisaInicio, pesquisaFim);
+                        List<Censo> list = controller.getCensoBetweenDates(pesquisaInicio, pesquisaFim);
                         Toast.makeText(MainActivity.this, list.size(),
                                 Toast.LENGTH_LONG).show();
                     }

@@ -22,11 +22,11 @@ public class CensoController {
         return censoService.atualizar(censo, censo.getId());
     }
 
-    public List<Censo> getCensoByDia(Date data) throws Exception {
+    public List<Censo> getCensoByDate(Date data) throws Exception {
         return censoService.getCensoByData(data);
     }
 
-    public List<Censo> getCensobetweenDates(Date from, Date to) throws Exception {
-        return censoService.getCensoByDateFromTo(from,to);
+    public List<Censo> getCensoBetweenDates(Date from, Date to) throws Exception {
+        return censoService.getCensoBetweenDates(from,to);
     }
 }

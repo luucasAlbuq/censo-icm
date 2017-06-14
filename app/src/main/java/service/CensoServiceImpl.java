@@ -74,11 +74,11 @@ public class CensoServiceImpl implements CensoService {
     }
 
     @Override
-    public List<Censo> getCensoByDateFromTo(Date from, Date to) throws Exception {
+    public List<Censo> getCensoBetweenDates(Date from, Date to) throws Exception {
         List<Censo> censos = null;
         try{
-            censoValidator.isCensoValidSearchDetweenDates(from,to);
-            censos = censoDAO.getCensoFromTo(from, to);
+            censoValidator.isCensoValidSearchBetweenDates(from,to);
+            censos = censoDAO.getCensoBetweenDates(from, to);
         }catch (Exception e){
             Log.e("Controller:",e.getMessage());
             throw new Exception(e.getMessage());

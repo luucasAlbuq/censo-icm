@@ -49,7 +49,7 @@ public class CensoDAOImpl implements CensoDAO {
         acl.setRoleReadAccess(Roles.USER.getValor(),true);
         object.setACL(acl);
 
-        object.put(DBEsquema.COL_NOME_IGREJA.getValor(), (String) currentUser.get("igreja"));
+        object.put(DBEsquema.COL_NOME_IGREJA.getValor(), (String) currentUser.get(DBEsquema.COL_NOME_IGREJA.getValor()));
         object.put(DBEsquema.COL_USER.getValor(),currentUser.getUsername());
 
         Calendar calendar = Calendar.getInstance();
@@ -137,7 +137,7 @@ public class CensoDAOImpl implements CensoDAO {
     }
 
     @Override
-    public List<Censo> getCensoFromTo(Date dataInicio, Date dataFim) {
+    public List<Censo> getCensoBetweenDates(Date dataInicio, Date dataFim) {
         List<Censo> list = new ArrayList<>();
         try{
             ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
@@ -170,14 +170,5 @@ public class CensoDAOImpl implements CensoDAO {
         return lista;
     }
 
-    @Override
-    public List<Censo> getCensoMes(int mes) {
-        return null;
-    }
-
-    @Override
-    public List<Censo> getCensoAno(int ano) {
-        return null;
-    }
 }
 

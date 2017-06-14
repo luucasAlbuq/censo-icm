@@ -58,7 +58,7 @@ public class CensoValidatorImpl implements CensoValidator {
     }
 
     @Override
-    public void isCensoValidSearchDetweenDates(Date from, Date to) throws Exception {
+    public void isCensoValidSearchBetweenDates(Date from, Date to) throws Exception {
         if(from.after(to)){
             throw new Exception("Dados de Pesquisa Inválidos");
         }
