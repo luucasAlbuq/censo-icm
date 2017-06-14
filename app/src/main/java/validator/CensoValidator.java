@@ -1,5 +1,7 @@
 package validator;
 
+import java.util.Date;
+
 import model.Censo;
 
 /**
@@ -12,4 +14,5 @@ public interface CensoValidator {
     public boolean isCensoValid(Censo censo);
     public void isCensoValidForUpdate(Censo censo, Object censoId) throws Exception;
     public void isCensoValidForSave(Censo censo) throws Exception;
+    public void isCensoValidSearchBetweenDates(Date from, Date to) throws Exception;
 }

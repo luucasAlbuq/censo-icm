@@ -10,7 +10,6 @@ import service.CensoServiceImpl;
 /**
  * Created by luucasAlbuq on 06/06/2017.
  */
-
 public class CensoController {
 
     private CensoService censoService = new CensoServiceImpl();
@@ -23,7 +22,11 @@ public class CensoController {
         return censoService.atualizar(censo, censo.getId());
     }
 
-    public List<Censo> getCensoByDia(Date data) throws Exception {
+    public List<Censo> getCensoByDate(Date data) throws Exception {
         return censoService.getCensoByData(data);
+    }
+
+    public List<Censo> getCensoBetweenDates(Date from, Date to) throws Exception {
+        return censoService.getCensoBetweenDates(from,to);
     }
 }

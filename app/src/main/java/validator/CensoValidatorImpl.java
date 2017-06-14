@@ -1,5 +1,7 @@
 package validator;
 
+import java.util.Date;
+
 import model.Censo;
 
 /**
@@ -52,6 +54,13 @@ public class CensoValidatorImpl implements CensoValidator {
     public void isCensoValidForSave(Censo censo) throws Exception {
         if(!isCensoValid(censo)){
             throw new Exception("Dados Inválidos");
+        }
+    }
+
+    @Override
+    public void isCensoValidSearchBetweenDates(Date from, Date to) throws Exception {
+        if(from.after(to)){
+            throw new Exception("Dados de Pesquisa Inválidos");
         }
     }
 }

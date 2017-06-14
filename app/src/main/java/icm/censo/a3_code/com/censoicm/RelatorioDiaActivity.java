@@ -39,6 +39,7 @@ import java.util.Random;
 
 import controller.CensoController;
 import model.Censo;
+import util.DBEsquema;
 
 public class RelatorioDiaActivity extends AppCompatActivity {
 
@@ -175,7 +176,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorio_dia);
 
-        dataPesquisa = (Date) getIntent().getSerializableExtra("date");
+        dataPesquisa = (Date) getIntent().getSerializableExtra(DBEsquema.COL_DATA.getValor());
 
         TextView obreiroLouvor = (TextView) findViewById(R.id.relatorio_obreiro_louvor_resposta);
         TextView obreiroPalavra = (TextView) findViewById(R.id.relatorio_obreiro_palavra_resposta);
@@ -189,7 +190,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         List<Censo> lista = null;
         try {
             //TODO implementar pesquisa
-            lista = controller.getCensoByDia(dataPesquisa);
+            lista = controller.getCensoByDate(dataPesquisa);
             Censo censo = lista.get(0);
             buildChart(censo);
 

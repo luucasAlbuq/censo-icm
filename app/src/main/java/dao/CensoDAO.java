@@ -19,7 +19,7 @@ public interface CensoDAO extends BasicOperations {
      * @param Date dataFim
      * @return List<Censo> colecao de objectos
      */
-    public List<Censo> getCensoFromTo(Date datInicio, Date dataFim);
+    public List<Censo> getCensoBetweenDates(Date datInicio, Date dataFim);
 
     /**
      * Recupera o censo feito em um dia específico
@@ -28,17 +28,4 @@ public interface CensoDAO extends BasicOperations {
      */
     public List<Censo> getCensoByData(Date data);
 
-    /**
-     * Recupera todos os @{@link Censo} de um mes
-     * @param int mes
-     * @return List<Censo> colecao de objectos
-     */
-    public List<Censo> getCensoMes(int mes);
-
-    /**
-     * Recupera todos os @{@link Censo} de um ano
-     * @param int ano
-     * @return List<Censo> colecao de objectos
-     */
-    public List<Censo> getCensoAno(int ano);
 }
