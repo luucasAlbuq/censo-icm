@@ -19,4 +19,5 @@ public interface CensoService {
     public Censo getCensoById(String censoId);
     public List<Censo> getCensoByMes(int mes);
     public List<Censo> getCensoByAno(int ano);
+    public List<Censo> getCensoByDateFromTo(Date from, Date to) throws Exception;
 }

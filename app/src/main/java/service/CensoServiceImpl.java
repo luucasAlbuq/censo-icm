@@ -73,4 +73,17 @@ public class CensoServiceImpl implements CensoService {
     public List<Censo> getCensoByAno(int ano) {
         return null;
     }
+
+    @Override
+    public List<Censo> getCensoByDateFromTo(Date from, Date to) throws Exception {
+        List<Censo> censos = null;
+        try{
+            censoValidator.isCensoValidSearchDetweenDates(from,to);
+            censos = censoDAO.getCensoFromTo(from, to);
+        }catch (Exception e){
+            Log.e("Controller:",e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+        return censos;
+    }
 }

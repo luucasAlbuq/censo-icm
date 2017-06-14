@@ -129,7 +129,21 @@ public class CensoDAOImpl implements CensoDAO {
 
     @Override
     public List<Censo> getCensoFromTo(Date dataInicio, Date dataFim) {
-        return null;
+        List<Censo> list = new ArrayList<>();
+        try{
+            ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
+            query.whereGreaterThanOrEqualTo(DBEsquema.COL_DATA.getValor(), dataInicio);
+            query.whereLessThanOrEqualTo(DBEsquema.COL_DATA.getValor(), dataFim);
+            query.setLimit(40);
+
+            for(ParseObject obj : query.find()){
+                list.add(castToCenso(obj));
+            }
+        }catch (Exception e){
+            Log.e("DB: read From To: ",e.getMessage());
+        }
+
+        return list;
     }
 
     @Override
