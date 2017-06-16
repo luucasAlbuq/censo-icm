@@ -93,6 +93,7 @@ public class CensoDAOImpl implements CensoDAO {
             censo.setObreiroPalavra(obj.getString(DBEsquema.COL_OBRE_PALAVRA.getValor()));
             censo.setObreiroLouvor(obj.getString(DBEsquema.COL_OBRE_LOUVOR.getValor()));
             censo.setId(obj.getString("objectId"));
+            censo.setIgreja(obj.getString(DBEsquema.COL_NOME_IGREJA.getValor()));
 
         }catch (Exception e){
             Log.e("DB: cast: ",e.getMessage());

@@ -16,14 +16,12 @@
         android:roundIcon="@mipmap/logo_icm"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.parse.SERVER_URL"
             android:value="@string/parse_server_url" />
         <meta-data
             android:name="com.parse.APPLICATION_ID"
             android:value="@string/parse_app_id" />
-
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="@string/parse_client_key" />
@@ -48,6 +46,7 @@
         <activity
             android:name=".RelatorioDiaActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ListaCensoActivity"></activity>
     </application>
 
 </manifest>

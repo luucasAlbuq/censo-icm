@@ -3,7 +3,6 @@ package icm.censo.a3_code.com.censoicm;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,6 +19,7 @@ import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -153,8 +153,10 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         Date pesquisaFim = formatter.parse(dataPesquisaFimResposta.getText().toString());
                         List<Censo> list = controller.getCensoBetweenDates(pesquisaInicio, pesquisaFim);
-                        Toast.makeText(MainActivity.this, list.size(),
-                                Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(dialog.getContext(), ListaCensoActivity.class);
+                        intent.putExtra(DBEsquema.TABLE.getValor(), (Serializable) list);
+                        dialog.getContext().startActivity(intent);
+                        dialog.dismiss();
                     }
 
                 } catch (Exception e) {
@@ -184,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Locale.setDefault(new Locale("pt", "BR"));
 
         //Chamando a tela de cadastro quando clicar na opcao de cadastro
         cadastrarButton = (Button) findViewById(R.id.cadastrarButton);
