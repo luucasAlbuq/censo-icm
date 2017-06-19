@@ -26,6 +26,7 @@ public class Censo implements Serializable {
     private Date data;
     private String id;
     private String textoBiblico;
+    private String igreja;
     private List<String> louvores;
 
     public Censo() {};
@@ -34,7 +35,7 @@ public class Censo implements Serializable {
     public Censo(int qtdJovens, int qtdCriancas, int qtdVisitantes, int qtdSenhoras, int qtdVaroes,
                  int qtdAdolescentes, int totalPessoas, String dom, List<String> obreirosPorta,
                  String obreiroLouvor, String obreiroPalavra, Date data, String id, String textoBiblico,
-                 List<String> louvores) {
+                 List<String> louvores, String igreja) {
         this.qtdJovens = qtdJovens;
         this.qtdCriancas = qtdCriancas;
         this.qtdVisitantes = qtdVisitantes;
@@ -50,6 +51,7 @@ public class Censo implements Serializable {
         this.id = id;
         this.textoBiblico = textoBiblico;
         this.louvores = louvores;
+        this.igreja = igreja;
     }
 
     public String getTextoBiblico() {
@@ -172,23 +174,12 @@ public class Censo implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Censo censo = (Censo) o;
-
-        if (!getData().equals(censo.getData())) return false;
-        return getId().equals(censo.getId());
-
+    public String getIgreja() {
+        return igreja;
     }
 
-    @Override
-    public int hashCode() {
-        int result = getData().hashCode();
-        result = 31 * result + getId().hashCode();
-        return result;
+    public void setIgreja(String igreja) {
+        this.igreja = igreja;
     }
 
     @Override
@@ -208,9 +199,31 @@ public class Censo implements Serializable {
                 ", data=" + data +
                 ", id='" + id + '\'' +
                 ", textoBiblico='" + textoBiblico + '\'' +
+                ", igreja='" + igreja + '\'' +
                 ", louvores=" + louvores +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Censo censo = (Censo) o;
+
+        if (!getData().equals(censo.getData())) return false;
+        return getId().equals(censo.getId());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getData().hashCode();
+        result = 31 * result + getId().hashCode();
+        return result;
+    }
+
+
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
