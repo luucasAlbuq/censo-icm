@@ -231,7 +231,9 @@ public class MainActivity extends AppCompatActivity {
         relatorioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                preparaPesquisaPopup();
+                //preparaPesquisaPopup();
+                Intent relatorioMesActivity = new Intent(MainActivity.this, RelatorioMesActivity.class);
+                startActivity(relatorioMesActivity);
             }
         });
 
