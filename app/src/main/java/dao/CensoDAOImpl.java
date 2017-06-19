@@ -144,6 +144,7 @@ public class CensoDAOImpl implements CensoDAO {
             ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
             query.whereGreaterThanOrEqualTo(DBEsquema.COL_DATA.getValor(), dataInicio);
             query.whereLessThanOrEqualTo(DBEsquema.COL_DATA.getValor(), dataFim);
+            query.orderByDescending(DBEsquema.COL_DATA.getValor());
             query.setLimit(40);
 
             for(ParseObject obj : query.find()){
@@ -152,7 +153,6 @@ public class CensoDAOImpl implements CensoDAO {
         }catch (Exception e){
             Log.e("DB: read From To: ",e.getMessage());
         }
-
         return list;
     }
 
@@ -161,6 +161,8 @@ public class CensoDAOImpl implements CensoDAO {
         List<Censo> lista = new ArrayList<Censo>();
         try{
             ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
+            query.orderByDescending(DBEsquema.COL_DATA.getValor());
+            query.setLimit(40);
             query.whereEqualTo(DBEsquema.COL_DATA.getValor(), data);
             for(ParseObject obj: query.find()){
                 lista.add(castToCenso(obj));
