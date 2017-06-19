@@ -42,7 +42,7 @@ import util.DBEsquema;
 
 public class RelatorioDiaActivity extends AppCompatActivity {
 
-    private Date dataPesquisa;
+    private Censo censo;
 
     private CensoController controller = new CensoController();
 
@@ -60,10 +60,15 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         mChart.setSaveEnabled(true);
 
         Description description = new Description();
-        description.setText("Total: "+censo.getTotalPessoas());
+
+        Locale BRAZIL = new Locale("pt", "BR");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", BRAZIL);
+        String data = sdf.format(censo.getData());
+
+        description.setText("Total: "+censo.getTotalPessoas()+" | "+data);
         description.setTextAlign(Paint.Align.CENTER);
         description.setTextSize(10f);
-        description.setPosition(50f,10f);
+        description.setPosition(85f,15f);
         mChart.setDescription(description);
         setDataPie(censo, mChart);
 
@@ -175,7 +180,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorio_dia);
 
-        dataPesquisa = (Date) getIntent().getSerializableExtra(DBEsquema.COL_DATA.getValor());
+        censo = (Censo) getIntent().getSerializableExtra(DBEsquema.TABLE.getValor());
 
         TextView obreiroLouvor = (TextView) findViewById(R.id.relatorio_obreiro_louvor_resposta);
         TextView obreiroPalavra = (TextView) findViewById(R.id.relatorio_obreiro_palavra_resposta);
@@ -186,11 +191,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         TextView textoBiblico = (TextView) findViewById(R.id.relatorio_texto_biblico_resposta);
         Button baixar = (Button) findViewById(R.id.baixarRelatorioDia);
 
-        List<Censo> lista = null;
         try {
-            //TODO implementar pesquisa
-            lista = controller.getCensoByDate(dataPesquisa);
-            Censo censo = lista.get(0);
             buildChart(censo);
 
             Locale BRAZIL = new Locale("pt", "BR");

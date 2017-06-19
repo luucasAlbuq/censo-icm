@@ -145,11 +145,21 @@ public class MainActivity extends AppCompatActivity {
                     Date pesquisaInicio = formatter.parse(dataPesquisaInicioResposta.getText().toString());
                     //Chama o relatorio diario
                     if(metodoPesquisa[0].equals(MetodoPesquisa.POR_DIA.getValor())){
-                        Intent intent = new Intent(dialog.getContext(), RelatorioDiaActivity.class);
-                        //To pass:
-                        intent.putExtra(DBEsquema.COL_DATA.getValor(), pesquisaInicio);
-                        dialog.getContext().startActivity(intent);
-                        dialog.dismiss();
+                        List<Censo> list = controller.getCensoByDate(pesquisaInicio);
+                        if(list.size() == 1){
+                            Intent intent = new Intent(dialog.getContext(), RelatorioDiaActivity.class);
+                            intent.putExtra(DBEsquema.TABLE.getValor(), (Serializable) list.get(0));
+                            dialog.getContext().startActivity(intent);
+                        }else if(list.size() > 1){
+                            Intent intent = new Intent(dialog.getContext(), ListaCensoActivity.class);
+                            intent.putExtra(DBEsquema.TABLE.getValor(), (Serializable) list);
+                            dialog.getContext().startActivity(intent);
+                        }else{
+                            dialog.dismiss();
+                            Toast.makeText(MainActivity.this, getString(R.string.no_data),
+                                    Toast.LENGTH_LONG).show();
+                        }
+
                     }else{
                         Date pesquisaFim = formatter.parse(dataPesquisaFimResposta.getText().toString());
                         List<Censo> list = controller.getCensoBetweenDates(pesquisaInicio, pesquisaFim);

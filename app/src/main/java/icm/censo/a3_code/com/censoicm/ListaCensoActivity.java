@@ -2,9 +2,11 @@ package icm.censo.a3_code.com.censoicm;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.List;
@@ -33,12 +35,11 @@ public class ListaCensoActivity extends AppCompatActivity {
             listaCenso = (List<Censo>) getIntent().getSerializableExtra(DBEsquema.TABLE.getValor());
             RecycleViewAdapter adapter = new RecycleViewAdapter(this,listaCenso);
             recyclerView.setAdapter(adapter);
-
         }catch (Exception e){
             Toast.makeText(ListaCensoActivity.this, getString(R.string.erro_generico)+": "+e.getMessage(),
                     Toast.LENGTH_LONG).show();
+            finish();
         }
-
     }
 
 }
