@@ -46,7 +46,8 @@
         <activity
             android:name=".RelatorioDiaActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ListaCensoActivity"></activity>
+        <activity android:name=".ListaCensoActivity" />
+        <activity android:name=".RelatorioMesActivity"></activity>
     </application>
 
 </manifest>
