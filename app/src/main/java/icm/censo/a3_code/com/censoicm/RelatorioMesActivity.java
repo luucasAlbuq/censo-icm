@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,8 +55,8 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
     private void buildLineaChart(LineChart chart){
         LineDataSet dataSet = new LineDataSet(addValueToLineChart(censoList, DBEsquema.COL_TOTAL),"Total");
-        dataSet.setCircleColor(Color.CYAN);
-        dataSet.setColor(Color.CYAN);
+        dataSet.setCircleColor(Color.BLUE);
+        dataSet.setColor(Color.BLUE);
 
 
         LineDataSet dataSet2 = new LineDataSet(addValueToLineChart(censoList, DBEsquema.COL_QTD_VISITANTES),"Visitantes");
@@ -69,7 +70,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
         chart.setData(data);
         chart.animateY(3000);
         chart.fitScreen();
-        chart.setMinimumHeight(300);
+        chart.setMinimumHeight(500);
         chart.setMaxVisibleValueCount(40);
         chart.invalidate();
 
@@ -85,7 +86,12 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
     private List<Entry> addValueToLineChart(List<Censo> censoList, DBEsquema campo){
         List<Entry> entries = new ArrayList<>();
+        Locale BRAZIL = new Locale("pt", "BR");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd", BRAZIL);
+
         for(int i=0;i<censoList.size();i++){
+            //Define o valor do eixo x como sendo o dia do mes em que o censo foi feito
+            //int dia = Integer.parseInt(sdf.format(censoList.get(i).getData()));
             if(campo.equals(DBEsquema.COL_QTD_VISITANTES)){
                 entries.add(new Entry(i,censoList.get(i).getQtdVisitantes()));
             }else if(campo.equals(DBEsquema.COL_TOTAL)){
@@ -241,8 +247,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_relatorio_mes);
 
         try{
-            //censoList = (List<Censo>) getIntent().getSerializableExtra(DBEsquema.TABLE.getValor());
-            censoList = mockCenso();
+            censoList = (List<Censo>) getIntent().getSerializableExtra(DBEsquema.TABLE.getValor());
             EstatisticaMes estatisticaMes = calculaEstatisticaMes(censoList);
             TextView resumo = (TextView) findViewById(R.id.relatorio_resumo_mes);
             resumo.setText(estatisticaMes.toString());
@@ -266,27 +271,6 @@ public class RelatorioMesActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.e("CENSO DIA ", e.getMessage());
         }
-    }
-
-    private List<Censo> mockCenso(){
-        List<Censo> censoList = new ArrayList<>();
-        Calendar calendario = Calendar.getInstance();
-        calendario.clear(Calendar.HOUR_OF_DAY);
-        calendario.clear(Calendar.AM_PM);
-        calendario.clear(Calendar.MINUTE);
-        calendario.clear(Calendar.HOUR);
-        calendario.clear(Calendar.MILLISECOND);
-        calendario.clear(Calendar.SECOND);
-        CensoController controller = new CensoController();
-        Locale BRAZIL = new Locale("pt", "BR");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", BRAZIL);
-        try {
-            censoList.addAll(controller.getCensoByDate(calendario.getTime()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return censoList;
     }
 
     /**
