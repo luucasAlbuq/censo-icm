@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -232,6 +235,13 @@ public class RelatorioMesActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
             outputStream.flush();
             outputStream.close();
+
+            //Efeito de flash na tela quando faz o screenshot
+            AlphaAnimation animation = new AlphaAnimation(1,0);
+            animation.setStartOffset(0);
+            animation.setDuration(200);
+            view.startAnimation(animation);
+
             baixarBtn.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), "Relatório salvo em suas imagens.", Toast.LENGTH_SHORT).show();
         } catch (Throwable e) {
@@ -278,7 +288,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
      * @param list
      * @return
      */
-    private EstatisticaMes calculaEstatisticaMes(List<Censo> list){
+    public static EstatisticaMes calculaEstatisticaMes(List<Censo> list){
         EstatisticaMes estatisticaMes = new EstatisticaMes();
         int totalDiasRegistrados = list.size();
         int totalAdolescentes = 0;
@@ -322,8 +332,8 @@ public class RelatorioMesActivity extends AppCompatActivity {
         estatisticaMes.setTotalVisitantes(totalVisitantes);
         estatisticaMes.setTotalPessoas(totalPessoas);
         //A lista vem do banco em order descencente em relacao a data de cada censo
-        estatisticaMes.setDataInicio(censoList.get(totalDiasRegistrados-1).getData());
-        estatisticaMes.setDataFim(censoList.get(0).getData());
+        estatisticaMes.setDataInicio(list.get(totalDiasRegistrados-1).getData());
+        estatisticaMes.setDataFim(list.get(0).getData());
         return estatisticaMes;
     }
 }

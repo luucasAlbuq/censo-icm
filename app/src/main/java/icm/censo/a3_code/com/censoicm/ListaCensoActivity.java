@@ -16,6 +16,7 @@ import java.util.List;
 
 import model.Censo;
 import util.DBEsquema;
+import util.EstatisticaMes;
 import util.RecycleViewAdapter;
 
 public class ListaCensoActivity extends AppCompatActivity {
@@ -47,7 +48,6 @@ public class ListaCensoActivity extends AppCompatActivity {
                     Intent relatorioMesActivity = new Intent(ListaCensoActivity.this, RelatorioMesActivity.class);
                     relatorioMesActivity.putExtra(DBEsquema.TABLE.getValor(), (Serializable) listaCenso);
                     startActivity(relatorioMesActivity);
-                    finish();
                 }
             });
 

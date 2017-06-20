@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -166,6 +168,13 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
             outputStream.flush();
             outputStream.close();
+
+            //Efeito de flash na tela quando faz o screenshot
+            AlphaAnimation animation = new AlphaAnimation(1,0);
+            animation.setStartOffset(0);
+            animation.setDuration(200);
+            view.startAnimation(animation);
+
             baixarBtn.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), "Relatório salvo em suas imagens.", Toast.LENGTH_SHORT).show();
         } catch (Throwable e) {
