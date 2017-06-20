@@ -19,6 +19,7 @@ import java.util.Locale;
 import icm.censo.a3_code.com.censoicm.MainActivity;
 import icm.censo.a3_code.com.censoicm.R;
 import icm.censo.a3_code.com.censoicm.RelatorioDiaActivity;
+import icm.censo.a3_code.com.censoicm.RelatorioMesActivity;
 import model.Censo;
 
 /**
@@ -29,11 +30,13 @@ public class RecycleViewAdapter extends  RecyclerView.Adapter<RecycleViewAdapter
 
     private List<Censo> censoList;
     private Context context;
+    private EstatisticaMes estatisticaMes;
     private Calendar calendar = Calendar.getInstance();
 
     public RecycleViewAdapter(Context context, List<Censo> lista){
         this.censoList = lista;
         this.context = context;
+        this.estatisticaMes = RelatorioMesActivity.calculaEstatisticaMes(lista);
     }
 
     @Override
@@ -52,6 +55,15 @@ public class RecycleViewAdapter extends  RecyclerView.Adapter<RecycleViewAdapter
             holder.censoDate.setText(data);
             holder.censoIgreja.setText(censo.getIgreja());
             holder.censoTotal.setText("Total: "+String.valueOf(censo.getTotalPessoas()));
+
+
+            if(censo.getTotalPessoas() >= estatisticaMes.getMediaPessoas()){
+                holder.censoIcone.setBackgroundResource(R.drawable.flag_green_icon);
+            }else if(censo.getTotalPessoas()+5 <= estatisticaMes.getMediaPessoas()){
+                holder.censoIcone.setBackgroundResource(R.drawable.flag_red_icon);
+            }else{
+                holder.censoIcone.setBackgroundResource(R.drawable.flag_orange_icon);
+            }
 
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
