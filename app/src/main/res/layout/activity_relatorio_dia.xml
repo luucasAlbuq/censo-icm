@@ -17,7 +17,6 @@
         android:visibility="visible">
 
         <TextView
-            android:id="@+id/relatorio_secessao_frequencia"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/holo_blue_light"
@@ -51,7 +50,6 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/relatorio_secessao_obreiros"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_blue_light"
@@ -73,7 +71,6 @@
                 android:visibility="visible">
 
                 <TextView
-                    android:id="@+id/relatorio_obreiro_louvor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
@@ -106,7 +103,6 @@
                     android:visibility="visible" />
 
                 <TextView
-                    android:id="@+id/relatorio_obreiro_palavra"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
@@ -139,7 +135,6 @@
                     android:visibility="visible" />
 
                 <TextView
-                    android:id="@+id/relatorio_obreiro_porta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
@@ -177,7 +172,6 @@
 
 
             <TextView
-                android:id="@+id/relatorio_secessao_culto"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_blue_light"
@@ -198,7 +192,6 @@
                 android:visibility="visible">
 
                 <TextView
-                    android:id="@+id/relatorio_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
@@ -231,7 +224,6 @@
                     android:visibility="visible" />
 
                 <TextView
-                    android:id="@+id/relatorio_texto_biblico"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
@@ -267,7 +259,6 @@
             </GridLayout>
 
             <TextView
-                android:id="@+id/relatorio_louvores"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -299,7 +290,6 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/relatorio_dom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
