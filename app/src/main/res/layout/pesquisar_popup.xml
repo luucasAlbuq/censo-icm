@@ -37,7 +37,6 @@
                 android:drawablePadding="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:drawableRight="@drawable/add_icon24dp"
                 android:padding="15dp"
                 android:text=" De: "
                 android:textAlignment="center"
@@ -65,7 +64,6 @@
                 android:layout_row="1"
                 android:drawablePadding="10dp"
                 android:layout_marginLeft="10dp"
-                android:drawableRight="@drawable/add_icon24dp"
                 android:padding="15dp"
                 android:text="Até: "
                 android:textSize="20dp" />

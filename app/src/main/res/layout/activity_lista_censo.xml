@@ -26,7 +26,6 @@
         android:layout_height="60dp"
         android:layout_margin="15dp"
         android:clickable="true"
-        app:srcCompat="@drawable/relatorio_icon48dp"
         app:layout_anchor="@id/recyclerView"
         app:layout_anchorGravity="bottom|right|end"/>
 

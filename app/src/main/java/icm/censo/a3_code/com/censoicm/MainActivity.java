@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -197,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Locale.setDefault(new Locale("pt", "BR"));
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         //Chamando a tela de cadastro quando clicar na opcao de cadastro
         cadastrarButton = (Button) findViewById(R.id.cadastrarButton);

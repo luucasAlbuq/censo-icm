@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -188,6 +189,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorio_dia);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         censo = (Censo) getIntent().getSerializableExtra(DBEsquema.TABLE.getValor());
 

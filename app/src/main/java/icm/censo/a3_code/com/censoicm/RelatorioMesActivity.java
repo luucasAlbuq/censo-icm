@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -47,6 +48,7 @@ import java.util.Locale;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
+import jxl.format.Alignment;
 import jxl.format.Colour;
 import jxl.write.Label;
 import jxl.write.Number;
@@ -265,6 +267,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorio_mes);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         try{
             censoList = (List<Censo>) getIntent().getSerializableExtra(DBEsquema.TABLE.getValor());
@@ -364,12 +367,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
         WorkbookSettings workbookSettings = new WorkbookSettings();
         workbookSettings.setUseTemporaryFileDuringWrite(true);
 
-        String path = Environment.getExternalStorageDirectory().toString() +"/"+ Environment.DIRECTORY_DOWNLOADS.toString()+"/"+fileName;
-        //add on the your app's path
-        File dir = new File(path);
-        //make them in case they're not there
-        dir.mkdirs();
-
+        String path = Environment.getExternalStorageDirectory().toString() +"/"+ Environment.DIRECTORY_DOWNLOADS.toString()+"/";
         //create a standard java.io.File object for the Workbook to use
         File wbfile = new File(path,fileName);
 
@@ -390,6 +388,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
             WritableFont font = new WritableFont(WritableFont.ARIAL, 14, WritableFont.BOLD);
             font.setColour(Colour.WHITE);
             cellFormat.setBackground(Colour.LIGHT_BLUE);
+            cellFormat.setAlignment(Alignment.CENTRE);
             cellFormat.setFont(font);
 
             int colunaDataIndex = 0;
@@ -412,44 +411,58 @@ public class RelatorioMesActivity extends AppCompatActivity {
             excelSheet.addCell(colunaData);
 
             Label colunaLouvores = new Label(colunaLouvoresIndex,0,"Lista de Louvores",cellFormat);
+            excelSheet.setColumnView(colunaLouvoresIndex, colunaLouvores.getString().length()*2);
             excelSheet.addCell(colunaLouvores);
 
-            Label colunaRecpcao = new Label(colunaRecpcaoIndex,0,"Recpção/Preparo",cellFormat);
+            Label colunaRecpcao = new Label(colunaRecpcaoIndex,0,"Recepção/Preparo",cellFormat);
+            excelSheet.setColumnView(colunaRecpcaoIndex, colunaRecpcao.getString().length()*2);
             excelSheet.addCell(colunaRecpcao);
 
             Label colunaObreiroLouvor = new Label(colunaObreiroLouvorIndex,0,"Servo(a) No Louvor",cellFormat);
+            excelSheet.setColumnView(colunaObreiroLouvorIndex, colunaObreiroLouvor.getString().length()*2);
             excelSheet.addCell(colunaObreiroLouvor);
 
             Label colunaObreiroPalavra = new Label(colunaObreiroPalavraIndex,0,"Servo(a) Na Palavra",cellFormat);
+            excelSheet.setColumnView(colunaObreiroPalavraIndex, colunaObreiroPalavra.getString().length()*2);
             excelSheet.addCell(colunaObreiroPalavra);
 
             Label colunaTxtBiblico = new Label(colunacolunaTxtBiblicoIndex,0,"Texto Bíblico",cellFormat);
+            excelSheet.setColumnView(colunacolunaTxtBiblicoIndex, colunaTxtBiblico.getString().length()*2);
             excelSheet.addCell(colunaTxtBiblico);
 
             Label colunaVaroes = new Label(colunaVaroesIndex,0,"N° Varões",cellFormat);
+            excelSheet.setColumnView(colunaVaroesIndex, colunaVaroes.getString().length()*2);
             excelSheet.addCell(colunaVaroes);
 
             Label colunaSenhoras = new Label(colunaSenhorasIndex,0,"N° Senhoras",cellFormat);
+            excelSheet.setColumnView(colunaSenhorasIndex, colunaSenhoras.getString().length()*2);
             excelSheet.addCell(colunaSenhoras);
 
             Label colunaJovens = new Label(colunaJovensIndex,0,"N° Jovens",cellFormat);
+            excelSheet.setColumnView(colunaJovensIndex, colunaJovens.getString().length()*2);
             excelSheet.addCell(colunaJovens);
 
             Label colunaAdolescentes = new Label(colunaAdolescentesIndex,0,"N° Adolescentes",cellFormat);
+            excelSheet.setColumnView(colunaAdolescentesIndex, colunaAdolescentes.getString().length()*2);
             excelSheet.addCell(colunaAdolescentes);
 
             Label colunaCriancas = new Label(colunaCriancasIndex,0,"N° Crianças",cellFormat);
+            excelSheet.setColumnView(colunaCriancasIndex, colunaCriancas.getString().length()*2);
             excelSheet.addCell(colunaCriancas);
 
             Label colunaVisitantes = new Label(colunaVisitantesIndex,0,"N° Visitantes",cellFormat);
+            excelSheet.setColumnView(colunaVisitantesIndex, colunaVisitantes.getString().length()*2);
             excelSheet.addCell(colunaVisitantes);
 
             Label colunaTotal = new Label(colunaTotalIndex,0,"N° Total",cellFormat);
+            excelSheet.setColumnView(colunaTotalIndex, colunaTotal.getString().length()*2);
             excelSheet.addCell(colunaTotal);
 
             Label colunaDom = new Label(colunaDomIndex,0,"Dom",cellFormat);
+            excelSheet.setColumnView(colunaDomIndex, colunaDom.getString().length()*20);
             excelSheet.addCell(colunaDom);
 
+            excelSheet.setColumnGroup(colunaVaroesIndex, colunaTotalIndex, false);
             populaExcell(censoList, excelSheet);
 
             writableWorkbook.write();
@@ -484,52 +497,60 @@ public class RelatorioMesActivity extends AppCompatActivity {
             Locale BRAZIL = new Locale("pt", "BR");
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", BRAZIL);
 
+            WritableCellFormat cellFormat = new WritableCellFormat();
+            WritableFont font = new WritableFont(WritableFont.ARIAL, 12, WritableFont.NO_BOLD);
+            font.setColour(Colour.BLACK);
+            cellFormat.setAlignment(Alignment.JUSTIFY);
+            cellFormat.setFont(font);
+
             for (int i=0;i<censoList.size();i++){
                 Censo censo = censoList.get(i);
                 int linha = i+1;
-                Label dataValue = new Label(colunaDataIndex, linha,sdf.format(censo.getData()).toString());
+                Label dataValue = new Label(colunaDataIndex, linha,sdf.format(censo.getData()).toString(), cellFormat);
                 sheet.addCell(dataValue);
 
                 String louvores = censo.getLouvores().toString().replace("[","").replace("]","");
-                Label louvoresValues = new Label(colunaLouvoresIndex, linha, louvores);
+                Label louvoresValues = new Label(colunaLouvoresIndex, linha, louvores, cellFormat);
                 sheet.addCell(louvoresValues);
 
                 String obreirosPorta = censo.getObreirosPorta().toString().replace("[","").replace("]","");
-                Label obreirosPortaValue = new Label(colunaRecpcaoIndex, linha,obreirosPorta);
+                Label obreirosPortaValue = new Label(colunaRecpcaoIndex, linha,obreirosPorta, cellFormat);
                 sheet.addCell(obreirosPortaValue);
 
-                Label obreiroLouvorValue = new Label(colunaObreiroLouvorIndex, linha, censo.getObreiroLouvor());
+                Label obreiroLouvorValue = new Label(colunaObreiroLouvorIndex, linha, censo.getObreiroLouvor(), cellFormat);
                 sheet.addCell(obreiroLouvorValue);
 
-                Label obreiroPalavraValue = new Label(colunaObreiroPalavraIndex, linha, censo.getObreiroPalavra());
+                Label obreiroPalavraValue = new Label(colunaObreiroPalavraIndex, linha, censo.getObreiroPalavra(), cellFormat);
                 sheet.addCell(obreiroPalavraValue);
 
-                Label txtBiblicoValue = new Label(colunacolunaTxtBiblicoIndex,linha,censo.getTextoBiblico());
+                Label txtBiblicoValue = new Label(colunacolunaTxtBiblicoIndex,linha,censo.getTextoBiblico(), cellFormat);
                 sheet.addCell(txtBiblicoValue);
 
-                Number vaoresValue = new Number(colunaVaroesIndex,linha,censo.getQtdVaroes());
+                Number vaoresValue = new Number(colunaVaroesIndex,linha,censo.getQtdVaroes(), cellFormat);
                 sheet.addCell(vaoresValue);
 
-                Number senhorasValue = new Number(colunaSenhorasIndex,linha,censo.getQtdSenhoras());
+                Number senhorasValue = new Number(colunaSenhorasIndex,linha,censo.getQtdSenhoras(), cellFormat);
                 sheet.addCell(senhorasValue);
 
-                Number jovensValue = new Number(colunaJovensIndex, linha, censo.getQtdJovens());
+                Number jovensValue = new Number(colunaJovensIndex, linha, censo.getQtdJovens(), cellFormat);
                 sheet.addCell(jovensValue);
 
-                Number adolescentesValue = new Number(colunaAdolescentesIndex, linha, censo.getQtdAdolescentes());
+                Number adolescentesValue = new Number(colunaAdolescentesIndex, linha, censo.getQtdAdolescentes(), cellFormat);
                 sheet.addCell(adolescentesValue);
 
-                Number criancasValue = new Number(colunaCriancasIndex, linha, censo.getQtdCriancas());
+                Number criancasValue = new Number(colunaCriancasIndex, linha, censo.getQtdCriancas(), cellFormat);
                 sheet.addCell(criancasValue);
 
-                Number visitantesValue = new Number(colunaVisitantesIndex, linha, censo.getQtdVisitantes());
+                Number visitantesValue = new Number(colunaVisitantesIndex, linha, censo.getQtdVisitantes(), cellFormat);
                 sheet.addCell(visitantesValue);
 
-                Number totalValue = new Number(colunaTotalIndex, linha, censo.getTotalPessoas());
+                Number totalValue = new Number(colunaTotalIndex, linha, censo.getTotalPessoas(), cellFormat);
                 sheet.addCell(totalValue);
 
-                Label domValue = new Label(colunaDomIndex, linha, censo.getDom());
+                Label domValue = new Label(colunaDomIndex, linha, censo.getDom(), cellFormat);
                 sheet.addCell(domValue);
+
+                sheet.getRowView(linha).setAutosize(true);
             }
         }
     }
