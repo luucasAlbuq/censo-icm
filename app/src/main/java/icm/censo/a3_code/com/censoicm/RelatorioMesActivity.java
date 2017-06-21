@@ -64,7 +64,10 @@ import util.EstatisticaMes;
 
 public class RelatorioMesActivity extends AppCompatActivity {
 
-    List<Censo> censoList;
+    private List<Censo> censoList;
+    private LineChart lineChartTotalMes;
+    private PieChart pieChartGeral;
+    private TextView resumo;
 
     private void buildLineaChart(LineChart chart){
         LineDataSet dataSet = new LineDataSet(addValueToLineChart(censoList, DBEsquema.COL_TOTAL),"Total");
@@ -80,6 +83,11 @@ public class RelatorioMesActivity extends AppCompatActivity {
         data.addDataSet(dataSet);
         data.addDataSet(dataSet2);
 
+        Description description = new Description();
+        description.setText("Frequência Geral");
+        description.setTextColor(Color.WHITE);
+        chart.setDescription(description);
+
         chart.setData(data);
         chart.animateY(3000);
         chart.fitScreen();
@@ -89,6 +97,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
         // customize legends
         Legend l = chart.getLegend();
+        l.setTextColor(Color.WHITE);
         l.setWordWrapEnabled(true);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
@@ -151,6 +160,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
         description.setText("Total: "+estatisticaMes.getTotalPessoas());
         description.setTextAlign(Paint.Align.CENTER);
+        description.setTextColor(Color.WHITE);
         description.setTextSize(10f);
         description.setPosition(85f,15f);
         mChart.setDescription(description);
@@ -158,6 +168,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
         // customize legends
         Legend l = mChart.getLegend();
+        l.setTextColor(Color.WHITE);
         l.setWordWrapEnabled(true);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
@@ -232,6 +243,12 @@ public class RelatorioMesActivity extends AppCompatActivity {
             baixarBtn.setVisibility(View.GONE);
             gerarExcellBtn.setVisibility(View.GONE);
 
+            pieChartGeral.getDescription().setTextColor(Color.BLACK);
+            pieChartGeral.getLegend().setTextColor(Color.BLACK);
+            lineChartTotalMes.getDescription().setTextColor(Color.BLACK);
+            lineChartTotalMes.getLegend().setTextColor(Color.BLACK);
+            resumo.setTextColor(Color.BLACK);
+
             Bitmap bitmap = Bitmap.createBitmap(
                     view.getChildAt(0).getWidth(),
                     view.getChildAt(0).getHeight(),
@@ -255,6 +272,13 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
             baixarBtn.setVisibility(View.VISIBLE);
             gerarExcellBtn.setVisibility(View.VISIBLE);
+
+            pieChartGeral.getDescription().setTextColor(Color.WHITE);
+            pieChartGeral.getLegend().setTextColor(Color.WHITE);
+            lineChartTotalMes.getDescription().setTextColor(Color.WHITE);
+            lineChartTotalMes.getLegend().setTextColor(Color.WHITE);
+            resumo.setTextColor(Color.WHITE);
+
             Toast.makeText(getApplicationContext(), "Relatório salvo em suas imagens.", Toast.LENGTH_SHORT).show();
         } catch (Throwable e) {
             // Several error may come out with file handling or OOM
@@ -272,12 +296,12 @@ public class RelatorioMesActivity extends AppCompatActivity {
         try{
             censoList = (List<Censo>) getIntent().getSerializableExtra(DBEsquema.TABLE.getValor());
             EstatisticaMes estatisticaMes = calculaEstatisticaMes(censoList);
-            TextView resumo = (TextView) findViewById(R.id.relatorio_resumo_mes);
+            resumo = (TextView) findViewById(R.id.relatorio_resumo_mes);
             resumo.setText(estatisticaMes.toString());
 
 
-            LineChart lineChartTotalMes = (LineChart) findViewById(R.id.grafico_linha_total_mes);
-            PieChart pieChartGeral = (PieChart) findViewById(R.id.grafico_geral_mes);
+            lineChartTotalMes = (LineChart) findViewById(R.id.grafico_linha_total_mes);
+            pieChartGeral = (PieChart) findViewById(R.id.grafico_geral_mes);
             buildLineaChart(lineChartTotalMes);
             buildPieChart(pieChartGeral, calculaEstatisticaMes(censoList));
 

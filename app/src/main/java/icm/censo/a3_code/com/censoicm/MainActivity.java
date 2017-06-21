@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,7 @@ import util.MetodoPesquisa;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button cadastrarButton, pesquisarMenuButton, compararButton, relatorioButton, sairButton;
+    private ImageButton cadastrarButton, pesquisarMenuButton, relatorioButton, sairButton;
     private final Calendar calendario = Calendar.getInstance();
     private CensoController controller = new CensoController();
 
@@ -201,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         //Chamando a tela de cadastro quando clicar na opcao de cadastro
-        cadastrarButton = (Button) findViewById(R.id.cadastrarButton);
+        cadastrarButton = (ImageButton) findViewById(R.id.cadastrarButton);
         cadastrarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Chamando o popup de pesquisa quando clicar na opcao de pesquisa
-        pesquisarMenuButton = (Button) findViewById(R.id.pesquisarButton);
+        pesquisarMenuButton = (ImageButton) findViewById(R.id.pesquisarButton);
         pesquisarMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,17 +220,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Chamando o popup de pesquisa quando clicar na opcao de comparar
-        compararButton = (Button) findViewById(R.id.compararButton);
-        compararButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                preparaPesquisaPopup();
-            }
-        });
-
         //Chamando o popup de pesquisa quando clicar na opcao de gerar relatorio
-        relatorioButton = (Button) findViewById(R.id.relatorioButton);
+        relatorioButton = (ImageButton) findViewById(R.id.relatorioButton);
         relatorioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Deslogar
-        sairButton = (Button) findViewById(R.id.sairButton);
+        sairButton = (ImageButton) findViewById(R.id.sairButton);
         sairButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

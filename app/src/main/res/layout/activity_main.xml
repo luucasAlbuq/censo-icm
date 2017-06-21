@@ -4,118 +4,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
+    android:background="@drawable/background"
     tools:context="icm.censo.a3_code.com.censoicm.MainActivity">
 
-
     <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="30dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
 
-
-        <Button
-            android:id="@+id/cadastrarButton"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="50dp"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="5dp"
+            android:layout_column="0"
+            android:layout_margin="20dp"
             android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:background="@android:color/holo_blue_light"
-            android:clickable="true"
-            android:drawablePadding="5dp"
-            android:elevation="0dp"
-            android:fontFamily="sans-serif"
-            android:gravity="fill"
-            android:text="Cadastrar"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/cadastrarButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/menu_icon_cadastrar_96"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"/>
 
-        <Button
-            android:id="@+id/pesquisarButton"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Cadastrar"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="50dp"
             android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="5dp"
+            android:layout_margin="20dp"
+            android:layout_row="0"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/pesquisarButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/menu_icon_pesquisar_96"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Pesquisar"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_margin="20dp"
             android:layout_row="1"
-            android:layout_rowWeight="1"
-            android:background="@android:color/holo_blue_light"
-            android:clickable="true"
-            android:gravity="fill"
-            android:text="Pesquisar"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/relatorioButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/menu_icon_gerar_relatorio_96"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"/>
 
-        <Button
-            android:id="@+id/compararButton"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="50dp"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="5dp"
-            android:layout_row="2"
-            android:layout_rowWeight="1"
-            android:background="@android:color/holo_blue_light"
-            android:clickable="true"
-            android:gravity="fill"
-            android:text="Comparar Frequência"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Relatórios"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/relatorioButton"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="50dp"
             android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="5dp"
-            android:layout_row="3"
-            android:layout_rowWeight="1"
-            android:background="@android:color/holo_blue_light"
-            android:clickable="true"
-            android:gravity="fill"
-            android:text="Gerar Relatório"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:layout_margin="20dp"
+            android:layout_row="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/sairButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/menu_icon_sair_96"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"/>
 
-        <Button
-            android:id="@+id/sairButton"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="50dp"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="5dp"
-            android:layout_row="4"
-            android:layout_rowWeight="1"
-            android:background="@android:color/holo_blue_light"
-            android:clickable="true"
-            android:gravity="fill"
-            android:text="Sair"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Sair"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"/>
+        </LinearLayout>
 
     </GridLayout>
+
 </RelativeLayout>
