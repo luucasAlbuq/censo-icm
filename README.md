@@ -30,6 +30,7 @@ Atualmente o aplicativo encontra-se na versão beta e possui as seguintes funcio
 
 ### Exemplo de excel gerado
 ![](http://icons.iconarchive.com/icons/ziggy19/microsoft-office-mac-tilt/24/Excel-icon.png)[Arquivo](https://github.com/luucasAlbuq/censo-icm/blob/master/app/screenshots/relatorio_censo_icm_1498059847968.xls)
+![](https://github.com/luucasAlbuq/censo-icm/blob/master/app/screenshots/Capture_report.PNG)
 
 ### Exemplo de análise geral salva no dispositivo
 ![](https://github.com/luucasAlbuq/censo-icm/blob/master/app/screenshots/WhatsApp%20Image%202017-06-19%20at%2018.59.41.jpeg)
