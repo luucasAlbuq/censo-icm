@@ -40,7 +40,9 @@
                 android:padding="15dp"
                 android:text=" De: "
                 android:textAlignment="center"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:drawableEnd="@drawable/calendar_icon"
+                android:drawableRight="@drawable/calendar_icon"/>
 
             <TextView
                 android:id="@+id/dataPesquisaInicio_resposta"
@@ -63,6 +65,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_row="1"
                 android:drawablePadding="10dp"
+                android:drawableEnd="@drawable/calendar_icon"
+                android:drawableRight="@drawable/calendar_icon"
                 android:layout_marginLeft="10dp"
                 android:padding="15dp"
                 android:text="Até: "

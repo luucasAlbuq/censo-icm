@@ -22,6 +22,7 @@
             android:layout_row="0"
             android:orientation="vertical"
             android:gravity="center">
+
             <ImageButton
                 android:id="@+id/cadastrarButton"
                 android:layout_width="100dp"

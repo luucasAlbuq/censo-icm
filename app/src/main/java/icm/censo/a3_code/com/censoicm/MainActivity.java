@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -202,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         //Chamando a tela de cadastro quando clicar na opcao de cadastro
+        //cadastrarButton = (ImageButton) findViewById(R.id.cadastrarButton);
         cadastrarButton = (ImageButton) findViewById(R.id.cadastrarButton);
         cadastrarButton.setOnClickListener(new View.OnClickListener() {
             @Override

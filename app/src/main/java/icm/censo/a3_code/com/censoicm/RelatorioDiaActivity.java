@@ -92,8 +92,12 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 if(mChart.isSaveEnabled()){
-                    mChart.saveToGallery("censo_icm"+ Calendar.getInstance().getTimeInMillis()+".jpg", 85); // 85 is the quality of the image
+                    mChart.getLegend().setTextColor(Color.BLACK);
+                    mChart.getDescription().setTextColor(Color.BLACK);
+                    mChart.saveToGallery("censo_icm_relatorio_diario"+ Calendar.getInstance().getTimeInMillis()+".jpg", 85); // 85 is the quality of the image
                     Toast.makeText(getApplicationContext(), "Gráfico Salvo", Toast.LENGTH_SHORT).show();
+                    mChart.getLegend().setTextColor(Color.WHITE);
+                    mChart.getDescription().setTextColor(Color.WHITE);
                 }
             }
 
