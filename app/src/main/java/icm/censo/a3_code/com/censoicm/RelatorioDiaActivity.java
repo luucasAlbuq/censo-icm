@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -45,11 +46,13 @@ import util.DBEsquema;
 public class RelatorioDiaActivity extends AppCompatActivity {
 
     private Censo censo;
-
     private CensoController controller = new CensoController();
+    private TextView obreiroLouvor, obreiroPalavra, obreiroPorta, data, dom, louvores, textoBiblico;
+    private Button baixar;
+    private PieChart mChart;
 
     private void  buildChart(Censo censo){
-        final PieChart mChart = (PieChart) findViewById(R.id.relatorio_graf_dia);
+        mChart = (PieChart) findViewById(R.id.relatorio_graf_dia);
         mChart.setTransparentCircleRadius(0);
         mChart.setUsePercentValues(true);
         mChart.setDescription(null);
@@ -70,12 +73,14 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         description.setText("Total: "+censo.getTotalPessoas()+" | "+data);
         description.setTextAlign(Paint.Align.CENTER);
         description.setTextSize(10f);
-        description.setPosition(85f,15f);
+        description.setTextColor(Color.WHITE);
+        description.setPosition(90f,15f);
         mChart.setDescription(description);
         setDataPie(censo, mChart);
 
         // customize legends
         Legend l = mChart.getLegend();
+        l.setTextColor(Color.WHITE);
         l.setWordWrapEnabled(true);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
@@ -87,8 +92,12 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 if(mChart.isSaveEnabled()){
-                    mChart.saveToGallery("censo_icm"+ Calendar.getInstance().getTimeInMillis()+".jpg", 85); // 85 is the quality of the image
+                    mChart.getLegend().setTextColor(Color.BLACK);
+                    mChart.getDescription().setTextColor(Color.BLACK);
+                    mChart.saveToGallery("censo_icm_relatorio_diario"+ Calendar.getInstance().getTimeInMillis()+".jpg", 85); // 85 is the quality of the image
                     Toast.makeText(getApplicationContext(), "Gráfico Salvo", Toast.LENGTH_SHORT).show();
+                    mChart.getLegend().setTextColor(Color.WHITE);
+                    mChart.getDescription().setTextColor(Color.WHITE);
                 }
             }
 
@@ -149,8 +158,31 @@ public class RelatorioDiaActivity extends AppCompatActivity {
 
 
             //Don't show the button
-            Button baixarBtn = (Button) findViewById(R.id.baixarRelatorioDia);
-            baixarBtn.setVisibility(View.GONE);
+            baixar.setVisibility(View.GONE);
+
+
+            TextView obreiroLouvorField = (TextView) findViewById(R.id.relatorio_obreiro_louvor);
+            TextView obreiroPalavraField = (TextView) findViewById(R.id.relatorio_obreiro_palavra);
+            TextView obreiroPortaField = (TextView) findViewById(R.id.relatorio_obreiro_porta);
+            TextView dataField = (TextView) findViewById(R.id.relatorio_data);
+            TextView domField = (TextView) findViewById(R.id.relatorio_dom);
+            TextView louvoresField = (TextView) findViewById(R.id.relatorio_louvores);
+            TextView textoBiblicoField = (TextView) findViewById(R.id.relatorio_texto_biblico);
+
+            obreiroLouvorField.setTextColor(Color.BLACK);
+            obreiroPalavraField.setTextColor(Color.BLACK);
+            dataField.setTextColor(Color.BLACK);
+            domField.setTextColor(Color.BLACK);
+            louvoresField.setTextColor(Color.BLACK);
+            textoBiblicoField.setTextColor(Color.BLACK);
+            obreiroLouvor.setTextColor(Color.BLACK);
+            obreiroPalavra.setTextColor(Color.BLACK);
+            data.setTextColor(Color.BLACK);
+            dom.setTextColor(Color.BLACK);
+            louvores.setTextColor(Color.BLACK);
+            textoBiblico.setTextColor(Color.BLACK);
+            mChart.getLegend().setTextColor(Color.BLACK);
+            mChart.getDescription().setTextColor(Color.BLACK);
 
 
             ScrollView view = (ScrollView) findViewById(R.id.relatorio_dia_id);
@@ -175,7 +207,22 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             animation.setDuration(200);
             view.startAnimation(animation);
 
-            baixarBtn.setVisibility(View.VISIBLE);
+            obreiroLouvorField.setTextColor(Color.WHITE);
+            obreiroPalavraField.setTextColor(Color.WHITE);
+            dataField.setTextColor(Color.WHITE);
+            domField.setTextColor(Color.WHITE);
+            louvoresField.setTextColor(Color.WHITE);
+            textoBiblicoField.setTextColor(Color.WHITE);
+            obreiroLouvor.setTextColor(Color.WHITE);
+            obreiroPalavra.setTextColor(Color.WHITE);
+            data.setTextColor(Color.WHITE);
+            dom.setTextColor(Color.WHITE);
+            louvores.setTextColor(Color.WHITE);
+            textoBiblico.setTextColor(Color.WHITE);
+            mChart.getLegend().setTextColor(Color.WHITE);
+            mChart.getDescription().setTextColor(Color.WHITE);
+
+            baixar.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), "Relatório salvo em suas imagens.", Toast.LENGTH_SHORT).show();
         } catch (Throwable e) {
             // Several error may come out with file handling or OOM
@@ -188,17 +235,18 @@ public class RelatorioDiaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorio_dia);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         censo = (Censo) getIntent().getSerializableExtra(DBEsquema.TABLE.getValor());
 
-        TextView obreiroLouvor = (TextView) findViewById(R.id.relatorio_obreiro_louvor_resposta);
-        TextView obreiroPalavra = (TextView) findViewById(R.id.relatorio_obreiro_palavra_resposta);
-        TextView obreiroPorta = (TextView) findViewById(R.id.relatorio_obreiro_porta_resposta);
-        TextView data = (TextView) findViewById(R.id.relatorio_data_resposta);
-        TextView dom = (TextView) findViewById(R.id.relatorio_dom_resposta);
-        TextView louvores = (TextView) findViewById(R.id.relatorio_louvores_resposta);
-        TextView textoBiblico = (TextView) findViewById(R.id.relatorio_texto_biblico_resposta);
-        Button baixar = (Button) findViewById(R.id.baixarRelatorioDia);
+        obreiroLouvor = (TextView) findViewById(R.id.relatorio_obreiro_louvor_resposta);
+        obreiroPalavra = (TextView) findViewById(R.id.relatorio_obreiro_palavra_resposta);
+        obreiroPorta = (TextView) findViewById(R.id.relatorio_obreiro_porta_resposta);
+        data = (TextView) findViewById(R.id.relatorio_data_resposta);
+        dom = (TextView) findViewById(R.id.relatorio_dom_resposta);
+        louvores = (TextView) findViewById(R.id.relatorio_louvores_resposta);
+        textoBiblico = (TextView) findViewById(R.id.relatorio_texto_biblico_resposta);
+        baixar = (Button) findViewById(R.id.baixarRelatorioDia);
 
         try {
             buildChart(censo);

@@ -5,15 +5,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -40,6 +38,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,14 +46,28 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import controller.CensoController;
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.format.Alignment;
+import jxl.format.Colour;
+import jxl.write.Label;
+import jxl.write.Number;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 import model.Censo;
 import util.DBEsquema;
 import util.EstatisticaMes;
 
 public class RelatorioMesActivity extends AppCompatActivity {
 
-    List<Censo> censoList;
+    private List<Censo> censoList;
+    private LineChart lineChartTotalMes;
+    private PieChart pieChartGeral;
+    private TextView resumo;
 
     private void buildLineaChart(LineChart chart){
         LineDataSet dataSet = new LineDataSet(addValueToLineChart(censoList, DBEsquema.COL_TOTAL),"Total");
@@ -70,6 +83,11 @@ public class RelatorioMesActivity extends AppCompatActivity {
         data.addDataSet(dataSet);
         data.addDataSet(dataSet2);
 
+        Description description = new Description();
+        description.setText("Frequência Geral");
+        description.setTextColor(Color.WHITE);
+        chart.setDescription(description);
+
         chart.setData(data);
         chart.animateY(3000);
         chart.fitScreen();
@@ -79,6 +97,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
         // customize legends
         Legend l = chart.getLegend();
+        l.setTextColor(Color.WHITE);
         l.setWordWrapEnabled(true);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
@@ -141,6 +160,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
         description.setText("Total: "+estatisticaMes.getTotalPessoas());
         description.setTextAlign(Paint.Align.CENTER);
+        description.setTextColor(Color.WHITE);
         description.setTextSize(10f);
         description.setPosition(85f,15f);
         mChart.setDescription(description);
@@ -148,6 +168,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
         // customize legends
         Legend l = mChart.getLegend();
+        l.setTextColor(Color.WHITE);
         l.setWordWrapEnabled(true);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
@@ -209,7 +230,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
         pieChart.invalidate();
     }
 
-    private void takeScreenshot(final ScrollView view, final Button baixarBtn) {
+    private void takeScreenshot(final ScrollView view, final Button baixarBtn, final Button gerarExcellBtn) {
         Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
@@ -220,6 +241,13 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
             //Don't show the button
             baixarBtn.setVisibility(View.GONE);
+            gerarExcellBtn.setVisibility(View.GONE);
+
+            pieChartGeral.getDescription().setTextColor(Color.BLACK);
+            pieChartGeral.getLegend().setTextColor(Color.BLACK);
+            lineChartTotalMes.getDescription().setTextColor(Color.BLACK);
+            lineChartTotalMes.getLegend().setTextColor(Color.BLACK);
+            resumo.setTextColor(Color.BLACK);
 
             Bitmap bitmap = Bitmap.createBitmap(
                     view.getChildAt(0).getWidth(),
@@ -243,6 +271,14 @@ public class RelatorioMesActivity extends AppCompatActivity {
             view.startAnimation(animation);
 
             baixarBtn.setVisibility(View.VISIBLE);
+            gerarExcellBtn.setVisibility(View.VISIBLE);
+
+            pieChartGeral.getDescription().setTextColor(Color.WHITE);
+            pieChartGeral.getLegend().setTextColor(Color.WHITE);
+            lineChartTotalMes.getDescription().setTextColor(Color.WHITE);
+            lineChartTotalMes.getLegend().setTextColor(Color.WHITE);
+            resumo.setTextColor(Color.WHITE);
+
             Toast.makeText(getApplicationContext(), "Relatório salvo em suas imagens.", Toast.LENGTH_SHORT).show();
         } catch (Throwable e) {
             // Several error may come out with file handling or OOM
@@ -255,25 +291,35 @@ public class RelatorioMesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorio_mes);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         try{
             censoList = (List<Censo>) getIntent().getSerializableExtra(DBEsquema.TABLE.getValor());
             EstatisticaMes estatisticaMes = calculaEstatisticaMes(censoList);
-            TextView resumo = (TextView) findViewById(R.id.relatorio_resumo_mes);
+            resumo = (TextView) findViewById(R.id.relatorio_resumo_mes);
             resumo.setText(estatisticaMes.toString());
 
 
-            LineChart lineChartTotalMes = (LineChart) findViewById(R.id.grafico_linha_total_mes);
-            PieChart pieChartGeral = (PieChart) findViewById(R.id.grafico_geral_mes);
+            lineChartTotalMes = (LineChart) findViewById(R.id.grafico_linha_total_mes);
+            pieChartGeral = (PieChart) findViewById(R.id.grafico_geral_mes);
             buildLineaChart(lineChartTotalMes);
             buildPieChart(pieChartGeral, calculaEstatisticaMes(censoList));
 
             final ScrollView scrollView = (ScrollView) findViewById(R.id.relatorio_geral_mes);
             final Button baixarBtn = (Button) findViewById(R.id.baixarRelatorioMes);
+            final Button gerarExcellBtn = (Button) findViewById(R.id.gerarRelatorioExcell);
+
             baixarBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    takeScreenshot(scrollView, baixarBtn);
+                    takeScreenshot(scrollView, baixarBtn, gerarExcellBtn);
+                }
+            });
+
+            gerarExcellBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    gerarRelatorioExcell();
                 }
             });
 
@@ -335,5 +381,201 @@ public class RelatorioMesActivity extends AppCompatActivity {
         estatisticaMes.setDataInicio(list.get(totalDiasRegistrados-1).getData());
         estatisticaMes.setDataFim(list.get(0).getData());
         return estatisticaMes;
+    }
+
+    /**
+     * Gera o excell com as informações de vários objestos censo
+     */
+    private void gerarRelatorioExcell(){
+        String fileName = "relatorio_censo_icm_"+Calendar.getInstance().getTimeInMillis()+".xls";
+        WorkbookSettings workbookSettings = new WorkbookSettings();
+        workbookSettings.setUseTemporaryFileDuringWrite(true);
+
+        String path = Environment.getExternalStorageDirectory().toString() +"/"+ Environment.DIRECTORY_DOWNLOADS.toString()+"/";
+        //create a standard java.io.File object for the Workbook to use
+        File wbfile = new File(path,fileName);
+
+        Log.i("Excel Path:",wbfile.getPath());
+
+        WritableWorkbook writableWorkbook = null;
+
+        try{
+            //create a new WritableWorkbook using the java.io.File and
+            //WorkbookSettings from above
+            writableWorkbook = Workbook.createWorkbook(wbfile,workbookSettings);
+
+            // create an Excel sheet
+            WritableSheet excelSheet = writableWorkbook.createSheet("Censo Icm", 0);
+
+            //Formt Cell
+            WritableCellFormat cellFormat = new WritableCellFormat();
+            WritableFont font = new WritableFont(WritableFont.ARIAL, 14, WritableFont.BOLD);
+            font.setColour(Colour.WHITE);
+            cellFormat.setBackground(Colour.LIGHT_BLUE);
+            cellFormat.setAlignment(Alignment.CENTRE);
+            cellFormat.setFont(font);
+
+            int colunaDataIndex = 0;
+            int colunaLouvoresIndex = 1;
+            int colunaRecpcaoIndex = 2;
+            int colunaObreiroLouvorIndex = 3;
+            int colunaObreiroPalavraIndex = 4;
+            int colunacolunaTxtBiblicoIndex = 5;
+            int colunaVaroesIndex = 6;
+            int colunaSenhorasIndex = 7;
+            int colunaJovensIndex = 8;
+            int colunaAdolescentesIndex = 9;
+            int colunaCriancasIndex = 10;
+            int colunaVisitantesIndex = 11;
+            int colunaTotalIndex = 12;
+            int colunaDomIndex = 13;
+
+
+            Label colunaData = new Label(colunaDataIndex,0,"Data",cellFormat);
+            excelSheet.addCell(colunaData);
+
+            Label colunaLouvores = new Label(colunaLouvoresIndex,0,"Lista de Louvores",cellFormat);
+            excelSheet.setColumnView(colunaLouvoresIndex, colunaLouvores.getString().length()*2);
+            excelSheet.addCell(colunaLouvores);
+
+            Label colunaRecpcao = new Label(colunaRecpcaoIndex,0,"Recepção/Preparo",cellFormat);
+            excelSheet.setColumnView(colunaRecpcaoIndex, colunaRecpcao.getString().length()*2);
+            excelSheet.addCell(colunaRecpcao);
+
+            Label colunaObreiroLouvor = new Label(colunaObreiroLouvorIndex,0,"Servo(a) No Louvor",cellFormat);
+            excelSheet.setColumnView(colunaObreiroLouvorIndex, colunaObreiroLouvor.getString().length()*2);
+            excelSheet.addCell(colunaObreiroLouvor);
+
+            Label colunaObreiroPalavra = new Label(colunaObreiroPalavraIndex,0,"Servo(a) Na Palavra",cellFormat);
+            excelSheet.setColumnView(colunaObreiroPalavraIndex, colunaObreiroPalavra.getString().length()*2);
+            excelSheet.addCell(colunaObreiroPalavra);
+
+            Label colunaTxtBiblico = new Label(colunacolunaTxtBiblicoIndex,0,"Texto Bíblico",cellFormat);
+            excelSheet.setColumnView(colunacolunaTxtBiblicoIndex, colunaTxtBiblico.getString().length()*2);
+            excelSheet.addCell(colunaTxtBiblico);
+
+            Label colunaVaroes = new Label(colunaVaroesIndex,0,"N° Varões",cellFormat);
+            excelSheet.setColumnView(colunaVaroesIndex, colunaVaroes.getString().length()*2);
+            excelSheet.addCell(colunaVaroes);
+
+            Label colunaSenhoras = new Label(colunaSenhorasIndex,0,"N° Senhoras",cellFormat);
+            excelSheet.setColumnView(colunaSenhorasIndex, colunaSenhoras.getString().length()*2);
+            excelSheet.addCell(colunaSenhoras);
+
+            Label colunaJovens = new Label(colunaJovensIndex,0,"N° Jovens",cellFormat);
+            excelSheet.setColumnView(colunaJovensIndex, colunaJovens.getString().length()*2);
+            excelSheet.addCell(colunaJovens);
+
+            Label colunaAdolescentes = new Label(colunaAdolescentesIndex,0,"N° Adolescentes",cellFormat);
+            excelSheet.setColumnView(colunaAdolescentesIndex, colunaAdolescentes.getString().length()*2);
+            excelSheet.addCell(colunaAdolescentes);
+
+            Label colunaCriancas = new Label(colunaCriancasIndex,0,"N° Crianças",cellFormat);
+            excelSheet.setColumnView(colunaCriancasIndex, colunaCriancas.getString().length()*2);
+            excelSheet.addCell(colunaCriancas);
+
+            Label colunaVisitantes = new Label(colunaVisitantesIndex,0,"N° Visitantes",cellFormat);
+            excelSheet.setColumnView(colunaVisitantesIndex, colunaVisitantes.getString().length()*2);
+            excelSheet.addCell(colunaVisitantes);
+
+            Label colunaTotal = new Label(colunaTotalIndex,0,"N° Total",cellFormat);
+            excelSheet.setColumnView(colunaTotalIndex, colunaTotal.getString().length()*2);
+            excelSheet.addCell(colunaTotal);
+
+            Label colunaDom = new Label(colunaDomIndex,0,"Dom",cellFormat);
+            excelSheet.setColumnView(colunaDomIndex, colunaDom.getString().length()*20);
+            excelSheet.addCell(colunaDom);
+
+            excelSheet.setColumnGroup(colunaVaroesIndex, colunaTotalIndex, false);
+            populaExcell(censoList, excelSheet);
+
+            writableWorkbook.write();
+            writableWorkbook.close();
+
+            Toast.makeText(getApplicationContext(), "Relatório Gerado com Sucesso.", Toast.LENGTH_SHORT).show();
+
+        }catch(Exception ex){
+            Log.e("EXCELL",ex.getStackTrace().toString());
+            Log.e("EXCELL", ex.getMessage());
+            Toast.makeText(getApplicationContext(),getString(R.string.erro_generico), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private  void populaExcell(List<Censo> censoList, WritableSheet sheet) throws WriteException {
+        int colunaDataIndex = 0;
+        int colunaLouvoresIndex = 1;
+        int colunaRecpcaoIndex = 2;
+        int colunaObreiroLouvorIndex = 3;
+        int colunaObreiroPalavraIndex = 4;
+        int colunacolunaTxtBiblicoIndex = 5;
+        int colunaVaroesIndex = 6;
+        int colunaSenhorasIndex = 7;
+        int colunaJovensIndex = 8;
+        int colunaAdolescentesIndex = 9;
+        int colunaCriancasIndex = 10;
+        int colunaVisitantesIndex = 11;
+        int colunaTotalIndex = 12;
+        int colunaDomIndex = 13;
+
+        if(sheet != null && censoList != null && censoList.size() > 0){
+            Locale BRAZIL = new Locale("pt", "BR");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", BRAZIL);
+
+            WritableCellFormat cellFormat = new WritableCellFormat();
+            WritableFont font = new WritableFont(WritableFont.ARIAL, 12, WritableFont.NO_BOLD);
+            font.setColour(Colour.BLACK);
+            cellFormat.setAlignment(Alignment.JUSTIFY);
+            cellFormat.setFont(font);
+
+            for (int i=0;i<censoList.size();i++){
+                Censo censo = censoList.get(i);
+                int linha = i+1;
+                Label dataValue = new Label(colunaDataIndex, linha,sdf.format(censo.getData()).toString(), cellFormat);
+                sheet.addCell(dataValue);
+
+                String louvores = censo.getLouvores().toString().replace("[","").replace("]","");
+                Label louvoresValues = new Label(colunaLouvoresIndex, linha, louvores, cellFormat);
+                sheet.addCell(louvoresValues);
+
+                String obreirosPorta = censo.getObreirosPorta().toString().replace("[","").replace("]","");
+                Label obreirosPortaValue = new Label(colunaRecpcaoIndex, linha,obreirosPorta, cellFormat);
+                sheet.addCell(obreirosPortaValue);
+
+                Label obreiroLouvorValue = new Label(colunaObreiroLouvorIndex, linha, censo.getObreiroLouvor(), cellFormat);
+                sheet.addCell(obreiroLouvorValue);
+
+                Label obreiroPalavraValue = new Label(colunaObreiroPalavraIndex, linha, censo.getObreiroPalavra(), cellFormat);
+                sheet.addCell(obreiroPalavraValue);
+
+                Label txtBiblicoValue = new Label(colunacolunaTxtBiblicoIndex,linha,censo.getTextoBiblico(), cellFormat);
+                sheet.addCell(txtBiblicoValue);
+
+                Number vaoresValue = new Number(colunaVaroesIndex,linha,censo.getQtdVaroes(), cellFormat);
+                sheet.addCell(vaoresValue);
+
+                Number senhorasValue = new Number(colunaSenhorasIndex,linha,censo.getQtdSenhoras(), cellFormat);
+                sheet.addCell(senhorasValue);
+
+                Number jovensValue = new Number(colunaJovensIndex, linha, censo.getQtdJovens(), cellFormat);
+                sheet.addCell(jovensValue);
+
+                Number adolescentesValue = new Number(colunaAdolescentesIndex, linha, censo.getQtdAdolescentes(), cellFormat);
+                sheet.addCell(adolescentesValue);
+
+                Number criancasValue = new Number(colunaCriancasIndex, linha, censo.getQtdCriancas(), cellFormat);
+                sheet.addCell(criancasValue);
+
+                Number visitantesValue = new Number(colunaVisitantesIndex, linha, censo.getQtdVisitantes(), cellFormat);
+                sheet.addCell(visitantesValue);
+
+                Number totalValue = new Number(colunaTotalIndex, linha, censo.getTotalPessoas(), cellFormat);
+                sheet.addCell(totalValue);
+
+                Label domValue = new Label(colunaDomIndex, linha, censo.getDom(), cellFormat);
+                sheet.addCell(domValue);
+
+                sheet.getRowView(linha).setAutosize(true);
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context="icm.censo.a3_code.com.censoicm.CadastroActivity">
 
     <RelativeLayout
@@ -25,7 +26,9 @@
                 android:hint="Porta (separados por vírgula)"
                 android:inputType="textPersonName"
                 android:paddingTop="15dp"
-                android:textSize="20dp"></EditText>
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"/>
 
             <EditText
                 android:id="@+id/louvor"
@@ -36,7 +39,9 @@
                 android:hint="Louvor"
                 android:inputType="textPersonName"
                 android:paddingTop="15dp"
-                android:textSize="20dp"></EditText>
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"/>
 
             <EditText
                 android:id="@+id/palavra"
@@ -47,7 +52,9 @@
                 android:hint="Palavra"
                 android:inputType="textPersonName"
                 android:paddingTop="15dp"
-                android:textSize="20dp"></EditText>
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"/>
 
             <EditText
                 android:id="@+id/dom"
@@ -59,7 +66,9 @@
                 android:inputType="textMultiLine"
                 android:lines="3"
                 android:paddingTop="15dp"
-                android:textSize="20dp"></EditText>
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"/>
 
             <EditText
                 android:id="@+id/louvores"
@@ -71,7 +80,9 @@
                 android:inputType="textMultiLine"
                 android:lines="2"
                 android:paddingTop="15dp"
-                android:textSize="20dp"></EditText>
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"/>
 
             <EditText
                 android:id="@+id/textoBiblico"
@@ -83,7 +94,9 @@
                 android:inputType="textMultiLine"
                 android:lines="2"
                 android:paddingTop="15dp"
-                android:textSize="20dp"></EditText>
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"/>
 
             <TextView
                 android:id="@+id/data"
@@ -94,10 +107,11 @@
                 android:layout_marginTop="10dp"
                 android:layout_row="3"
                 android:drawablePadding="10dp"
-                android:drawableRight="@drawable/add_icon24dp"
                 android:padding="15dp"
                 android:text="Data:"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"/>
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -115,7 +129,9 @@
                     android:gravity="fill"
                     android:hint="Varões"
                     android:inputType="number"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"/>
 
                 <EditText
                     android:id="@+id/senhoras"
@@ -128,7 +144,9 @@
                     android:gravity="fill"
                     android:hint="Senhoras"
                     android:inputType="number"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"/>
 
                 <EditText
                     android:id="@+id/adolescentes"
@@ -141,7 +159,9 @@
                     android:gravity="fill"
                     android:hint="Adolescentes"
                     android:inputType="number"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"/>
 
                 <EditText
                     android:id="@+id/criancas"
@@ -154,7 +174,9 @@
                     android:gravity="fill"
                     android:hint="Crianças"
                     android:inputType="number"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"/>
 
                 <EditText
                     android:id="@+id/jovens"
@@ -167,7 +189,9 @@
                     android:gravity="fill"
                     android:hint="Jovens"
                     android:inputType="number"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"/>
 
                 <EditText
                     android:id="@+id/visitantes"
@@ -180,7 +204,9 @@
                     android:gravity="fill"
                     android:hint="Visitantes"
                     android:inputType="number"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"/>
 
                 <TextView
                     android:id="@+id/total"
@@ -192,7 +218,9 @@
                     android:layout_row="3"
                     android:text="Total:"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"/>
 
             </GridLayout>
 
