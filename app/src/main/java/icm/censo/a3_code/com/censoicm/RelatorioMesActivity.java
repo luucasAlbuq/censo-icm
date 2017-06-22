@@ -432,6 +432,7 @@ public class RelatorioMesActivity extends AppCompatActivity {
 
 
             Label colunaData = new Label(colunaDataIndex,0,"Data",cellFormat);
+            excelSheet.setColumnView(colunaDataIndex, colunaData.getString().length()*3);
             excelSheet.addCell(colunaData);
 
             Label colunaLouvores = new Label(colunaLouvoresIndex,0,"Lista de Louvores",cellFormat);
