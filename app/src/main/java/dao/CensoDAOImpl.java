@@ -49,7 +49,7 @@ public class CensoDAOImpl implements CensoDAO {
         acl.setRoleReadAccess(Roles.USER.getValor(),true);
         object.setACL(acl);
 
-        object.put(DBEsquema.COL_NOME_IGREJA.getValor(), (String) currentUser.get(DBEsquema.COL_NOME_IGREJA.getValor()));
+        object.put(DBEsquema.COL_NOME_IGREJA.getValor(), currentUser.getString(DBEsquema.COL_NOME_IGREJA.getValor()));
         object.put(DBEsquema.COL_USER.getValor(),currentUser.getUsername());
 
         Calendar calendar = Calendar.getInstance();
@@ -142,6 +142,8 @@ public class CensoDAOImpl implements CensoDAO {
         List<Censo> list = new ArrayList<>();
         try{
             ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
+            query.whereEqualTo(DBEsquema.COL_NOME_IGREJA.getValor(),
+                    ParseUser.getCurrentUser().getString(DBEsquema.COL_NOME_IGREJA.getValor()));
             query.whereGreaterThanOrEqualTo(DBEsquema.COL_DATA.getValor(), dataInicio);
             query.whereLessThanOrEqualTo(DBEsquema.COL_DATA.getValor(), dataFim);
             query.orderByDescending(DBEsquema.COL_DATA.getValor());
@@ -161,9 +163,11 @@ public class CensoDAOImpl implements CensoDAO {
         List<Censo> lista = new ArrayList<Censo>();
         try{
             ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
+            query.whereEqualTo(DBEsquema.COL_NOME_IGREJA.getValor(),
+                    ParseUser.getCurrentUser().getString(DBEsquema.COL_NOME_IGREJA.getValor()));
+            query.whereEqualTo(DBEsquema.COL_DATA.getValor(), data);
             query.orderByDescending(DBEsquema.COL_DATA.getValor());
             query.setLimit(40);
-            query.whereEqualTo(DBEsquema.COL_DATA.getValor(), data);
             for(ParseObject obj: query.find()){
                 lista.add(castToCenso(obj));
             }
