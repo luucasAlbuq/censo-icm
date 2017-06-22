@@ -169,6 +169,59 @@ public class EstatisticaMes {
         this.totalVisitantes = totalVisitantes;
     }
 
+    /**
+     * Calcula a frequência geral de um grupo de dados
+     * @param list
+     * @return
+     */
+    public static EstatisticaMes calculaEstatisticaMes(List<Censo> censoList){
+        EstatisticaMes estatisticaMes = new EstatisticaMes();
+        int totalDiasRegistrados = censoList.size();
+        int totalAdolescentes = 0;
+        int totalJovens = 0;
+        int totalCriancas = 0;
+        int totalSenhoras = 0;
+        int totalVaroes = 0;
+        int totalVisitantes = 0;
+        int totalPessoas = 0;
+
+        for(Censo censo: censoList){
+            totalAdolescentes += censo.getQtdAdolescentes();
+            totalCriancas += censo.getQtdCriancas();
+            totalJovens += censo.getQtdJovens();
+            totalSenhoras += censo.getQtdSenhoras();
+            totalVaroes += censo.getQtdVaroes();
+            totalVisitantes += censo.getQtdVisitantes();
+            totalPessoas += censo.getTotalPessoas();
+        }
+
+        float mediaPessoas = (totalPessoas/totalDiasRegistrados);
+        float mediaPorcentagemJovens = (totalJovens*100)/totalPessoas;
+        float mediaPorcentagemCriancas = (totalCriancas*100)/totalPessoas;
+        float mediaPorcentagemAdolescentes = (totalAdolescentes*100)/totalPessoas;
+        float mediaPorcentagemSenhoras = (totalSenhoras*100)/totalPessoas;
+        float mediaPorcentagemVaroes = (totalVaroes*100)/totalPessoas;
+        float mediaPorcentagemVisitantes = (totalVisitantes*100)/totalPessoas;
+
+        estatisticaMes.setMediaPessoas(mediaPessoas);
+        estatisticaMes.setMediaPorcentagemAdolescentes(mediaPorcentagemAdolescentes);
+        estatisticaMes.setMediaPorcentagemCriancas(mediaPorcentagemCriancas);
+        estatisticaMes.setMediaPorcentagemJovens(mediaPorcentagemJovens);
+        estatisticaMes.setMediaPorcentagemSenhoras(mediaPorcentagemSenhoras);
+        estatisticaMes.setMediaPorcentagemVaroes(mediaPorcentagemVaroes);
+        estatisticaMes.setMediaPorcentagemVisitantes(mediaPorcentagemVisitantes);
+        estatisticaMes.setTotalAdolescentes(totalAdolescentes);
+        estatisticaMes.setTotalCriancas(totalCriancas);
+        estatisticaMes.setTotalJovens(totalJovens);
+        estatisticaMes.setTotalSenhoras(totalSenhoras);
+        estatisticaMes.setTotalVaroes(totalVaroes);
+        estatisticaMes.setTotalVisitantes(totalVisitantes);
+        estatisticaMes.setTotalPessoas(totalPessoas);
+        //A lista vem do banco em order descencente em relacao a data de cada censo
+        estatisticaMes.setDataInicio(censoList.get(totalDiasRegistrados-1).getData());
+        estatisticaMes.setDataFim(censoList.get(0).getData());
+        return estatisticaMes;
+    }
 
     @Override
     public String toString() {

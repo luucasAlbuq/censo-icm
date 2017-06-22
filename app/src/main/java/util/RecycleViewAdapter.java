@@ -9,17 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import icm.censo.a3_code.com.censoicm.MainActivity;
 import icm.censo.a3_code.com.censoicm.R;
 import icm.censo.a3_code.com.censoicm.RelatorioDiaActivity;
-import icm.censo.a3_code.com.censoicm.RelatorioMesActivity;
 import model.Censo;
 
 /**
@@ -36,7 +33,7 @@ public class RecycleViewAdapter extends  RecyclerView.Adapter<RecycleViewAdapter
     public RecycleViewAdapter(Context context, List<Censo> lista){
         this.censoList = lista;
         this.context = context;
-        this.estatisticaMes = RelatorioMesActivity.calculaEstatisticaMes(lista);
+        this.estatisticaMes = EstatisticaMes.calculaEstatisticaMes(lista);
     }
 
     @Override
