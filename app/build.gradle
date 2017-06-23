@@ -4,6 +4,16 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
+    signingConfigs {
+        release {
+            storeFile file('../build/censo_key_apk.jks')
+            storePassword "censoicm1208"
+            keyAlias "censo_icm_key"
+            keyPassword "censoicm1208"
+        }
+    }
+
     defaultConfig {
         applicationId "icm.censo.a3_code.com.censoicm"
         minSdkVersion 14
@@ -16,6 +26,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

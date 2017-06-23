@@ -13,13 +13,46 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRole;
 import com.parse.ParseUser;
+
+import java.util.List;
+
+import util.Roles;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
     private ProgressBar progressBar;
     private Button btnLogin;
+    private static List<ParseRole> userRoles;
+
+    private void getUserRoles(ParseUser user){
+        ParseQuery<ParseRole> query = ParseRole.getQuery();
+        query.whereEqualTo("users",user);
+        try {
+            userRoles = query.find();
+        } catch (ParseException e) {
+            Toast.makeText(getApplicationContext(), getString(R.string.erro_generico)+": "+e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Verifica se o usuario corrente tem a role de admin
+     * @return
+     */
+    public static boolean hasAdminRole(){
+        if(userRoles != null && !userRoles.isEmpty()){
+            for(ParseRole role: userRoles){
+                if(role.getName().equals(Roles.ADMIN.getValor())) return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void done(ParseUser user, ParseException e) {
                         progressBar.setVisibility(View.GONE);
                         if (user != null) {
+                            getUserRoles(user);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();

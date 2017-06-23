@@ -242,7 +242,7 @@ public class CadastroActivity extends AppCompatActivity {
             totalTextView.setTextColor(Color.RED);
             valido = false;
         }
-        if(dataCadastro == null){
+        if (dataCadastro == null) {
             dataTextView.setTextColor(Color.RED);
             valido = false;
         }
@@ -277,6 +277,13 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void salvarCadastro() {
+        // Caso o usuario nao tenha role de admin objeto nao pode ser salvo e o fluxo e interompido
+        if (!LoginActivity.hasAdminRole()) {
+            finish();
+            Toast.makeText(getApplicationContext(), getString(R.string.denied_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         try {
             if (verificaCamposObrigatorios()) {
                 Censo censo = buildCenso();
@@ -285,7 +292,7 @@ public class CadastroActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Dados Salvos!", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Ocorreu um erro!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.erro_generico), Toast.LENGTH_SHORT).show();
                 }
 
             } else {

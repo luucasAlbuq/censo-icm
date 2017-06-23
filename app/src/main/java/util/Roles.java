@@ -4,6 +4,7 @@ package util;
  * Created by luucasAlbuq on 14/06/2017.
  */
 public enum Roles {
+    TABLE("Role"),
     ADMIN("admin"), USER("user");
 
     private String valor;

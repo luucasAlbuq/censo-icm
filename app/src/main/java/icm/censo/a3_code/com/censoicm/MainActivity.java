@@ -19,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.LogOutCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
+import com.parse.ParseRole;
 import com.parse.ParseUser;
 
 import java.io.Serializable;
@@ -33,6 +35,7 @@ import controller.CensoController;
 import model.Censo;
 import util.DBEsquema;
 import util.MetodoPesquisa;
+import util.Roles;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -153,12 +156,13 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(dialog.getContext(), RelatorioDiaActivity.class);
                             intent.putExtra(DBEsquema.TABLE.getValor(), (Serializable) list.get(0));
                             dialog.getContext().startActivity(intent);
+                            dialog.dismiss();
                         }else if(list.size() > 1){
                             Intent intent = new Intent(dialog.getContext(), ListaCensoActivity.class);
                             intent.putExtra(DBEsquema.TABLE.getValor(), (Serializable) list);
                             dialog.getContext().startActivity(intent);
-                        }else{
                             dialog.dismiss();
+                        }else{
                             Toast.makeText(MainActivity.this, getString(R.string.no_data),
                                     Toast.LENGTH_LONG).show();
                         }
@@ -166,14 +170,20 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         Date pesquisaFim = formatter.parse(dataPesquisaFimResposta.getText().toString());
                         List<Censo> list = controller.getCensoBetweenDates(pesquisaInicio, pesquisaFim);
-                        Intent intent = new Intent(dialog.getContext(), ListaCensoActivity.class);
-                        intent.putExtra(DBEsquema.TABLE.getValor(), (Serializable) list);
-                        dialog.getContext().startActivity(intent);
-                        dialog.dismiss();
+
+                        if(!list.isEmpty()){
+                            Intent intent = new Intent(dialog.getContext(), ListaCensoActivity.class);
+                            intent.putExtra(DBEsquema.TABLE.getValor(), (Serializable) list);
+                            dialog.getContext().startActivity(intent);
+                            dialog.dismiss();
+                        }else{
+                            Toast.makeText(MainActivity.this, getString(R.string.no_data),
+                                    Toast.LENGTH_LONG).show();
+                        }
                     }
 
                 } catch (Exception e) {
-                    Toast.makeText(MainActivity.this, "Necessário informar a(s) data(s) para realizar a pesquisa.",
+                    Toast.makeText(MainActivity.this, getString(R.string.no_date_input),
                             Toast.LENGTH_LONG).show();
                 }
             }

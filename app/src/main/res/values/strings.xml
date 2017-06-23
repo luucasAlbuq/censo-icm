@@ -13,6 +13,8 @@
     <string name="erro_generico">Desculpe, ocorreu um erro.</string>
     <string name="no_data">Desculpe, nenhuma informação foi encontrada para essa(s) data(s).</string>
     <string name="auth_failed">Não foi possível realizar o login,verifique seu email e sua senha.</string>
+    <string name="no_date_input">"Necessário informar a(s) data(s) para realizar a pesquisa."</string>
+    <string name="denied_error">"Você não tem permissão para realizar essa operação."</string>
     <string name="relatorio_obreiro_louvor">Louvor:</string>
     <string name="relatorio_obreiro_palavra">Palavra:</string>
     <string name="relatorio_obreiro_porta">Porta:</string>
@@ -23,8 +25,8 @@
 
     <!-- Parse -->
     <string name="parse_server_url">https://parseapi.back4app.com/</string>
-    <string name="parse_app_id">***</string>
-    <string name="parse_client_key">***</string>
+    <string name="parse_app_id">IoKiBX4HFAZQYVDAkhIMb0WeeZV7DuIQUTGyZkPY</string>
+    <string name="parse_client_key">TcGZw2CeKTjdAYjZ6Lt3KIm2D89GdLFtGes8yM3c</string>
 
     <!-- Esquema DB -->
 

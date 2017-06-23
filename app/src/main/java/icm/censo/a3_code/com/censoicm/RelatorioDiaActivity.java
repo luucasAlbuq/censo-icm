@@ -53,7 +53,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
     private Button baixar, delete;
     private PieChart mChart;
 
-    private void  buildChart(Censo censo){
+    private void buildChart(Censo censo) {
         mChart = (PieChart) findViewById(R.id.relatorio_graf_dia);
         mChart.setTransparentCircleRadius(0);
         mChart.setUsePercentValues(true);
@@ -72,11 +72,11 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", BRAZIL);
         String data = sdf.format(censo.getData());
 
-        description.setText("Total: "+censo.getTotalPessoas()+" | "+data);
+        description.setText("Total: " + censo.getTotalPessoas() + " | " + data);
         description.setTextAlign(Paint.Align.CENTER);
         description.setTextSize(10f);
         description.setTextColor(Color.WHITE);
-        description.setPosition(90f,15f);
+        description.setPosition(90f, 15f);
         mChart.setDescription(description);
         setDataPie(censo, mChart);
 
@@ -93,10 +93,10 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                if(mChart.isSaveEnabled()){
+                if (mChart.isSaveEnabled()) {
                     mChart.getLegend().setTextColor(Color.BLACK);
                     mChart.getDescription().setTextColor(Color.BLACK);
-                    mChart.saveToGallery("censo_icm_relatorio_diario"+ Calendar.getInstance().getTimeInMillis()+".jpg", 85); // 85 is the quality of the image
+                    mChart.saveToGallery("censo_icm_relatorio_diario" + Calendar.getInstance().getTimeInMillis() + ".jpg", 85); // 85 is the quality of the image
                     Toast.makeText(getApplicationContext(), "Gráfico Salvo", Toast.LENGTH_SHORT).show();
                     mChart.getLegend().setTextColor(Color.WHITE);
                     mChart.getDescription().setTextColor(Color.WHITE);
@@ -104,18 +104,19 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected() {}
+            public void onNothingSelected() {
+            }
         });
     }
 
-    private void setDataPie(Censo censo, PieChart pieChart){
+    private void setDataPie(Censo censo, PieChart pieChart) {
 
-        PieEntry qtd_jovens = new PieEntry((float) censo.getQtdJovens(), "Jovens: "+censo.getQtdJovens());
-        PieEntry qtd_adolescentes = new PieEntry((float) censo.getQtdAdolescentes(), "Adolescentes: "+censo.getQtdAdolescentes());
-        PieEntry qtd_criancas = new PieEntry((float) censo.getQtdCriancas(), "Crianças: "+censo.getQtdCriancas());
-        PieEntry qtd_varoes = new PieEntry((float) censo.getQtdVaroes(), "Varões: "+censo.getQtdVaroes());
-        PieEntry qtd_senhoras = new PieEntry((float) censo.getQtdSenhoras(), "Senhoras: "+censo.getQtdSenhoras());
-        PieEntry qtd_visitanates = new PieEntry((float) censo.getQtdVisitantes(), "Visitantes: "+censo.getQtdVisitantes());
+        PieEntry qtd_jovens = new PieEntry((float) censo.getQtdJovens(), "Jovens: " + censo.getQtdJovens());
+        PieEntry qtd_adolescentes = new PieEntry((float) censo.getQtdAdolescentes(), "Adolescentes: " + censo.getQtdAdolescentes());
+        PieEntry qtd_criancas = new PieEntry((float) censo.getQtdCriancas(), "Crianças: " + censo.getQtdCriancas());
+        PieEntry qtd_varoes = new PieEntry((float) censo.getQtdVaroes(), "Varões: " + censo.getQtdVaroes());
+        PieEntry qtd_senhoras = new PieEntry((float) censo.getQtdSenhoras(), "Senhoras: " + censo.getQtdSenhoras());
+        PieEntry qtd_visitanates = new PieEntry((float) censo.getQtdVisitantes(), "Visitantes: " + censo.getQtdVisitantes());
 
         List<PieEntry> entries = new ArrayList<>();
         entries.add(qtd_jovens);
@@ -126,12 +127,12 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         entries.add(qtd_visitanates);
 
         ArrayList<Integer> cores = new ArrayList<Integer>();
-        for(int c : ColorTemplate.MATERIAL_COLORS){
-            if(!cores.contains(c)) cores.add(c);
+        for (int c : ColorTemplate.MATERIAL_COLORS) {
+            if (!cores.contains(c)) cores.add(c);
         }
 
-        for(int c: ColorTemplate.COLORFUL_COLORS){
-            if(!cores.contains(c)) cores.add(c);
+        for (int c : ColorTemplate.COLORFUL_COLORS) {
+            if (!cores.contains(c)) cores.add(c);
         }
 
         PieDataSet dataSet = new PieDataSet(entries, null);
@@ -155,8 +156,8 @@ public class RelatorioDiaActivity extends AppCompatActivity {
 
         try {
             // image naming and path  to include sd card  appending name you choose for file
-            String mPath = Environment.getExternalStorageDirectory().toString()+"/"+ Environment.DIRECTORY_DCIM.toString()+"/"+ now + ".jpg";
-            Log.i("PATH",mPath);
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + Environment.DIRECTORY_DCIM.toString() + "/" + now + ".jpg";
+            Log.i("PATH", mPath);
 
             //Don't show the button
             baixar.setVisibility(View.GONE);
@@ -202,7 +203,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             outputStream.close();
 
             //Efeito de flash na tela quando faz o screenshot
-            AlphaAnimation animation = new AlphaAnimation(1,0);
+            AlphaAnimation animation = new AlphaAnimation(1, 0);
             animation.setStartOffset(0);
             animation.setDuration(200);
             view.startAnimation(animation);
@@ -227,11 +228,11 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         } catch (Throwable e) {
             // Several error may come out with file handling or OOM
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(),getString(R.string.erro_generico), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.erro_generico), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void buildDeletePopup(){
+    private void buildDeletePopup() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(RelatorioDiaActivity.this);
         ViewGroup view = (ViewGroup) getLayoutInflater().inflate(R.layout.popup_delete, null);
         mBuilder.setView(view);
@@ -244,13 +245,13 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         confirmaDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
+                try {
                     controller.delete(censo.getId());
                     ListaCensoActivity.updateCensoListActivityWhenDeleteIsDone(censo);
                     dialog.dismiss();
                     finish();
                     Toast.makeText(getApplicationContext(), "Removido com Sucesso.", Toast.LENGTH_SHORT).show();
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), getString(R.string.erro_generico), Toast.LENGTH_SHORT).show();
                     Log.e("CENSO Delete ", e.getMessage());
                 }
@@ -292,10 +293,10 @@ public class RelatorioDiaActivity extends AppCompatActivity {
 
             obreiroLouvor.setText(censo.getObreiroLouvor());
             obreiroPalavra.setText(censo.getObreiroPalavra());
-            obreiroPorta.setText(censo.getObreirosPorta().toString().replace("[","").replace("]",""));
+            obreiroPorta.setText(censo.getObreirosPorta().toString().replace("[", "").replace("]", ""));
 
             dom.setText(censo.getDom());
-            louvores.setText(censo.getLouvores().toString().replace("[","").replace("]",""));
+            louvores.setText(censo.getLouvores().toString().replace("[", "").replace("]", ""));
             textoBiblico.setText(censo.getTextoBiblico());
 
 
@@ -315,7 +316,12 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               buildDeletePopup();
+                // Caso o usuario nao tenha role de admin objeto nao pode ser salvo
+                if (!LoginActivity.hasAdminRole()) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.denied_error), Toast.LENGTH_SHORT).show();
+                } else {
+                    buildDeletePopup();
+                }
             }
         });
     }
