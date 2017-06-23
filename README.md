@@ -22,7 +22,7 @@ Atualmente o aplicativo encontra-se na versão beta e possui as seguintes funcio
 * É necessário ter acesso a internet no dispositivo para poder fazer uso das funcionalidades.
 * As análises diárias e geral quando baixadas são **armazenadas na pasta DCIM** do seu celular.
 * Os arquivos excel gerados com os dados dos relatórios mensais são **armazenadas na pasta Download** do seu celular.
-* Atualmente não é edição de informações previamente cadastradas, caso seja necessário realizar alguma alteração solicite ao administrador do app.
+* Atualmente não permitido a é edição de informações previamente cadastradas, caso seja necessário realizar alguma alteração solicite ao administrador do app.
 * Não é permitido criações de contas para usuário, apenas usuários criados pelo administrador do app podem usar a aplicação.
 
 ### Telas do aplicativo (v. beta)
