@@ -2,7 +2,7 @@
 
 CensoApp é um aplicativo para dispositivos **android** que auxilia no monitoramento e análise da frequência e informações pertinentes aos cultos da [Icm - Azenha RS](http://icmazenha.com/).
 
-As informações são armazenadas em um banco de dados online, permitindo que os dados possam ser acessados e manipulados de qualquer celular que tenha o aplicativo instalada.
+As informações são armazenadas em um banco de dados online, permitindo que os dados possam ser acessados e manipulados de qualquer celular que tenha o aplicativo instalado.
 
 ### Funcionalidades
 
