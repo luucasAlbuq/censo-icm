@@ -17,8 +17,18 @@ import validator.CensoValidatorImpl;
  */
 public class CensoServiceImpl implements CensoService {
 
+    private static CensoService censoService;
     private CensoValidator censoValidator = new CensoValidatorImpl();
     private CensoDAO censoDAO = CensoDAOImpl.getInstance();
+
+    private CensoServiceImpl() {};
+
+    public static synchronized CensoService getInstance() {
+        if(censoService == null){
+            censoService = new CensoServiceImpl();
+        }
+        return censoService;
+    }
 
     @Override
     public boolean cadastrar(Censo censo) throws Exception {
@@ -31,6 +41,20 @@ public class CensoServiceImpl implements CensoService {
             throw new Exception(e.getMessage());
         }
         return success;
+    }
+
+    @Override
+    public boolean delete(String id) throws Exception {
+        boolean sucess = false;
+        try{
+            censoValidator.isCensoValidForDelete(id);
+            censoDAO.delete(id);
+            sucess = true;
+        }catch (Exception e){
+            Log.e("Controller:",e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+        return sucess;
     }
 
     @Override
@@ -60,16 +84,6 @@ public class CensoServiceImpl implements CensoService {
 
     @Override
     public Censo getCensoById(String censoId) {
-        return null;
-    }
-
-    @Override
-    public List<Censo> getCensoByMes(int mes) {
-        return null;
-    }
-
-    @Override
-    public List<Censo> getCensoByAno(int ano) {
         return null;
     }
 

@@ -111,7 +111,9 @@
                 android:text="Data:"
                 android:textSize="20dp"
                 android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white"/>
+                android:textColorHint="@android:color/white"
+                android:drawableEnd="@drawable/calendar_icon"
+                android:drawableRight="@drawable/calendar_icon"/>
 
             <GridLayout
                 android:layout_width="match_parent"

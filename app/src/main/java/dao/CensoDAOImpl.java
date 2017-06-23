@@ -92,7 +92,7 @@ public class CensoDAOImpl implements CensoDAO {
             censo.setObreirosPorta((List<String>) obj.get(DBEsquema.COL_OBRE_PORTA.getValor()));
             censo.setObreiroPalavra(obj.getString(DBEsquema.COL_OBRE_PALAVRA.getValor()));
             censo.setObreiroLouvor(obj.getString(DBEsquema.COL_OBRE_LOUVOR.getValor()));
-            censo.setId(obj.getString("objectId"));
+            censo.setId(obj.getObjectId());
             censo.setIgreja(obj.getString(DBEsquema.COL_NOME_IGREJA.getValor()));
 
         }catch (Exception e){
@@ -122,7 +122,16 @@ public class CensoDAOImpl implements CensoDAO {
 
     @Override
     public <T> boolean delete(T objectId) {
-        return false;
+        try {
+            ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
+            ParseObject obj = query.get((String) objectId);
+            obj.delete();
+            obj.save();
+            return true;
+        } catch (ParseException e) {
+            Log.e("DB: delete by id: ",e.getMessage());
+            return false;
+        }
     }
 
     @Override

@@ -7,10 +7,12 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
@@ -46,9 +48,9 @@ import util.DBEsquema;
 public class RelatorioDiaActivity extends AppCompatActivity {
 
     private Censo censo;
-    private CensoController controller = new CensoController();
+    private CensoController controller = CensoController.getInstance();
     private TextView obreiroLouvor, obreiroPalavra, obreiroPorta, data, dom, louvores, textoBiblico;
-    private Button baixar;
+    private Button baixar, delete;
     private PieChart mChart;
 
     private void  buildChart(Censo censo){
@@ -156,10 +158,8 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             String mPath = Environment.getExternalStorageDirectory().toString()+"/"+ Environment.DIRECTORY_DCIM.toString()+"/"+ now + ".jpg";
             Log.i("PATH",mPath);
 
-
             //Don't show the button
             baixar.setVisibility(View.GONE);
-
 
             TextView obreiroLouvorField = (TextView) findViewById(R.id.relatorio_obreiro_louvor);
             TextView obreiroPalavraField = (TextView) findViewById(R.id.relatorio_obreiro_palavra);
@@ -231,6 +231,40 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         }
     }
 
+    private void buildDeletePopup(){
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(RelatorioDiaActivity.this);
+        ViewGroup view = (ViewGroup) getLayoutInflater().inflate(R.layout.popup_delete, null);
+        mBuilder.setView(view);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+        final Button confirmaDelete = (Button) view.findViewById(R.id.confirmaRemocaoButton);
+        final Button negaDelete = (Button) view.findViewById(R.id.negaRemocaoButton);
+
+        confirmaDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    controller.delete(censo.getId());
+                    ListaCensoActivity.updateCensoListActivityWhenDeleteIsDone(censo);
+                    dialog.dismiss();
+                    finish();
+                    Toast.makeText(getApplicationContext(), "Removido com Sucesso.", Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), getString(R.string.erro_generico), Toast.LENGTH_SHORT).show();
+                    Log.e("CENSO Delete ", e.getMessage());
+                }
+            }
+        });
+
+        negaDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -247,6 +281,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
         louvores = (TextView) findViewById(R.id.relatorio_louvores_resposta);
         textoBiblico = (TextView) findViewById(R.id.relatorio_texto_biblico_resposta);
         baixar = (Button) findViewById(R.id.baixarRelatorioDia);
+        delete = (Button) findViewById(R.id.deleteCenso);
 
         try {
             buildChart(censo);
@@ -274,6 +309,13 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 takeScreenshot();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               buildDeletePopup();
             }
         });
     }

@@ -1,5 +1,7 @@
 package model;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,7 +12,7 @@ import java.util.Map;
  * Entidade que armazena dados sobre o censo de um culto
  * Created by luucasAlbuq on 30/05/2017.
  */
-public class Censo implements Serializable {
+public class Censo implements Serializable, Comparable<Censo>{
 
     private int qtdJovens;
     private int qtdCriancas;
@@ -224,10 +226,8 @@ public class Censo implements Serializable {
     }
 
 
-
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("id", id);
-        return result;
+    @Override
+    public int compareTo(@NonNull Censo o) {
+        return getId().compareTo(o.getId());
     }
 }

@@ -22,23 +22,20 @@ import model.Censo;
 /**
  * Created by luucasAlbuq on 14/06/2017.
  */
-
 public class RecycleViewAdapter extends  RecyclerView.Adapter<RecycleViewAdapter.CensoViewHolder> {
 
     private List<Censo> censoList;
-    private Context context;
     private EstatisticaMes estatisticaMes;
     private Calendar calendar = Calendar.getInstance();
 
-    public RecycleViewAdapter(Context context, List<Censo> lista){
+    public RecycleViewAdapter(List<Censo> lista){
         this.censoList = lista;
-        this.context = context;
         this.estatisticaMes = EstatisticaMes.calculaEstatisticaMes(lista);
     }
 
     @Override
     public CensoViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        final View itemView = LayoutInflater.from(context).inflate(R.layout.card_view, parent, false);
+        final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
         return new CensoViewHolder(itemView);
     }
 
@@ -52,7 +49,7 @@ public class RecycleViewAdapter extends  RecyclerView.Adapter<RecycleViewAdapter
             holder.censoDate.setText(data);
             holder.censoIgreja.setText(censo.getIgreja());
             holder.censoTotal.setText("Total: "+String.valueOf(censo.getTotalPessoas()));
-
+            holder.censoId.setText("ID: "+censo.getId());
 
             if(censo.getTotalPessoas() >= estatisticaMes.getMediaPessoas()){
                 holder.censoIcone.setBackgroundResource(R.drawable.flag_green_icon);
@@ -65,10 +62,10 @@ public class RecycleViewAdapter extends  RecyclerView.Adapter<RecycleViewAdapter
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, RelatorioDiaActivity.class);
+                    Intent intent = new Intent(v.getContext(), RelatorioDiaActivity.class);
                     //To pass:
                     intent.putExtra(DBEsquema.TABLE.getValor(), censo);
-                    context.startActivity(intent);
+                    v.getContext().startActivity(intent);
                 }
             });
         }
@@ -82,7 +79,7 @@ public class RecycleViewAdapter extends  RecyclerView.Adapter<RecycleViewAdapter
     public static class CensoViewHolder extends RecyclerView.ViewHolder {
         private CardView cardView;
         private ImageView censoIcone;
-        private TextView censoDate,censoIgreja,censoTotal;
+        private TextView censoDate,censoIgreja,censoTotal, censoId;
 
 
         public CensoViewHolder(View itemView) {
@@ -92,6 +89,7 @@ public class RecycleViewAdapter extends  RecyclerView.Adapter<RecycleViewAdapter
             censoIgreja = (TextView) itemView.findViewById(R.id.censo_igreja);
             censoIcone = (ImageView) itemView.findViewById(R.id.censo_icone);
             censoTotal = (TextView) itemView.findViewById(R.id.censo_total);
+            censoId = (TextView) itemView.findViewById(R.id.censo_id);
         }
     }
 }

@@ -12,7 +12,17 @@ import service.CensoServiceImpl;
  */
 public class CensoController {
 
-    private CensoService censoService = new CensoServiceImpl();
+    private static CensoController controller;
+    private CensoService censoService = CensoServiceImpl.getInstance();
+
+    private CensoController(){};
+
+    public static synchronized CensoController getInstance() {
+        if(controller == null){
+            controller = new CensoController();
+        }
+        return controller;
+    }
 
     public boolean cadastrar(Censo censo) throws Exception {
         return censoService.cadastrar(censo);
@@ -20,6 +30,10 @@ public class CensoController {
 
     public boolean atualizar(Censo censo) throws Exception {
         return censoService.atualizar(censo, censo.getId());
+    }
+
+    public boolean delete(String id) throws Exception{
+        return censoService.delete(id);
     }
 
     public List<Censo> getCensoByDate(Date data) throws Exception {

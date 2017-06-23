@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton cadastrarButton, pesquisarMenuButton, relatorioButton, sairButton;
     private final Calendar calendario = Calendar.getInstance();
-    private CensoController controller = new CensoController();
+    private CensoController controller = CensoController.getInstance();
 
     //Prepara o calendario
     private DatePickerDialog.OnDateSetListener preparaCalendario(final TextView dataTextView) {
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
-                    Toast.makeText(MainActivity.this, getString(R.string.erro_generico)+": "+e.getMessage(),
+                    Toast.makeText(MainActivity.this, "Necessário informar a(s) data(s) para realizar a pesquisa.",
                             Toast.LENGTH_LONG).show();
                 }
             }

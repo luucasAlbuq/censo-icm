@@ -22,10 +22,19 @@ import util.RecycleViewAdapter;
 
 public class ListaCensoActivity extends AppCompatActivity {
 
-    private List<Censo> listaCenso;
+    private static  List<Censo> listaCenso;
+    private static RecyclerView recyclerView;
     private RecyclerView mRecyclerView;
     private RecycleViewAdapter adapter;
     private FloatingActionButton reportBtn;
+
+    public static void updateCensoListActivityWhenDeleteIsDone(Censo censoDeleted){
+        if(listaCenso != null && recyclerView != null){
+            listaCenso.remove(censoDeleted);
+            RecycleViewAdapter adapter = new RecycleViewAdapter(listaCenso);
+            recyclerView.setAdapter(adapter);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +43,13 @@ public class ListaCensoActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         try{
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+            recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
             listaCenso = (List<Censo>) getIntent().getSerializableExtra(DBEsquema.TABLE.getValor());
-            RecycleViewAdapter adapter = new RecycleViewAdapter(this,listaCenso);
+            RecycleViewAdapter adapter = new RecycleViewAdapter(listaCenso);
             recyclerView.setAdapter(adapter);
 
             reportBtn = (FloatingActionButton) findViewById(R.id.reportButton);

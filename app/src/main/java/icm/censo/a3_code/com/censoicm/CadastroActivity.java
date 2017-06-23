@@ -28,7 +28,7 @@ import model.Censo;
 
 public class CadastroActivity extends AppCompatActivity {
 
-    private CensoController controller = new CensoController();
+    private CensoController controller = CensoController.getInstance();
 
     private int varoesValue, senhorasValue, jovensValue, adolescentesValue, criancasValue, visitantesValue, totalValue;
     private TextView totalTextView, dataTextView;
@@ -217,17 +217,7 @@ public class CadastroActivity extends AppCompatActivity {
         censo.setLouvores(Arrays.asList(louvores));
         censo.setTextoBiblico(textoBiblico);
 
-        calendario.clear(Calendar.HOUR_OF_DAY);
-        calendario.clear(Calendar.AM_PM);
-        calendario.clear(Calendar.MINUTE);
-        calendario.clear(Calendar.HOUR);
-        calendario.clear(Calendar.MILLISECOND);
-        calendario.clear(Calendar.SECOND);
-        if (dataCadastro == null){
-            censo.setData(calendario.getTime());
-        }else{
-            censo.setData(dataCadastro);
-        }
+        censo.setData(dataCadastro);
 
         return censo;
     }
@@ -250,6 +240,10 @@ public class CadastroActivity extends AppCompatActivity {
         }
         if (totalValue <= 0) {
             totalTextView.setTextColor(Color.RED);
+            valido = false;
+        }
+        if(dataCadastro == null){
+            dataTextView.setTextColor(Color.RED);
             valido = false;
         }
         return valido;
@@ -331,6 +325,7 @@ public class CadastroActivity extends AppCompatActivity {
         dataTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dataTextView.setTextColor(Color.WHITE);
                 preparaCalendario();
                 DatePickerDialog datePickerDialog = new DatePickerDialog(CadastroActivity.this, data, calendario
                         .get(Calendar.YEAR), calendario.get(Calendar.MONTH),

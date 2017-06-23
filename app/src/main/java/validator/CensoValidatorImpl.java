@@ -58,6 +58,13 @@ public class CensoValidatorImpl implements CensoValidator {
     }
 
     @Override
+    public void isCensoValidForDelete(String id) throws Exception {
+        if(id == null || id.isEmpty()){
+            throw new Exception("ID Inválido");
+        }
+    }
+
+    @Override
     public void isCensoValidSearchBetweenDates(Date from, Date to) throws Exception {
         if(from.after(to)){
             throw new Exception("Dados de Pesquisa Inválidos");
