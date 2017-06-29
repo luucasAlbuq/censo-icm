@@ -1,6 +1,8 @@
 package icm.censo.a3_code.com.censoicm;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -54,6 +56,13 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(LoginActivity.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +83,12 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(!isNetworkAvailable()){
+                    Toast.makeText(getApplicationContext(), "Você está sem acesso a internet.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
