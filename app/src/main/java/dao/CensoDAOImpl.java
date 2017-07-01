@@ -125,7 +125,7 @@ public class CensoDAOImpl implements CensoDAO {
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
             ParseObject obj = query.get((String) objectId);
-            obj.delete();
+            obj.deleteInBackground();
             obj.save();
             return true;
         } catch (ParseException e) {

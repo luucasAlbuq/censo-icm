@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -241,11 +242,13 @@ public class RelatorioDiaActivity extends AppCompatActivity {
 
         final Button confirmaDelete = (Button) view.findViewById(R.id.confirmaRemocaoButton);
         final Button negaDelete = (Button) view.findViewById(R.id.negaRemocaoButton);
+        final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBarDelete);
 
         confirmaDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
+                    progressBar.setVisibility(View.VISIBLE);
                     controller.delete(censo.getId());
                     ListaCensoActivity.updateCensoListActivityWhenDeleteIsDone(censo);
                     dialog.dismiss();
@@ -255,6 +258,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), getString(R.string.erro_generico), Toast.LENGTH_SHORT).show();
                     Log.e("CENSO Delete ", e.getMessage());
                 }
+                progressBar.setVisibility(View.GONE);
             }
         });
 

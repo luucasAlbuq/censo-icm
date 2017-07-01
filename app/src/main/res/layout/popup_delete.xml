@@ -49,6 +49,14 @@
                 android:text="Não" />
         </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/progressBarDelete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 </RelativeLayout>
