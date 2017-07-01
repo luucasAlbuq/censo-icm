@@ -14,7 +14,7 @@ public class CensoValidatorImpl implements CensoValidator {
 
     //Verifica se uma string possui apenas letras
     private boolean isAlpth(String name){
-        return name.trim().matches("[a-zA-Z]+");
+        return name.replaceAll(" ","").matches("[a-zA-Z]+");
     }
 
     @Override

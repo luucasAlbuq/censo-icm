@@ -47,7 +47,7 @@ public class GenerateExcel {
     private static  int colunaTotalIndex = 12;
     private static  int colunaDomIndex = 13;
 
-    private static String path = Environment.getExternalStorageDirectory().toString() +"/"+ Environment.DIRECTORY_DOWNLOADS.toString()+"/censo_icm_app";;
+    private static String path = Environment.getExternalStorageDirectory().toString() +"/"+ Environment.DIRECTORY_DOWNLOADS.toString();
 
     public static void gerarRelatorioExcell(List<Censo> censoList, Context context){
         String fileName = "relatorio_censo_icm_"+ Calendar.getInstance().getTimeInMillis()+".xls";
@@ -56,7 +56,6 @@ public class GenerateExcel {
 
         //create a standard java.io.File object for the Workbook to use
         File wbfile = new File(path,fileName);
-        wbfile.mkdir();
 
         Log.i("Excel Path:",wbfile.getPath());
 
