@@ -162,6 +162,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
 
             //Don't show the button
             baixar.setVisibility(View.GONE);
+            delete.setVisibility(View.GONE);
 
             TextView obreiroLouvorField = (TextView) findViewById(R.id.relatorio_obreiro_louvor);
             TextView obreiroPalavraField = (TextView) findViewById(R.id.relatorio_obreiro_palavra);
@@ -225,6 +226,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
             mChart.getDescription().setTextColor(Color.WHITE);
 
             baixar.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), "Relatório salvo em suas imagens.", Toast.LENGTH_SHORT).show();
         } catch (Throwable e) {
             // Several error may come out with file handling or OOM

@@ -122,16 +122,17 @@ public class CensoDAOImpl implements CensoDAO {
 
     @Override
     public <T> boolean delete(T objectId) {
+        boolean isDeleted = false;
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
             ParseObject obj = query.get((String) objectId);
-            obj.deleteInBackground();
+            obj.delete();
             obj.save();
-            return true;
+            isDeleted = true;
         } catch (ParseException e) {
             Log.e("DB: delete by id: ",e.getMessage());
-            return false;
         }
+        return isDeleted;
     }
 
     @Override
