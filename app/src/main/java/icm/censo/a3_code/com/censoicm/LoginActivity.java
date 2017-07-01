@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     public static boolean hasAdminRole(){
         if(userRoles != null && !userRoles.isEmpty()){
             for(ParseRole role: userRoles){
-                if(role.getName().equals(Roles.ADMIN.getValor())) return true;
+                if(role.getName().equals("admin")) return true;
             }
         }
         return false;
