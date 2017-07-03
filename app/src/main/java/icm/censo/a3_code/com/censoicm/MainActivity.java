@@ -13,15 +13,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.LogOutCallback;
-import com.parse.ParseACL;
 import com.parse.ParseException;
-import com.parse.ParseRole;
 import com.parse.ParseUser;
 
 import java.io.Serializable;
@@ -35,7 +32,6 @@ import controller.CensoController;
 import model.Censo;
 import util.DBEsquema;
 import util.MetodoPesquisa;
-import util.Roles;
 
 public class MainActivity extends AppCompatActivity {
 

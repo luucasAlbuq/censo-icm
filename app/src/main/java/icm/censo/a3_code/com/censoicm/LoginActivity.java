@@ -15,14 +15,11 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRole;
 import com.parse.ParseUser;
 
 import java.util.List;
-
-import util.Roles;
 
 public class LoginActivity extends AppCompatActivity {
 

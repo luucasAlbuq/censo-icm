@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import dao.CensoDAO;
 import dao.CensoDAOImpl;

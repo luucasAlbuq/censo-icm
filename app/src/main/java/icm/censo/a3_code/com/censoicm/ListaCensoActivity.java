@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import model.Censo;
 import util.DBEsquema;
-import util.EstatisticaMes;
 import util.RecycleViewAdapter;
 
 public class ListaCensoActivity extends AppCompatActivity {

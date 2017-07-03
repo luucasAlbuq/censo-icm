@@ -2,22 +2,17 @@ package dao;
 
 import android.util.Log;
 
-import com.parse.DeleteCallback;
 import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseRole;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
-import icm.censo.a3_code.com.censoicm.ListaCensoActivity;
 import model.Censo;
 import util.DBEsquema;
 import util.Roles;
