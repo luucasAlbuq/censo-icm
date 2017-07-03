@@ -180,20 +180,27 @@ public class RelatorioMesActivity extends AppCompatActivity {
     }
 
     private void setDataPie(EstatisticaMes estatisticaMes, PieChart pieChart) {
-        PieEntry qtd_jovens = new PieEntry((float) estatisticaMes.getTotalJovens(), "Jovens: " + estatisticaMes.getTotalAdolescentes());
-        PieEntry qtd_adolescentes = new PieEntry((float) estatisticaMes.getTotalAdolescentes(), "Adolescentes: " + estatisticaMes.getTotalAdolescentes());
-        PieEntry qtd_criancas = new PieEntry((float) estatisticaMes.getTotalCriancas(), "Crianças: " + estatisticaMes.getTotalCriancas());
-        PieEntry qtd_varoes = new PieEntry((float) estatisticaMes.getTotalVaroes(), "Varões: " + estatisticaMes.getTotalVaroes());
-        PieEntry qtd_senhoras = new PieEntry((float) estatisticaMes.getTotalSenhoras(), "Senhoras: " + estatisticaMes.getTotalSenhoras());
-        PieEntry qtd_visitanates = new PieEntry((float) estatisticaMes.getTotalVisitantes(), "Visitantes: " + estatisticaMes.getTotalVisitantes());
-
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(qtd_jovens);
-        entries.add(qtd_adolescentes);
-        entries.add(qtd_criancas);
-        entries.add(qtd_varoes);
-        entries.add(qtd_senhoras);
-        entries.add(qtd_visitanates);
+
+        if(estatisticaMes.getTotalJovens() > 0){
+            PieEntry qtd_jovens = new PieEntry((float) estatisticaMes.getTotalJovens(), "Jovens: " + estatisticaMes.getTotalJovens());
+            entries.add(qtd_jovens);
+        }if(estatisticaMes.getTotalAdolescentes() > 0){
+            PieEntry qtd_adolescentes = new PieEntry((float) estatisticaMes.getTotalAdolescentes(), "Adolescentes: " + estatisticaMes.getTotalAdolescentes());
+            entries.add(qtd_adolescentes);
+        }if(estatisticaMes.getTotalCriancas() > 0){
+            PieEntry qtd_criancas = new PieEntry((float) estatisticaMes.getTotalCriancas(), "Crianças: " + estatisticaMes.getTotalCriancas());
+            entries.add(qtd_criancas);
+        }if(estatisticaMes.getTotalVaroes() >0){
+            PieEntry qtd_varoes = new PieEntry((float) estatisticaMes.getTotalVaroes(), "Varões: " + estatisticaMes.getTotalVaroes());
+            entries.add(qtd_varoes);
+        }if(estatisticaMes.getTotalSenhoras() > 0){
+            PieEntry qtd_senhoras = new PieEntry((float) estatisticaMes.getTotalSenhoras(), "Senhoras: " + estatisticaMes.getTotalSenhoras());
+            entries.add(qtd_senhoras);
+        }if(estatisticaMes.getTotalVisitantes() > 0){
+            PieEntry qtd_visitanates = new PieEntry((float) estatisticaMes.getTotalVisitantes(), "Visitantes: " + estatisticaMes.getTotalVisitantes());
+            entries.add(qtd_visitanates);
+        }
 
         ArrayList<Integer> cores = new ArrayList<Integer>();
         for (int c : ColorTemplate.MATERIAL_COLORS) {

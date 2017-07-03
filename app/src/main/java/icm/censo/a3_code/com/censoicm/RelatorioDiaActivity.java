@@ -112,20 +112,26 @@ public class RelatorioDiaActivity extends AppCompatActivity {
 
     private void setDataPie(Censo censo, PieChart pieChart) {
 
-        PieEntry qtd_jovens = new PieEntry((float) censo.getQtdJovens(), "Jovens: " + censo.getQtdJovens());
-        PieEntry qtd_adolescentes = new PieEntry((float) censo.getQtdAdolescentes(), "Adolescentes: " + censo.getQtdAdolescentes());
-        PieEntry qtd_criancas = new PieEntry((float) censo.getQtdCriancas(), "Crianças: " + censo.getQtdCriancas());
-        PieEntry qtd_varoes = new PieEntry((float) censo.getQtdVaroes(), "Varões: " + censo.getQtdVaroes());
-        PieEntry qtd_senhoras = new PieEntry((float) censo.getQtdSenhoras(), "Senhoras: " + censo.getQtdSenhoras());
-        PieEntry qtd_visitanates = new PieEntry((float) censo.getQtdVisitantes(), "Visitantes: " + censo.getQtdVisitantes());
-
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(qtd_jovens);
-        entries.add(qtd_adolescentes);
-        entries.add(qtd_criancas);
-        entries.add(qtd_varoes);
-        entries.add(qtd_senhoras);
-        entries.add(qtd_visitanates);
+        if(censo.getQtdJovens() > 0){
+            PieEntry qtd_jovens = new PieEntry((float) censo.getQtdJovens(), "Jovens: " + censo.getQtdJovens());
+            entries.add(qtd_jovens);
+        }if(censo.getQtdAdolescentes() > 0){
+            PieEntry qtd_adolescentes = new PieEntry((float) censo.getQtdAdolescentes(), "Adolescentes: " + censo.getQtdAdolescentes());
+            entries.add(qtd_adolescentes);
+        }if(censo.getQtdCriancas() > 0){
+            PieEntry qtd_criancas = new PieEntry((float) censo.getQtdCriancas(), "Crianças: " + censo.getQtdCriancas());
+            entries.add(qtd_criancas);
+        }if(censo.getQtdVaroes() > 0){
+            PieEntry qtd_varoes = new PieEntry((float) censo.getQtdVaroes(), "Varões: " + censo.getQtdVaroes());
+            entries.add(qtd_varoes);
+        }if(censo.getQtdSenhoras() > 0){
+            PieEntry qtd_senhoras = new PieEntry((float) censo.getQtdSenhoras(), "Senhoras: " + censo.getQtdSenhoras());
+            entries.add(qtd_senhoras);
+        }if(censo.getQtdVisitantes() > 0){
+            PieEntry qtd_visitanates = new PieEntry((float) censo.getQtdVisitantes(), "Visitantes: " + censo.getQtdVisitantes());
+            entries.add(qtd_visitanates);
+        }
 
         ArrayList<Integer> cores = new ArrayList<Integer>();
         for (int c : ColorTemplate.MATERIAL_COLORS) {
