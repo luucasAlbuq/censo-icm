@@ -45,13 +45,13 @@ public class CensoServiceImpl implements CensoService {
 
     @Override
     public boolean delete(String id) throws Exception {
-        boolean sucess = false;
+        boolean sucess = true;
         try{
             censoValidator.isCensoValidForDelete(id);
-            censoDAO.delete(id);
-            sucess = true;
+            sucess = censoDAO.delete(id);
         }catch (Exception e){
             Log.e("Controller:",e.getMessage());
+            sucess = false;
             throw new Exception(e.getMessage());
         }
         return sucess;

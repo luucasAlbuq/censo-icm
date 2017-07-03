@@ -20,6 +20,7 @@ public enum DBEsquema {
     COL_OBRE_PORTA("obreiros_porta"),
     COL_LOUVORES("louvores"),
     COL_NOME_IGREJA("igreja"),
+    COL_OBJECT_ID("objectId"),
     COL_DATA("data");
 
     private String valor;

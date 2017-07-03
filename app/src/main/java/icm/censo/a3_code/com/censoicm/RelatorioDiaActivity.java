@@ -252,7 +252,7 @@ public class RelatorioDiaActivity extends AppCompatActivity {
                 try {
                     progressBar.setVisibility(View.VISIBLE);
                     controller.delete(censo.getId());
-                    ListaCensoActivity.updateCensoListActivityWhenDeleteIsDone(censo);
+                    ListaCensoActivity.updateCensoListActivityWhenDeleteIsDone(censo, RelatorioDiaActivity.this);
                     dialog.dismiss();
                     finish();
                     Toast.makeText(getApplicationContext(), "Removido com Sucesso.", Toast.LENGTH_SHORT).show();

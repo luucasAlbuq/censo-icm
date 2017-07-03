@@ -1,5 +1,6 @@
 package icm.censo.a3_code.com.censoicm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -28,11 +29,17 @@ public class ListaCensoActivity extends AppCompatActivity {
     private RecycleViewAdapter adapter;
     private FloatingActionButton reportBtn;
 
-    public static void updateCensoListActivityWhenDeleteIsDone(Censo censoDeleted){
-        if(listaCenso != null && recyclerView != null){
+    public static void updateCensoListActivityWhenDeleteIsDone(Censo censoDeleted, Context context){
+        if(listaCenso != null && recyclerView != null && !listaCenso.isEmpty()){
             listaCenso.remove(censoDeleted);
-            RecycleViewAdapter adapter = new RecycleViewAdapter(listaCenso);
-            recyclerView.setAdapter(adapter);
+            if(listaCenso.isEmpty()){
+                Intent home = new Intent(context, MainActivity.class);
+                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(home);
+            }else{
+                RecycleViewAdapter adapter = new RecycleViewAdapter(listaCenso);
+                recyclerView.setAdapter(adapter);
+            }
         }
     }
 
@@ -61,6 +68,10 @@ public class ListaCensoActivity extends AppCompatActivity {
                     startActivity(relatorioMesActivity);
                 }
             });
+
+            if(adapter.getItemCount()==0){
+                finish();
+            }
 
         }catch (Exception e){
             Toast.makeText(ListaCensoActivity.this, getString(R.string.erro_generico)+": "+e.getMessage(),

@@ -2,6 +2,7 @@ package dao;
 
 import android.util.Log;
 
+import com.parse.DeleteCallback;
 import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import icm.censo.a3_code.com.censoicm.ListaCensoActivity;
 import model.Censo;
 import util.DBEsquema;
 import util.Roles;
@@ -122,15 +124,14 @@ public class CensoDAOImpl implements CensoDAO {
 
     @Override
     public <T> boolean delete(T objectId) {
-        boolean isDeleted = false;
+        boolean isDeleted = true;
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery(DBEsquema.TABLE.getValor());
             ParseObject obj = query.get((String) objectId);
-            obj.delete();
-            obj.save();
-            isDeleted = true;
+            obj.deleteInBackground();
         } catch (ParseException e) {
             Log.e("DB: delete by id: ",e.getMessage());
+            isDeleted = false;
         }
         return isDeleted;
     }
