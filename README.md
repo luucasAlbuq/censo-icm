@@ -1,37 +1,36 @@
 # Censo Icm
+CensoApp is an application for android devices that assists in the monitoring and analysis of the frequency and information pertinent to the services of [Icm - Azenha RS](http://icmazenha.com/).
 
-CensoApp é um aplicativo para dispositivos **android** que auxilia no monitoramento e análise da frequência e informações pertinentes aos cultos da [Icm - Azenha RS](http://icmazenha.com/).
+Information is stored in an online database, allowing data to be accessed and manipulated from any mobile device that has the application installed.
 
-As informações são armazenadas em um banco de dados online, permitindo que os dados possam ser acessados e manipulados de qualquer celular que tenha o aplicativo instalado.
+### Features
 
-### Funcionalidades
+Currently the application is in beta and has the following features:
+* Registration of important information (praises, biblical text, etc.) and the frequency of people in each service.
+* Consultation of information previously registered.
+* Average frequency analysis, flags (green, orange, red) are displayed to report respectively whether the cult had its frequency above average, below or below the average for that period of time at which the survey was conducted.
+* Daily analysis on information concerning worship.
+* Monthly analysis of information regarding worship.
+* Generation of dynamic charts informing the general frequency and by classes of people (young people, children, visitors, etc).
+* Generating a dynamic textual summary by passing important information about the frequency in a period entered by the user during a search.
+* Automatic generation of an excel file counting all the data about the cults registered.
+* Export of daily and monthly analyzes in the image format, allowing the easy sharing of information.
+* Application distribution is done only internally.
 
-Atualmente o aplicativo encontra-se na versão beta e possui as seguintes funcionalidades:
-* Cadastro de informações importantes (louvores, texto bíblico, etc) e a frequência de pessoas em cada culto.
-* Consulta de informações previamente cadastradas.
-* Análise de frequência média, são exibidas bandeiras (verde, laranja, vermelha) para informar respectivamente se o culto teve sua frequência acima da média, na média ou abaixo da média para aquele período de tempo ao qual foi feita a pesquisa.
-* Análise diária sobre informações referentes ao culto.
-* Análise mensal sobre informações referentes ao culto. 
-* Geração de gráficos dinâmicos informando a frequência geral e por classes de pessoas (jovens, crianças, visitantes, etc).
-* Geração de um resumo textual dinâmico passando informações importantes a respeito da frequência em um período informado pelo usuário durante uma pesquisa.
-* Geração automática de um arquivo excel contando todos os dados sobre os cultos cadastrados.
-* Exportação das análises diárias e mensais no formato de imagem, permitindo o fácil compartilhamento de informações.
-* A distribuição do aplicativo é feita apenas internamente. 
+### Important information about how the application works:
+* It is necessary to have internet access in the device in order to make use of the features.
+* Daily and general analyzes when downloaded are ** stored in the DCIM ** folder of your phone.
+* Excel files generated with monthly report data are ** stored in the Download ** folder of your mobile phone.
+* It is currently not allowed to edit previously registered information, in case it is necessary to make any changes ask the administrator of the app.
+* Creations of user accounts are not allowed, only users created by the app administrator can use the application.
+* Email support contact: albuquerque.dev@gmail.com
 
-### Informações importantes sobre o funcionamento do aplicativo:
-* É necessário ter acesso a internet no dispositivo para poder fazer uso das funcionalidades.
-* As análises diárias e geral quando baixadas são **armazenadas na pasta DCIM** do seu celular.
-* Os arquivos excel gerados com os dados dos relatórios mensais são **armazenadas na pasta Download** do seu celular.
-* Atualmente não é permitido a edição de informações previamente cadastradas, caso seja necessário realizar alguma alteração solicite ao administrador do app.
-* Não é permitido criações de contas para usuário, apenas usuários criados pelo administrador do app podem usar a aplicação.
-* Email para contato com o suporte: albuquerque.dev@gmail.com
-
-### Telas do aplicativo (v. beta)
+### Application screens (v. beta)
 ![](https://github.com/luucasAlbuq/censo-icm/blob/master/app/screenshots/geral.png)
 
-### Exemplo de excel gerado
+### Example of excel generated
 ![](http://icons.iconarchive.com/icons/ziggy19/microsoft-office-mac-tilt/24/Excel-icon.png)[Arquivo](https://github.com/luucasAlbuq/censo-icm/blob/master/app/screenshots/relatorio_censo_icm_1498059847968.xls)
 ![](https://github.com/luucasAlbuq/censo-icm/blob/master/app/screenshots/Capture_report.PNG)
 
-### Exemplo de análise geral salva no dispositivo
+### Example of general analysis saved on the device
 ![](https://github.com/luucasAlbuq/censo-icm/blob/master/app/screenshots/WhatsApp%20Image%202017-06-19%20at%2018.59.41.jpeg)
