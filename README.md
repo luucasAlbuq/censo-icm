@@ -8,10 +8,10 @@ Information is stored in an online database, allowing data to be accessed and ma
 Currently the application is in beta and has the following features:
 * Registration of important information (praises, biblical text, etc.) and the frequency of people in each service.
 * Consultation of information previously registered.
-* Average frequency analysis, flags (green, orange, red) are displayed to report respectively whether the cult had its frequency above average, below or below the average for that period of time at which the survey was conducted.
+* Average frequency analysis, flags (green, orange, red) are displayed to report respectively whether the service had its frequency above average, below or below the average for that period of time at which the survey was conducted.
 * Daily analysis on information concerning worship.
 * Monthly analysis of information regarding worship.
-* Generation of dynamic charts informing the general frequency and by classes of people (young people, children, visitors, etc).
+* Generation of dynamic charts informing the general frequency and by classes of people (youngs, children, visitors, etc).
 * Generating a dynamic textual summary by passing important information about the frequency in a period entered by the user during a search.
 * Automatic generation of an excel file counting all the data about the cults registered.
 * Export of daily and monthly analyzes in the image format, allowing the easy sharing of information.
