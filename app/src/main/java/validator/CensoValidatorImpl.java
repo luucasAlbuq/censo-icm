@@ -9,7 +9,6 @@ import model.Censo;
  *
  * Created by luucasAlbuq on 30/05/2017.
  */
-
 public class CensoValidatorImpl implements CensoValidator {
 
     //Verifica se uma string possui apenas letras
