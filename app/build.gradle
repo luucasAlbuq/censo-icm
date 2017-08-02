@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 25
@@ -52,5 +51,3 @@ dependencies {
     androidTestCompile 'org.mockito:mockito-android:2.7.22'
     compile files('libs/jxl.jar')
 }
-
-apply plugin: 'com.google.gms.google-services'

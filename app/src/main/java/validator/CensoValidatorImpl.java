@@ -26,7 +26,7 @@ public class CensoValidatorImpl implements CensoValidator {
         if(censo.getObreiroPalavra() == null) return false;
         if(!isAlpth(censo.getObreiroPalavra())) return false;
         if(censo.getObreiroLouvor() == null) return false;
-        if(!isAlpth(censo.getObreiroLouvor())) return false;
+        //if(!isAlpth(censo.getObreiroLouvor())) return false;
         if(censo.getTotalPessoas() <= 0) return false;
         if((censo.getQtdAdolescentes() + censo.getQtdCriancas() + censo.getQtdJovens()
                 + censo.getQtdSenhoras() + censo.getQtdVaroes() + censo.getQtdVisitantes())
